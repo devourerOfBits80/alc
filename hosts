@@ -1,0 +1,19 @@
+#alc.localhost
+
+[vm]
+vm.localhost            ansible_connection=local
+
+[desktop]
+desktop.localhost       ansible_connection=local
+
+[portable]
+portable.localhost      ansible_connection=local
+
+[hp650lts]
+hp650lts.localhost      ansible_connection=local
+
+[msigl63]
+msigl63.localhost       ansible_connection=local
+
+[msib85g43lts]
+msib85g43lts.localhost  ansible_connection=local
