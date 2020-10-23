@@ -1,0 +1,38 @@
+---
+- name: Install Sudo
+  pacaur:
+    name:
+      - sudo
+    state: present
+  tags:
+    - print_action
+
+- name: Allow members of the wheel group to the sudo access
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^#?\s*%wheel\s+ALL=\(ALL\)\s+ALL$'
+    line: '%wheel ALL=(ALL) ALL'
+    mode: 0440
+    validate: '/usr/sbin/visudo -cf %s'
+    state: present
+  tags:
+    - print_action
+
+- name: Add user to the wheel group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: wheel
+    append: yes
+  tags:
+    - print_action
+    - user
+
+# it will be automatically disabled by the finalize role
+- name: Temporarily allow the user to access sudo without a password
+  lineinfile:
+    path: /etc/sudoers
+    line: '{{ USER.NAME }} ALL=(ALL) NOPASSWD: ALL'
+    mode: 0440
+    validate: '/usr/sbin/visudo -cf %s'
+    state: present
+  changed_when: no

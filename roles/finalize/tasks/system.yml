@@ -1,0 +1,20 @@
+---
+- name: Upgrade the whole system
+  pacaur:
+    upgrade: yes
+    update_cache: yes
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action
+
+- name: Delete all cached packages from the cache folder
+  command: pacman -Scc --noconfirm
+  notify:
+    - deny user to access sudo without a password
+    - stop systemd instance for the created user
+    - delete ansible configuration directories
+  tags:
+    - print_action
+    - shell
+    - user

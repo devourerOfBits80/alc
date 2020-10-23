@@ -1,0 +1,50 @@
+---
+- name: deny user to access sudo without a password
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^{{ USER.NAME }}\s+ALL=\(ALL\)\s+NOPASSWD:\s+ALL$'
+    mode: 0440
+    validate: '/usr/sbin/visudo -cf %s'
+    state: absent
+  changed_when: no
+
+- name: stop systemd instance for the created user
+  service:
+    name: user@{{ USER.UID }}
+    state: stopped
+  tags:
+    - print_action
+
+- name: delete ansible configuration directories
+  file:
+    path: '{{ item }}'
+    state: absent
+    force: yes
+  changed_when: no
+  loop:
+    - /root/.ansible
+    - /home/{{ USER.NAME }}/.ansible
+
+- name: clean unneeded dependencies
+  command: yay -Yc --noconfirm
+  when: INSTALLED_PACMAN_WRAPPER == 'yay'
+  tags:
+    - print_action
+
+- name: uninstall the pacman wrapper
+  pacaur:
+    name:
+      - yay
+    state: absent
+    extra_args: '-s -n'
+  become: yes
+  changed_when: no
+  when: PACMAN_WRAPPER is not defined or (PACMAN_WRAPPER == 'None')
+
+- name: delete the yay configuration directory
+  file:
+    path: /home/{{ USER.NAME }}/.config/yay
+    state: absent
+    force: yes
+  changed_when: no
+  when: PACMAN_WRAPPER is not defined or (PACMAN_WRAPPER == 'None')

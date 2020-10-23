@@ -1,0 +1,6 @@
+---
+- include: system.yml
+  when: CURRENT_USER_NAME == 'root'
+
+- include: non-system.yml
+  when: CURRENT_USER_NAME != 'root'

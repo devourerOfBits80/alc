@@ -1,0 +1,24 @@
+---
+- name: Install Bash shell
+  pacaur:
+    name:
+      - bash
+    state: present
+  tags:
+    - print_action
+    - shell
+
+- name: Install Zsh shell
+  pacaur:
+    name:
+      - zsh
+    state: present
+  tags:
+    - print_action
+    - shell
+
+- name: Set the root login shell
+  shell: chsh -s {{ ROOT.SHELL | default("/bin/zsh") }}
+  changed_when: no
+  tags:
+    - shell

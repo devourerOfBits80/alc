@@ -1,0 +1,8 @@
+---
+### SYSTEM PLAYBOOK SETTINGS ###
+
+# Unique name to identify your machine on a network
+HOSTNAME: TOMAHAWK-HP650
+
+# Hardware and video drivers installation
+MACHINE_TYPE: portable

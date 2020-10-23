@@ -1,0 +1,10 @@
+---
+- name: alc system playbook
+  hosts: vm:desktop:portable:hp650lts:msigl63:msib85g43lts
+  become: yes
+  vars_prompt:
+    - name: USER_PASSWORD
+      prompt: user account password
+      confirm: yes
+  roles:
+    - { role: finalize, tags: ['finalize'] }

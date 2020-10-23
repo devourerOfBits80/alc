@@ -1,0 +1,43 @@
+---
+- name: Create a user group
+  group:
+    name: '{{ USER.GROUP }}'
+    state: present
+  tags:
+    - print_action
+    - user
+
+- name: Create and assign a user to group
+  user:
+    name: '{{ USER.NAME }}'
+    password: '{{ USER_PASSWORD | password_hash("sha512") }}'
+    group: '{{ USER.GROUP }}'
+    uid: '{{ USER.UID }}'
+    shell: '{{ USER.SHELL | default("/bin/zsh") }}'
+    groups: log,rfkill,uucp
+    append: yes
+    update_password: on_create
+    state: present
+  tags:
+    - print_action
+    - user
+
+- name: Create user socket directory
+  file:
+    path: /run/user/{{ USER.UID }}
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0700
+  tags:
+    - print_action
+    - user
+
+# instance will be stopped by the finalize role
+- name: Start systemd instance for the created user
+  service:
+    name: user@{{ USER.UID }}
+    state: started
+  tags:
+    - print_action
+    - user

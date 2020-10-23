@@ -1,0 +1,16 @@
+---
+- name: Set the installed pacman wrapper fact
+  set_fact:
+    INSTALLED_PACMAN_WRAPPER: >-
+      "{{ (PACMAN_WRAPPER is defined and (PACMAN_WRAPPER != 'None')) |
+      ternary(PACMAN_WRAPPER, 'yay') }}"
+  changed_when: no
+
+- name: Delete all cached packages from the cache folders
+  command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
+  notify:
+    - clean unneeded dependencies
+    - uninstall the pacman wrapper
+    - delete the yay configuration directory
+  tags:
+    - print_action

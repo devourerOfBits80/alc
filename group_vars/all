@@ -1,0 +1,23 @@
+---
+### SYSTEM PLAYBOOK SETTINGS ###
+
+# Unique name to identify your machine on a network
+HOSTNAME: TEST-VM
+
+# Root account configuration
+ROOT:
+    SHELL: /bin/zsh
+
+# User account configuration
+USER:
+    NAME: tomek
+    GROUP: tomahawk
+    UID: 1000
+    SHELL: /bin/zsh
+    FULL_NAME: Tomasz Choroba
+
+# Repositories and common packages
+PACMAN_WRAPPER: yay     # set of values: yay, pikaur or trizen (leave empty to skip installation)
+
+# Hardware and video drivers installation
+MACHINE_TYPE: virtual   # set of values: desktop, portable or virtual

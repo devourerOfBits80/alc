@@ -1,0 +1,82 @@
+---
+- name: Validate if the HOSTNAME is defined
+  fail:
+    msg: The HOSTNAME variable is not defined
+  changed_when: no
+  when: HOSTNAME is not defined
+
+- name: Retrieve the CURRENT_HOSTNAME information
+  command: hostnamectl
+  register: hostnamectl_info_retrieving_result
+  become: no
+  changed_when: no
+
+- name: Set the CURRENT_HOSTNAME fact
+  set_fact:
+    CURRENT_HOSTNAME: >-
+      {{ hostnamectl_info_retrieving_result.stdout_lines |
+      select("match", ".*Static hostname\:.*") | list | first |
+      regex_replace(".*Static hostname\:\s+(.*)", "\1") | trim }}
+  changed_when: no
+
+- name: Validate if the USER is defined
+  fail:
+    msg: The USER variable is not defined
+  changed_when: no
+  when: USER is not defined
+
+- name: Validate if the USER.NAME is defined
+  fail:
+    msg: The USER.NAME variable is not defined
+  changed_when: no
+  when: USER.NAME is not defined
+
+- name: Validate if the USER.GROUP is defined
+  fail:
+    msg: The USER.GROUP variable is not defined
+  changed_when: no
+  when: USER.GROUP is not defined
+
+- name: Validate if the USER.UID is defined
+  fail:
+    msg: The USER.UID variable is not defined
+  changed_when: no
+  when: USER.UID is not defined
+
+- name: Retrieve the CURRENT_USER_NAME
+  command: whoami
+  register: current_user_name_retrieving_result
+  become: no
+  changed_when: no
+
+- name: Set the CURRENT_USER_NAME fact
+  set_fact:
+    CURRENT_USER_NAME: '{{ current_user_name_retrieving_result.stdout }}'
+  changed_when: no
+
+- name: Validate if the USER exists
+  fail:
+    msg: The USER with the required USER.NAME does not exist
+  changed_when: no
+  when: CURRENT_USER_NAME != 'root' and (CURRENT_USER_NAME != USER.NAME)
+
+- name: Validate if the USER exists on the proper machine
+  fail:
+    msg: The HOSTNAME of current machine is not compatible with the definition
+  changed_when: no
+  when: CURRENT_USER_NAME != 'root' and (CURRENT_HOSTNAME != HOSTNAME)
+
+- name: Validate if the MACHINE_TYPE is defined
+  fail:
+    msg: The MACHINE_TYPE variable is not defined
+  changed_when: no
+  when: MACHINE_TYPE is not defined
+
+- name: Validate if the MACHINE_TYPE has a proper value
+  fail:
+    msg: The MACHINE_TYPE variable has improper value
+  changed_when: no
+  when: >
+    MACHINE_TYPE != 'desktop' and
+    MACHINE_TYPE != 'portable' and
+    MACHINE_TYPE != 'virtual'

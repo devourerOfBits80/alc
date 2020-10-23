@@ -1,0 +1,13 @@
+---
+- name: Set the HOSTNAME
+  hostname:
+    name: '{{ HOSTNAME }}'
+  when: HOSTNAME != CURRENT_HOSTNAME
+  tags:
+    - print_action
+
+- include: shell.yml
+
+- include: user.yml
+
+- include: sudo.yml

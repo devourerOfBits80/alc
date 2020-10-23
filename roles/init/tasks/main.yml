@@ -1,0 +1,14 @@
+---
+- include: system.yml
+  when: CURRENT_USER_NAME == 'root'
+
+# it will be automatically uninstalled (if required) by the finalize role
+- name: Install the pacman wrapper
+  pacaur:
+    name:
+      - yay
+    state: present
+  changed_when: no
+  when: >
+    CURRENT_USER_NAME != 'root' and
+    (PACMAN_WRAPPER is not defined or (PACMAN_WRAPPER == None))
