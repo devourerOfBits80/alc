@@ -7,4 +7,6 @@
       prompt: user account password
       confirm: yes
   roles:
+    - { role: repositories, tags: ['repositories'] }
+    - { role: shell, tags: ['shell'] }
     - { role: finalize, tags: ['finalize'] }

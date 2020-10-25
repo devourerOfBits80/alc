@@ -1,0 +1,27 @@
+---
+- name: Copy the pacman configuration file
+  copy:
+    src: pacman.conf
+    dest: /etc/pacman.conf
+  tags:
+    - print_action
+
+- name: Update the master package databases
+  pacaur:
+    update_cache: yes
+  tags:
+    - print_action
+
+- include: mirrorlist.yml
+
+- name: Refresh the master package databases
+  pacaur:
+    update_cache: yes
+    force: yes
+  tags:
+    - print_action
+
+- include: packages.yml
+
+- include: flatpak.yml
+  when: 'FLATPAK_SUPPORTED | default(True)'

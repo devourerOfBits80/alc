@@ -1,0 +1,37 @@
+---
+- name: Install shell packages
+  pacaur:
+    name: '{{ SHELL_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install programmable completion for the Bash shell
+  pacaur:
+    name:
+      - bash-completion
+    state: present
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- include: zsh.yml
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+
+- include: nano.yml
+  when: '"nano" in SHELL_PACKAGES'
+
+- name: Copy the vim configuration file
+  copy:
+    src: vimrc
+    dest: /home/{{ USER.NAME }}/.vimrc
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  when: '"vim" in SHELL_PACKAGES'
+  tags:
+    - print_action

@@ -1,0 +1,37 @@
+---
+- name: Create the nano configuration directory
+  file:
+    path: /home/{{ USER.NAME }}/.config/nano
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+  tags:
+    - print_action
+
+- name: Check if the nano configuration file exists
+  stat:
+    path: /home/{{ USER.NAME }}/.config/nano/nanorc
+  register: nano_configuration_file
+  changed_when: no
+
+- name: Copy the nano configuration file
+  copy:
+    src: /etc/nanorc
+    dest: /home/{{ USER.NAME }}/.config/nano/nanorc
+    remote_src: yes
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  when: not nano_configuration_file.stat.exists
+  tags:
+    - print_action
+
+- name: Enable nano predefined syntax highlighting rules
+  lineinfile:
+    path: /home/{{ USER.NAME }}/.config/nano/nanorc
+    regexp: '^#?\s*include\s+"/usr/share/nano/\*\.nanorc"$'
+    line: 'include "/usr/share/nano/*.nanorc"'
+    state: present
+  when: '"nano-syntax-highlighting" in SHELL_PACKAGES'
+  tags:
+    - print_action

@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: init }
+  - { role: hooks }
+  - { role: systemd }

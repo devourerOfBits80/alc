@@ -4,5 +4,25 @@
 # Unique name to identify your machine on a network
 HOSTNAME: TOMAHAWK-HP650
 
+# Repositories and common packages
+COMMON_PACKAGES:
+    - base-devel
+    - pacman-contrib
+    - pkgfile
+    - dialog
+    - wpa_supplicant
+    - net-tools
+    - wireless_tools
+    - inetutils
+    - nmap
+FLATPAK_SUPPORTED: False
+
+# User shell configuration
+SHELL_PACKAGES:
+    - nano
+    - nano-syntax-highlighting
+    - mc
+    - htop
+
 # Hardware and video drivers installation
 MACHINE_TYPE: portable

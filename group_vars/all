@@ -17,7 +17,53 @@ USER:
     FULL_NAME: Tomasz Choroba
 
 # Repositories and common packages
+COMMON_PACKAGES:
+    - base-devel
+    - pacman-contrib
+    - pkgfile
+    - dmidecode
+    - hwinfo
+    - fwupd
+    - dialog
+    - wpa_supplicant
+    - net-tools
+    - wireless_tools
+    - inetutils
+    - nmap
+    - openvpn
+    - cryfs
+    - encfs
 PACMAN_WRAPPER: yay     # set of values: yay, pikaur or trizen (leave empty to skip installation)
+FLATPAK_SUPPORTED: True
+
+# User shell configuration
+SHELL_PACKAGES:
+    - nano
+    - nano-syntax-highlighting
+    - vim
+    - mc
+    - ncdu
+    - htop
+ZSH:
+    THEME: agnoster
+    HIST_STAMPS: dd.mm.yyyy
+    PLUGINS:
+        - archlinux
+        - colored-man-pages
+        - command-not-found
+        - cp
+        - gitfast
+        - history-substring-search
+        - zsh-autosuggestions
+        - zsh-syntax-highlighting
+    EDITOR: nano
+    SSH_EDITOR: nano
+    ALIASES:
+        - 'hclr="history -c"'
+        - 'fpac="find / -regextype posix-extended -regex \".+\.pac(new|save)\" 2> /dev/null"'
+        - 'fpacetc="find /etc -regextype posix-extended -regex \".+\.pac(new|save)\" 2> /dev/null"'
+        - 'pac="sudo pacman"'
+    SAVEHIST: 200
 
 # Hardware and video drivers installation
 MACHINE_TYPE: virtual   # set of values: desktop, portable or virtual

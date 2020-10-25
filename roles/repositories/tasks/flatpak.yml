@@ -1,0 +1,17 @@
+---
+- name: Install Flatpak
+  pacaur:
+    name:
+      - flatpak
+    state: present
+  tags:
+    - print_action
+    - flatpak
+
+- name: Add the official Flathub repository
+  command: 'flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo'
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action
+    - flatpak

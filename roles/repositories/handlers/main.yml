@@ -1,0 +1,21 @@
+---
+- name: restart Reflector update service
+  service:
+    name: reflector-update.service
+    state: restarted
+  tags:
+    - print_action
+
+- name: restart paccache cleanup service timer
+  service:
+    name: paccache-cleanup.timer
+    state: restarted
+  tags:
+    - print_action
+
+- name: restart pkgfile update timer
+  service:
+    name: pkgfile-update.timer
+    state: restarted
+  tags:
+    - print_action

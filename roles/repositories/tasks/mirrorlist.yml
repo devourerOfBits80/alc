@@ -1,0 +1,52 @@
+---
+- name: Install Reflector
+  pacaur:
+    name:
+      - reflector
+    state: present
+  tags:
+    - print_action
+    - mirrorlist
+
+- name: Copy the Reflector update shell script
+  copy:
+    src: reflector-update.sh
+    dest: /usr/local/bin/reflector-update
+    mode: 0755
+  tags:
+    - print_action
+    - mirrorlist
+
+- name: Update pacman's mirrorlist through the Reflector
+  shell: /usr/local/bin/reflector-update
+  tags:
+    - print_action
+    - mirrorlist
+
+- name: Copy the pacman mirrorlist update hook
+  copy:
+    src: mirrorupgrade.hook
+    dest: /etc/pacman.d/hooks/mirrorupgrade.hook
+  tags:
+    - print_action
+    - mirrorlist
+
+- name: Copy the Reflector update service file
+  copy:
+    src: reflector-update.service
+    dest: /etc/systemd/system/reflector-update.service
+  notify:
+    - reload systemd manager configuration
+  tags:
+    - print_action
+    - mirrorlist
+
+- name: Enable Reflector update service
+  service:
+    name: reflector-update.service
+    enabled: yes
+  notify:
+    - restart Reflector update service
+  tags:
+    - print_action
+    - mirrorlist

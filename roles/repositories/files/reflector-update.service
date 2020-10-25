@@ -1,0 +1,13 @@
+[Unit]
+Description=Reflector update service for the pacman mirrorlist
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+IOSchedulingClass=idle
+CPUSchedulingPolicy=idle
+ExecStart=/usr/local/bin/reflector-update
+
+[Install]
+RequiredBy=multi-user.target

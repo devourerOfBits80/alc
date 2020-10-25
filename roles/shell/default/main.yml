@@ -1,0 +1,8 @@
+---
+SHELL_PACKAGES:
+  - nano
+  - nano-syntax-highlighting
+  - vim
+  - mc
+  - ncdu
+  - htop

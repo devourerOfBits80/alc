@@ -1,0 +1,59 @@
+---
+- name: Install Zsh shell packages
+  pacaur:
+    name:
+      - zsh-completions
+      - zsh-syntax-highlighting
+      - powerline-fonts
+    state: present
+  tags:
+    - print_action
+
+- name: Install Oh-My-Zsh
+  pacaur:
+    name:
+      - oh-my-zsh-git
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Create the Oh-My-Zsh custom plugins directory
+  file:
+    path: /home/{{ USER.NAME }}/.oh-my-zsh/custom/plugins
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+  tags:
+    - print_action
+
+- name: Create a symbolic link to the syntax highlighting directory
+  file:
+    src: /usr/share/zsh/plugins/zsh-syntax-highlighting
+    path: /home/{{ USER.NAME }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    state: link
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+  tags:
+    - print_action
+
+- name: Push the Zsh shell configuration file
+  template:
+    src: zshrc.j2
+    dest: /home/{{ USER.NAME }}/.zshrc
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  tags:
+    - print_action
+
+- name: Create an empty environment variables file
+  file:
+    path: /home/{{ USER.NAME }}/.zshenv
+    state: touch
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  tags:
+    - print_action

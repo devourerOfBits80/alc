@@ -1,0 +1,13 @@
+---
+COMMON_PACKAGES:
+  - base-devel
+  - pacman-contrib
+  - pkgfile
+  - dmidecode
+  - hwinfo
+  - dialog
+  - wpa_supplicant
+  - net-tools
+  - wireless_tools
+  - inetutils
+  - nmap

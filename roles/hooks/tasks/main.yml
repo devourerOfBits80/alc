@@ -1,0 +1,8 @@
+---
+- name: Create the pacman hooks directory
+  file:
+    path: /etc/pacman.d/hooks
+    state: directory
+  when: CURRENT_USER_NAME == 'root'
+  tags:
+    - mirrorlist

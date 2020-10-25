@@ -7,7 +7,7 @@
     - print_action
     - user
 
-- name: Create and assign a user to group
+- name: Create and assign user to group
   user:
     name: '{{ USER.NAME }}'
     password: '{{ USER_PASSWORD | password_hash("sha512") }}'
@@ -38,6 +38,16 @@
   service:
     name: user@{{ USER.UID }}
     state: started
+  tags:
+    - print_action
+    - user
+
+- name: Update the user identity in the passwd file
+  replace:
+    path: /etc/passwd
+    regexp: '^{{ USER.NAME }}:x:{{ USER.UID }}:(\d+):.*:/home/{{ USER.NAME }}:(.*)$'
+    replace: '{{ USER.NAME }}:x:{{ USER.UID }}:\1:{{ USER.FULL_NAME }}:/home/{{ USER.NAME }}:\2'
+  when: USER.FULL_NAME is defined
   tags:
     - print_action
     - user

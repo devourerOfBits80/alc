@@ -18,3 +18,4 @@
     - print_action
     - shell
     - user
+    - repositories

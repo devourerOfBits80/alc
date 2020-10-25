@@ -1,0 +1,67 @@
+---
+- name: Install common packages
+  pacaur:
+    name: '{{ COMMON_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Utilizing multiple cores on packages compression
+  lineinfile:
+    path: /etc/makepkg.conf
+    regexp: '^COMPRESSXZ=\\(.*\\)$'
+    line: 'COMPRESSXZ=(xz -c -z - --threads=0)'
+    state: present
+  tags:
+    - print_action
+
+- name: Install pacman's wrapper
+  pacaur:
+    name:
+      - '{{ PACMAN_WRAPPER }}'
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  when: PACMAN_WRAPPER is defined and (PACMAN_WRAPPER != None)
+  tags:
+    - print_action
+
+- name: Copy the paccache cleanup service file
+  copy:
+    src: paccache-cleanup.service
+    dest: /etc/systemd/system/paccache-cleanup.service
+  notify:
+    - reload systemd manager configuration
+  when: '"pacman-contrib" in COMMON_PACKAGES'
+  tags:
+    - print_action
+
+- name: Copy the paccache cleanup service timer file
+  copy:
+    src: paccache-cleanup.timer
+    dest: /etc/systemd/system/paccache-cleanup.timer
+  notify:
+    - reload systemd manager configuration
+  when: '"pacman-contrib" in COMMON_PACKAGES'
+  tags:
+    - print_action
+
+- name: Enable paccache cleanup service timer
+  service:
+    name: paccache-cleanup.timer
+    enabled: yes
+  notify:
+    - restart paccache cleanup service timer
+  when: '"pacman-contrib" in COMMON_PACKAGES'
+  tags:
+    - print_action
+
+- name: Enable pkgfile update timer
+  service:
+    name: pkgfile-update.timer
+    enabled: yes
+  notify:
+    - restart pkgfile update timer
+  when: '"pkgfile" in COMMON_PACKAGES'
+  tags:
+    - print_action
