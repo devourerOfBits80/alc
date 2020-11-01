@@ -1,0 +1,15 @@
+---
+- name: Check if the GRUB boot loader is installed
+  command: pacman -Qi grub
+  register: grub_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Regenerate the GRUB configuration file
+  command: 'grub-mkconfig -o {{ GRUB_CONFIG_FILE_PATH }}'
+  when: >
+    not grub_package_querying_result.failed and
+    MICROCODE_UPDATE_IMAGE is defined
+  tags:
+    - print_action

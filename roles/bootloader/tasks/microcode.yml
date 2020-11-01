@@ -1,0 +1,51 @@
+---
+# Intel CPUs microcode update
+- name: Install microcode update for Intel CPUs
+  pacaur:
+    name:
+      - intel-ucode
+    state: present
+  when: '"GenuineIntel" in ansible_processor'
+  tags:
+    - print_action
+
+- name: Check if the microcode update for Intel CPUs has been installed
+  command: pacman -Qi intel-ucode
+  register: intel_ucode_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Set the microcode update image fact for Intel CPUs
+  set_fact:
+    MICROCODE_UPDATE_IMAGE: 'intel-ucode.img'
+  changed_when: no
+  when: not intel_ucode_package_querying_result.failed
+
+# AMD CPUs microcode update
+- name: Install microcode update for AMD CPUs
+  pacaur:
+    name:
+      - amd-ucode
+    state: present
+  when: >
+    MICROCODE_UPDATE_IMAGE is not defined and
+    '"AuthenticAMD" in ansible_processor'
+  tags:
+    - print_action
+
+- name: Check if the microcode update for AMD CPUs has been installed
+  command: pacman -Qi amd-ucode
+  register: amd_ucode_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: MICROCODE_UPDATE_IMAGE is not defined
+
+- name: Set the microcode update image fact for AMD CPUs
+  set_fact:
+    MICROCODE_UPDATE_IMAGE: 'amd-ucode.img'
+  changed_when: no
+  when: >
+    MICROCODE_UPDATE_IMAGE is not defined and
+    not amd_ucode_package_querying_result.failed

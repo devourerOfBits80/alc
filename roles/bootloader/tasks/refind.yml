@@ -1,0 +1,40 @@
+---
+- name: Check if the rEFInd boot manager is installed
+  command: pacman -Qi refind
+  register: refind_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Push the pacman hook for updating rEFInd on ESP
+  template:
+    src: refind.hook.j2
+    dest: /etc/pacman.d/hooks/refind.hook
+  when: not refind_package_querying_result.failed
+  tags:
+    - print_action
+
+- name: Check whether the rEFInd configuration file contains the microcode update image parameter
+  command: 'grep -Fwq {{ MICROCODE_UPDATE_IMAGE }} {{ REFIND_CONFIG_FILE_PATH }}'
+  register: microcode_update_image_checking_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: >
+    not refind_package_querying_result.failed and
+    MICROCODE_UPDATE_IMAGE is defined
+
+- name: Enable microcode update for the rEFInd boot manager
+  replace:
+    path: '{{ REFIND_CONFIG_FILE_PATH }}'
+    regexp: '^(.*)\sinitrd=initramfs-linux(.*)$'
+    replace: '\1 initrd={{ MICROCODE_UPDATE_IMAGE }} initrd=initramfs-linux\2'
+  when: >
+    not refind_package_querying_result.failed and
+    MICROCODE_UPDATE_IMAGE is defined and
+    microcode_update_image_checking_result.failed
+  tags:
+    - print_action
+
+- include: secureboot.yml
+  when: SECURE_BOOT_ENABLED | default(False)

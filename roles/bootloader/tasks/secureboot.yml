@@ -1,0 +1,76 @@
+---
+# install required packages to enable secure boot
+- name: Install initial UEFI bootloader that handles chaining to a trusted full bootloader under Secure Boot environments
+  pacaur:
+    name:
+      - shim-signed
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Install tools to add signatures to EFI binaries and drivers
+  pacaur:
+    name:
+      - sbsigntools
+    state: present
+  tags:
+    - print_action
+
+# prepare Machine Owner Key with the proper certificate
+- name: Create rEFInd keys directory
+  file:
+    path: '{{ REFIND_KEYS_DIR }}'
+    state: directory
+  tags:
+    - print_action
+
+- name: Create a Machine Owner Key (MOK)
+  command: >
+    openssl req -newkey rsa:4096 -nodes -keyout {{ REFIND_KEYS_DIR }}/refind_local.key
+    -new -x509 -sha256 -days {{ CERTIFICATE_VALID_DAYS }} -subj \"/CN={{ HOSTNAME }} Machine Owner Key/\"
+    -out {{ REFIND_KEYS_DIR }}/refind_local.crt
+  become: no
+  tags:
+    - print_action
+
+- name: Create Self-Signed Certificate for MOK
+  command: >
+    openssl x509 -outform DER -in {{ REFIND_KEYS_DIR }}/refind_local.crt
+    -out {{ REFIND_KEYS_DIR }}/refind_local.cer
+  become: no
+  tags:
+    - print_action
+
+# reinstall and configure rEFInd boot manager
+- name: Install rEFInd with shim
+  command: '{{ REFIND_INSTALL_COMMAND }} --shim /usr/share/shim-signed/shimx64.efi --localkeys --yes'
+  become: no
+  tags:
+    - print_action
+
+- name: Sign the linux kernel
+  command: >
+    /usr/bin/sbsign --key {{ REFIND_KEYS_DIR }}/refind_local.key --cert {{ REFIND_KEYS_DIR }}/refind_local.crt
+    --output {{ VMLINUZ_FILE_PATH }} {{ VMLINUZ_FILE_PATH }}
+  become: no
+  tags:
+    - print_action
+
+- name: Update the pacman hook for updating rEFInd on ESP
+  lineinfile:
+    path: /etc/pacman.d/hooks/refind.hook
+    regexp: '^Exec=/usr/bin/(.*)$'
+    line: 'Exec=/usr/bin/{{ REFIND_INSTALL_COMMAND }} --shim /usr/share/shim-signed/shimx64.efi --localkeys'
+    insertafter: '^\[Action\]$'
+    state: present
+  tags:
+    - print_action
+
+- name: Push the pacman hook for kernel signing automation
+  template:
+    src: sign_kernel_for_secureboot.hook.j2
+    dest: /etc/pacman.d/hooks/999-sign_kernel_for_secureboot.hook
+  tags:
+    - print_action

@@ -4,5 +4,9 @@
 # Unique name to identify your machine on a network
 HOSTNAME: TOMAHAWK-MSIGL63
 
+# Bootloader microcode update and Secure Boot
+REFIND_INSTALL_COMMAND: refind-install
+SECURE_BOOT_ENABLED: True
+
 # Hardware and video drivers installation
 MACHINE_TYPE: portable

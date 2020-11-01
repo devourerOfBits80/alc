@@ -1,0 +1,5 @@
+---
+GRUB_CONFIG_FILE_PATH: /boot/grub/grub.cfg
+REFIND_CONFIG_FILE_PATH: /boot/refind_linux.conf
+REFIND_INSTALL_COMMAND: refind-install
+VMLINUZ_FILE_PATH: /boot/vmlinuz-linux

@@ -1,0 +1,3 @@
+---
+REFIND_KEYS_DIR: /etc/refind.d/keys
+CERTIFICATE_VALID_DAYS: 3650

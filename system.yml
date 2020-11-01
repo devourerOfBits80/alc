@@ -9,4 +9,5 @@
   roles:
     - { role: repositories, tags: ['repositories'] }
     - { role: shell, tags: ['shell'] }
+    - { role: bootloader, tags: ['bootloader'] }
     - { role: finalize, tags: ['finalize'] }

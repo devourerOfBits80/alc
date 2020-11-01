@@ -29,3 +29,16 @@ Finally, adjust the playbooks' execution settings to your expectations (see the 
 ### Hostname and user account details
 
 The machine unique name (the *HOSTNAME* variable) and user account details must be defined. *alc* will automatically create a user account. The only one thing needed to do is to set the *USER.NAME*, *USER.GROUP* and *USER.FULL_NAME* variables as expected.
+
+### Bootloader (Secure Boot for the rEFInd boot manager)
+
+There is a possibility to install a *Secure Boot* (with using a *Machine Owner Key*) for *UEFI* mode with the *rEFInd* bootloader, but this option is disabled by default because it requires some additional actions. If you currently have installed the *rEFInd* boot manager and you want to install and configure a *Secure Boot* on your machine, please follow the steps:
+
+- First of all, disable temporarily *Secure Boot* in *BIOS* (it should happen before execution the *system.yml* playbook).
+- Edit the *group_vars/all* file and set the *SECURE_BOOT_ENABLED* variable as *True*.
+- Run the *system.yml* playbook and wait until the installation has been finished. Reboot your machine, enter the *BIOS* and set the *Secure Boot* option back to *Enabled*.
+- Once the *rEFInd* boot manager will appear on the screen, choose the yellow key icon and launch the *MokManager*.
+- In the *MokManager* application select option *Enroll key from disk*. After that choose the proper partition and add the *refind_local.cer* certificate to the *MoKList* (the file should be available inside the *rEFInd's* installation directory (eg. */boot/EFI/refind/keys/refind_local.cer*).
+- Go back to the *MokManager* main menu and select *Continue boot* option. Your machine should boot now protected by the *Secure Boot*. If at the list of the boot order there are displayed duplicate entries for the *rEFInd* manager, you can easily remove the unused one via the *efibootmgr* command.
+
+> \$ efibootmgr -b XXXX -B (where XXXX is an identifire of the boot number)

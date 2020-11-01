@@ -51,19 +51,22 @@ ZSH:
         - archlinux
         - colored-man-pages
         - command-not-found
-        - cp
         - gitfast
         - history-substring-search
-        - zsh-autosuggestions
         - zsh-syntax-highlighting
     EDITOR: nano
     SSH_EDITOR: nano
     ALIASES:
         - 'hclr="history -c"'
-        - 'fpac="find / -regextype posix-extended -regex \".+\.pac(new|save)\" 2> /dev/null"'
-        - 'fpacetc="find /etc -regextype posix-extended -regex \".+\.pac(new|save)\" 2> /dev/null"'
+        - 'fpacs="find /etc -regextype posix-extended -regex \".+\.pac(new|save)\" 2> /dev/null"'
         - 'pac="sudo pacman"'
     SAVEHIST: 200
+
+# Bootloader microcode update and Secure Boot
+GRUB_CONFIG_FILE_PATH: /boot/grub/grub.cfg
+REFIND_CONFIG_FILE_PATH: /boot/refind_linux.conf
+REFIND_INSTALL_COMMAND: refind-install --usedefault /dev/sda1
+SECURE_BOOT_ENABLED: False  # available only for the rEFInd boot manager
 
 # Hardware and video drivers installation
 MACHINE_TYPE: virtual   # set of values: desktop, portable or virtual

@@ -1,0 +1,31 @@
+---
+# preparation of the proper microcode
+- include: microcode.yml
+
+# GRUB bootloader configuration
+- name: Check if the GRUB configuration file exists
+  stat:
+    path: '{{ GRUB_CONFIG_FILE_PATH }}'
+  register: grub_configuration_file
+  changed_when: no
+
+- include: grub.yml
+  when: grub_configuration_file.stat.exists
+
+# rEFInd bootloader configuration
+- name: Check if UEFI mode is available
+  stat:
+    path: /sys/firmware/efi/efivars
+  register: uefi_mode_directory
+  changed_when: no
+
+- name: Check if the rEFInd configuration file exists
+  stat:
+    path: '{{ REFIND_CONFIG_FILE_PATH }}'
+  register: refind_linux_configuration_file
+  changed_when: no
+
+- include: refind.yml
+  when: >
+    uefi_mode_directory.stat.exists and
+    refind_linux_configuration_file.stat.exists
