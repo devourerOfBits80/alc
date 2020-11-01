@@ -1,0 +1,27 @@
+---
+- name: Install filesystem packages
+  pacaur:
+    name: '{{ FILESYSTEM_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install utility to control and monitor storage systems using the SMART
+  pacaur:
+    name:
+      - smartmontools
+    state: present
+  tags:
+    - print_action
+
+- include: ssd.yml
+
+- name: Install disc playback utilities
+  pacaur:
+    name: '{{ DISC_PLAYBACK_UTILITIES }}'
+    state: present
+  tags:
+    - print_action
+
+- include: odd.yml
+  when: OPTICAL_DISC_DRIVE_SUPPORTED | default(False)

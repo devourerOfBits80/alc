@@ -10,4 +10,5 @@
     - { role: repositories, tags: ['repositories'] }
     - { role: shell, tags: ['shell'] }
     - { role: bootloader, tags: ['bootloader'] }
+    - { role: drives, tags: ['drives'] }
     - { role: finalize, tags: ['finalize'] }

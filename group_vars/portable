@@ -1,5 +1,5 @@
 ---
 ### SYSTEM PLAYBOOK SETTINGS ###
 
-# Hardware and video drivers installation
+# Drives, hardware and video drivers installation
 MACHINE_TYPE: portable

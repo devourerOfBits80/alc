@@ -1,0 +1,28 @@
+---
+- name: Install utility to manipulating Linux IDE drive parameters
+  pacaur:
+    name:
+      - hdparm
+    state: present
+  tags:
+    - print_action
+    - ssd
+
+- name: Retrieve information for the primary drive
+  command: 'hdparm -I {{ PRIMARY_DRIVE | default("/dev/sda") }}'
+  register: hdparm_information_retrieving_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - ssd
+
+- name: Start and enable timer to run the TRIM service once a week
+  service:
+    name: fstrim.timer
+    state: started
+    enabled: yes
+  when: (hdparm_information_retrieving_result.stdout | regex_findall('TRIM') | length) > 0
+  tags:
+    - print_action
+    - ssd

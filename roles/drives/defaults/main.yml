@@ -1,0 +1,6 @@
+---
+FILESYSTEM_PACKAGES:
+  - dosfstools
+  - exfat-utils
+  - ntfs-3g
+  - f2fs-tools

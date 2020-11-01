@@ -68,5 +68,7 @@ REFIND_CONFIG_FILE_PATH: /boot/refind_linux.conf
 REFIND_INSTALL_COMMAND: refind-install --usedefault /dev/sda1
 SECURE_BOOT_ENABLED: False  # available only for the rEFInd boot manager
 
-# Hardware and video drivers installation
+# Drives, hardware and video drivers installation
 MACHINE_TYPE: virtual   # set of values: desktop, portable or virtual
+PRIMARY_DRIVE: /dev/sda
+OPTICAL_DISC_DRIVE_SUPPORTED: False

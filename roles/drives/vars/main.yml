@@ -1,0 +1,12 @@
+---
+DISC_PLAYBACK_UTILITIES:
+  - libcdio
+  - libdvdread
+  - libdvdcss
+  - libdvdnav
+  - libbluray
+BURNING_UTILITIES:
+  - cdrdao
+  - cdrtools
+  - libburn
+  - dvd+rw-tools

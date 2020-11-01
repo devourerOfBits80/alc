@@ -29,7 +29,7 @@
 - name: Create a Machine Owner Key (MOK)
   command: >
     openssl req -newkey rsa:4096 -nodes -keyout {{ REFIND_KEYS_DIR }}/refind_local.key
-    -new -x509 -sha256 -days {{ CERTIFICATE_VALID_DAYS }} -subj \"/CN={{ HOSTNAME }} Machine Owner Key/\"
+    -new -x509 -sha256 -days {{ CERTIFICATE_VALID_DAYS }} -subj "/CN={{ HOSTNAME }} Machine Owner Key/"
     -out {{ REFIND_KEYS_DIR }}/refind_local.crt
   become: no
   tags:

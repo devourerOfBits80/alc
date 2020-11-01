@@ -1,0 +1,26 @@
+---
+- name: Install burning utilities
+  pacaur:
+    name: '{{ BURNING_UTILITIES }}'
+    state: present
+  tags:
+    - print_action
+    - odd
+
+- name: Install video and DVD ripper and encoder
+  pacaur:
+    name:
+      - transcode
+    state: present
+  tags:
+    - print_action
+    - odd
+
+- name: Install DVD authoring tools
+  pacaur:
+    name:
+      - dvdauthor
+    state: present
+  tags:
+    - print_action
+    - odd

@@ -24,5 +24,6 @@ SHELL_PACKAGES:
     - mc
     - htop
 
-# Hardware and video drivers installation
+# Drives, hardware and video drivers installation
 MACHINE_TYPE: portable
+OPTICAL_DISC_DRIVE_SUPPORTED: True
