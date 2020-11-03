@@ -27,3 +27,8 @@ SHELL_PACKAGES:
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: portable
 OPTICAL_DISC_DRIVE_SUPPORTED: True
+NETWORK_MANAGER_PACKAGES:
+    - networkmanager
+    - network-manager-applet
+BLUETOOTH_SUPPORTED: False
+BLUETOOTH_ENABLED: False

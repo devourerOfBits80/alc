@@ -1,0 +1,17 @@
+---
+# Advanced Linux Sound Architecture (ALSA)
+- include: alsa.yml
+
+# network-capable sound server
+- include: pulseaudio.yml
+
+# NetworkManager
+- include: networkmanager.yml
+
+# short-range wireless interconnection standard
+- include: bluetooth.yml
+  when: BLUETOOTH_SUPPORTED | default(True)
+
+# Media Transfer Protocol (MTP)
+- include: mtp.yml
+  when: MTP_SUPPORTED | default(True)

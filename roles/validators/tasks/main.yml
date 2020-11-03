@@ -80,3 +80,21 @@
     MACHINE_TYPE != 'desktop' and
     MACHINE_TYPE != 'portable' and
     MACHINE_TYPE != 'virtual'
+
+- name: Retrieve the KERNEL_RELEASE_INFO
+  command: 'uname -r'
+  register: kernel_release_info_result
+  become: no
+  changed_when: no
+
+- name: Set the KERNEL_RELEASE_INFO fact
+  set_fact:
+    KERNEL_RELEASE_INFO: '{{ kernel_release_info_result.stdout }}'
+    LTS_KERNEL: False
+  changed_when: no
+
+- name: Set the LTS kernel fact
+  set_fact:
+    LTS_KERNEL: True
+  when: KERNEL_RELEASE_INFO | lower is search("lts")
+  changed_when: no

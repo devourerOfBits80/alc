@@ -20,3 +20,5 @@
     - user
     - repositories
     - bootloader
+    - hardware
+    - vm

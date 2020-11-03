@@ -1,0 +1,36 @@
+---
+- name: Install FUSE filesystem packages
+  pacaur:
+    name:
+      - libmtp
+      - mtpfs
+    state: present
+  tags:
+    - print_action
+
+- name: Install FUSE based filesystem for accessing MTP devices
+  pacaur:
+    name:
+      - jmtpfs
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Install udev rules to connect Android devices
+  pacaur:
+    name:
+      - android-udev
+    state: present
+  tags:
+    - print_action
+
+- name: Allow users to access a mounted fuse
+  lineinfile:
+    path: /etc/fuse.conf
+    regexp: '^#?user_allow_other$'
+    line: 'user_allow_other'
+    state: present
+  tags:
+    - print_action

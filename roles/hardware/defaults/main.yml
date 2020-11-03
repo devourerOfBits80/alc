@@ -1,0 +1,13 @@
+---
+ALSA_PACKAGES:
+  - alsa-plugins
+  - alsa-utils
+NETWORK_MANAGER_PACKAGES:
+  - networkmanager
+  - networkmanager-openvpn
+  - network-manager-applet
+BLUEZ_PACKAGES:
+  - bluez
+  - bluez-libs
+  - bluez-utils
+BLUETOOTH_ENABLED: True

@@ -1,0 +1,16 @@
+---
+- name: reload udev rules
+  command: udevadm control --reload-rules
+  tags:
+    - print_action
+
+- name: restart PulseAudio service
+  shell: '$([[ $(pulseaudio -k) -eq 0 ]] || exit 0; sleep 5; [[ $(pulseaudio --start) -eq 0 ]] || exit 0)'
+  args:
+    executable: /bin/bash
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action

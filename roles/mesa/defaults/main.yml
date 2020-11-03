@@ -1,0 +1,4 @@
+---
+MESA_PACKAGES:
+  - mesa
+  - mesa-demos

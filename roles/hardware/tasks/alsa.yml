@@ -1,0 +1,16 @@
+---
+- name: Install ALSA packages
+  pacaur:
+    name: '{{ ALSA_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Add user to the audio group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: audio
+    append: yes
+  tags:
+    - print_action
+    - user

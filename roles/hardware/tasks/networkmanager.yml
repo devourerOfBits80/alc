@@ -1,0 +1,38 @@
+---
+- name: Install GNOME Keyring packages
+  pacaur:
+    name:
+      - gnome-keyring
+      - libsecret
+    state: present
+  when: '"network-manager-applet" in NETWORK_MANAGER_PACKAGES'
+  tags:
+    - print_action
+    - networkmanager
+
+- name: Install NetworkManager packages
+  pacaur:
+    name: '{{ NETWORK_MANAGER_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+    - networkmanager
+
+- name: Start and enable NetworkManager service
+  service:
+    name: NetworkManager.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action
+    - networkmanager
+
+- name: Start and enable NetworkManager dispatcher service
+  service:
+    name: NetworkManager-dispatcher.service
+    state: started
+    enabled: yes
+  when: MACHINE_TYPE == 'portable'
+  tags:
+    - print_action
+    - networkmanager

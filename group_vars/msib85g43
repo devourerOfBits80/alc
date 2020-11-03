@@ -7,3 +7,5 @@ HOSTNAME: TOMAHAWK-MSIB85G43
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: desktop
 OPTICAL_DISC_DRIVE_SUPPORTED: True
+BLUETOOTH_SUPPORTED: True
+BLUETOOTH_ENABLED: True

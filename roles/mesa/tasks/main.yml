@@ -1,0 +1,16 @@
+---
+- name: Install mesa packages
+  pacaur:
+    name: '{{ MESA_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Add user to the video group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: video
+    append: yes
+  tags:
+    - print_action
+    - user

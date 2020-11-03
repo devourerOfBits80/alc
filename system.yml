@@ -1,6 +1,6 @@
 ---
 - name: alc system playbook
-  hosts: vm:desktop:portable:hp650lts:msigl63:msib85g43lts
+  hosts: vm:desktop:portable:hp650:msigl63:msib85g43
   become: yes
   vars_prompt:
     - name: USER_PASSWORD
@@ -11,4 +11,6 @@
     - { role: shell, tags: ['shell'] }
     - { role: bootloader, tags: ['bootloader'] }
     - { role: drives, tags: ['drives'] }
+    - { role: hardware, tags: ['hardware'] }
+    - { role: vm, tags: ['vm'], when: 'MACHINE_TYPE == "virtual"' }
     - { role: finalize, tags: ['finalize'] }

@@ -1,0 +1,35 @@
+---
+- name: Install VM guest utilities
+  pacaur:
+    name: '{{ VM_GUEST_UTILITIES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install LTS kernel support for VM
+  pacaur:
+    name: '{{ VM_GUEST_LTS_KERNEL_SUPPORT }}'
+    state: present
+  when: LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Enable the VirtualBox kernel modules service
+  service:
+    name: vboxservice.service
+    enabled: yes
+  when: >
+    '"virtualbox-guest-utils" in VM_GUEST_UTILITIES' and
+    not LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Add user to the vboxsf group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: vboxsf
+    append: yes
+  when: '"virtualbox-guest-utils" in VM_GUEST_UTILITIES'
+  tags:
+    - print_action
+    - user

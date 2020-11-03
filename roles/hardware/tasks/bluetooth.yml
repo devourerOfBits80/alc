@@ -1,0 +1,106 @@
+---
+- name: Install bluez packages
+  pacaur:
+    name: '{{ BLUEZ_PACKAGES }}'
+    state: present
+  notify:
+    - restart PulseAudio service
+  tags:
+    - print_action
+
+- name: Add user to the lp group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: lp
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Enable Bluetooth auto power-on after boot
+  lineinfile:
+    path: /etc/bluetooth/main.conf
+    regexp: '^#?\s*AutoEnable\s*=\s*(false|true)$'
+    line: AutoEnable=true
+    state: present
+  when: BLUETOOTH_ENABLED
+  tags:
+    - print_action
+
+- name: Disable Bluetooth auto power-on after boot
+  lineinfile:
+    path: /etc/bluetooth/main.conf
+    regexp: '^#?\s*AutoEnable\s*=\s*(false|true)$'
+    line: AutoEnable=false
+    state: present
+  when: not BLUETOOTH_ENABLED
+  tags:
+    - print_action
+
+- name: Install PulseAudio Bluetooth with LDAC/aptX support
+  pacaur:
+    name:
+      - libldac
+      - pulseaudio-modules-bt-git
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  notify:
+    - restart PulseAudio service
+  tags:
+    - print_action
+
+- name: Enable automatic profile switching between A2DP and HSP/HSF
+  lineinfile:
+    path: /etc/pulse/default.pa
+    regexp: '^#?\s*load-module\s+module-bluetooth-policy(\s.+)*$'
+    line: 'load-module module-bluetooth-policy auto_switch=2'
+    state: present
+  notify:
+    - restart PulseAudio service
+  tags:
+    - print_action
+
+- name: Unblock Bluetooth service
+  service:
+    name: rfkill-block@bluetooth.service
+    state: stopped
+    enabled: no
+  when: BLUETOOTH_ENABLED
+  tags:
+    - print_action
+
+- name: Start and enable Bluetooth service
+  service:
+    name: bluetooth.service
+    state: started
+    enabled: yes
+  when: BLUETOOTH_ENABLED
+  tags:
+    - print_action
+
+- name: Stop and disable Bluetooth service
+  service:
+    name: bluetooth.service
+    state: stopped
+    enabled: no
+  when: not BLUETOOTH_ENABLED
+  tags:
+    - print_action
+
+- name: Check if the rfkill directory exists
+  stat:
+    path: /dev/rfkill
+  register: rfkill_directory
+  changed_when: no
+
+- name: Block Bluetooth service
+  service:
+    name: rfkill-block@bluetooth.service
+    state: started
+    enabled: yes
+  when: >
+    rfkill_directory.stat.exists and
+    not BLUETOOTH_ENABLED
+  tags:
+    - print_action

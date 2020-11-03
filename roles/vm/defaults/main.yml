@@ -1,0 +1,6 @@
+---
+VM_GUEST_UTILITIES:
+  - virtualbox-guest-utils
+VM_GUEST_LTS_KERNEL_SUPPORT:
+  - virtualbox-guest-dkms
+  - linux-lts-headers

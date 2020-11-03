@@ -1,0 +1,53 @@
+---
+- name: Install PulseAudio packages
+  pacaur:
+    name:
+      - pulseaudio
+      - pulseaudio-alsa
+    state: present
+  tags:
+    - print_action
+
+- name: Install utility to control PulseAudio volume from the shell
+  pacaur:
+    name:
+      - pulseaudio-ctl
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Enable switching the output sound to newly connected devices
+  blockinfile:
+    path: /etc/pulse/default.pa
+    block: |
+      ### Switching the output sound to newly connected devices
+      load-module module-switch-on-connect
+    marker_begin: '### Begin'
+    marker_end: '### End'
+    marker: '{mark} of the output sound management block'
+    state: present
+  tags:
+    - print_action
+
+- name: Push script to automate switching between audio and HDMI
+  template:
+    src: hdmi_sound_toggle.sh.j2
+    dest: /usr/local/bin/hdmi_sound_toggle.sh
+    mode: 0755
+  when: MACHINE_TYPE == 'portable'
+  tags:
+    - print_action
+
+- name: Create a udev rule file to manage the switching script
+  lineinfile:
+    path: /etc/udev/rules.d/99-hdmi_sound.rules
+    line: 'KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="change", RUN+="/usr/local/bin/hdmi_sound_toggle.sh"'
+    state: present
+    create: yes
+  notify:
+    - reload udev rules
+  when: MACHINE_TYPE == 'portable'
+  tags:
+    - print_action
