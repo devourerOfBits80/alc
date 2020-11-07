@@ -1,0 +1,4 @@
+{% if GUC_HUC_FIRMWARE_LOADING_ENABLED %}options i915 enable_guc=2
+{% endif %}{% if FRAMEBUFFER_COMPRESSION_ENABLED %}options i915 enable_fbc=1
+{% endif %}{% if INTEL_FASTBOOT_ENABLED %}options i915 fastboot=1
+{% endif %}

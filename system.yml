@@ -13,4 +13,6 @@
     - { role: drives, tags: ['drives'] }
     - { role: hardware, tags: ['hardware'] }
     - { role: vm, tags: ['vm'], when: 'MACHINE_TYPE == "virtual"' }
+    - { role: video, tags: ['video'], when: 'MACHINE_TYPE != "virtual"' }
+    - { role: power-management, tags: ['power-management'] }
     - { role: finalize, tags: ['finalize'] }

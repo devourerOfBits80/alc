@@ -3,3 +3,6 @@
 
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: desktop
+DISCRETE_GPU_DRIVERS:
+    - nvidia
+    - nvidia-settings

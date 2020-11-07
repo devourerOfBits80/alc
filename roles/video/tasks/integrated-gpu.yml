@@ -1,0 +1,21 @@
+---
+- name: Install integrated GPU drivers
+  pacaur:
+    name: '{{ INTEGRATED_GPU_DRIVERS }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Push the i915 configuration file
+  template:
+    src: i915.conf.j2
+    dest: /etc/modprobe.d/i915.conf
+  when: '"xf86-video-intel" in INTEGRATED_GPU_DRIVERS'
+  tags:
+    - print_action
+
+- name: Set the early KMS start fact for Intel GPUs
+  set_fact:
+    EARLY_KMS_START: 'intel_agp i915'
+  changed_when: no
+  when: '"xf86-video-intel" in INTEGRATED_GPU_DRIVERS'

@@ -1,0 +1,33 @@
+---
+- include: integrated-gpu.yml
+  when: INTEGRATED_GPU_DRIVERS is defined and (INTEGRATED_GPU_DRIVERS != None)
+
+- include: discrete-gpu.yml
+  when: >
+    DISCRETE_GPU_DRIVERS is defined and (DISCRETE_GPU_DRIVERS != None) and
+    not (INTEGRATED_GPU_DRIVERS is defined and (INTEGRATED_GPU_DRIVERS != None)
+    and MACHINE_TYPE != 'portable')
+
+- name: Check whether the mkinitcpio configuration file contains early KMS start modules
+  command: 'grep -Fwq "{{ EARLY_KMS_START }}" /etc/mkinitcpio.conf'
+  register: mkinitcpio_modules_checking_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: EARLY_KMS_START is defined
+
+- name: Enable the early KMS start modules for the leading GPU
+  replace:
+    path: /etc/mkinitcpio.conf
+    regexp: '^MODULES=\((.*)\)$'
+    replace: 'MODULES=(\1 {{ EARLY_KMS_START }})'
+    after: '# MODULES'
+    before: '# BINARIES'
+  notify:
+    - remove leading whitespaces
+    - regenerate initramfs
+  when: >
+    EARLY_KMS_START is defined and
+    mkinitcpio_modules_checking_result.failed
+  tags:
+    - print_action

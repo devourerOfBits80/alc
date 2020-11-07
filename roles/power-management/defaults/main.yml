@@ -1,0 +1,6 @@
+---
+TLP_PACKAGES:
+  - x86_energy_perf_policy
+  - ethtool
+  - tlp
+  - tlp-rdw

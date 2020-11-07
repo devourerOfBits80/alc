@@ -10,6 +10,14 @@ SECURE_BOOT_ENABLED: True
 
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: portable
+SECONDARY_DRIVE: /dev/sdb
 OPTICAL_DISC_DRIVE_SUPPORTED: False
 BLUETOOTH_SUPPORTED: True
 BLUETOOTH_ENABLED: True
+INTEGRATED_GPU_DRIVERS:
+    - xf86-video-intel
+    - vulkan-intel
+    - intel-media-driver
+DISCRETE_GPU_DRIVERS:
+    - nvidia
+    - nvidia-settings

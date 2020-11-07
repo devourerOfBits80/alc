@@ -32,3 +32,8 @@ NETWORK_MANAGER_PACKAGES:
     - network-manager-applet
 BLUETOOTH_SUPPORTED: False
 BLUETOOTH_ENABLED: False
+INTEGRATED_GPU_DRIVERS:
+    - xf86-video-intel
+    - libva-intel-driver
+GUC_HUC_FIRMWARE_LOADING_ENABLED: False
+INTEL_FASTBOOT_ENABLED: False

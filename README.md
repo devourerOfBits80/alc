@@ -42,3 +42,23 @@ There is a possibility to install a *Secure Boot* (with using a *Machine Owner K
 - Go back to the *MokManager* main menu and select *Continue boot* option. Your machine should boot now protected by the *Secure Boot*. If at the list of the boot order there are displayed duplicate entries for the *rEFInd* manager, you can easily remove the unused one via the *efibootmgr* command.
 
 > \$ efibootmgr -b XXXX -B (where XXXX is an identifire of the boot number)
+
+### Drives, hardware and video drivers
+
+*alc* is able to install a complete set of machine drivers, but some details have to be provided before launching the *system.yml* playbook. If you are going to make an installation process on a virtual machine, please omit the *-l desktop* parameter in the playbook execution command.
+
+For desktops, only one *GPU* driver can be installed. By default, it is a driver for discrete graphics card however, if you have only an internal, integrated graphics card, edit the *group_vars/desktop* file, remove the *DISCRETE_GPU_DRIVERS* list variable and add the *INTEGRATED_GPU_DRIVERS* list with required drivers.
+
+In the case of laptops (notebooks) with the *NVIDIA* graphics card, both types of *GPU* can be handled out of the box, because together with drivers there will be installed the *Bumblebee* software which provides support for the *NVIDIA Optimus* technology. However, if there is only one graphics card on your *PC*, remove the unused variable (list of drivers) in the *group_vars/portable* file.
+
+The *NVIDIA Optimus* technology feature can be tested directly from the console of the already installed system with the command:
+
+> \$ optirun glxspheres64 (should be displayed using the *NVIDIA* graphics card)
+
+There is also a possibility to enable or disable support for optical disk drives, *Bluetooth* devices, and *MTP* devices like cell phones or media players.
+
+Some older machines have problems with too slow launching the desktop environment. It is a very isolated case, but if you are frustrated, installing the *Haveged* and enabling its service should resolve your issue.
+
+> \$ pacman -S haveged  
+> \$ systemctl start haveged.service  
+> \$ systemctl enable haveged.service

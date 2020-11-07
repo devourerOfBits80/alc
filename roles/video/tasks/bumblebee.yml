@@ -1,0 +1,60 @@
+---
+- name: Install Bumblebee
+  pacaur:
+    name:
+      - bumblebee
+    state: present
+  tags:
+    - print_action
+
+- name: Add user to the bumblebee group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: bumblebee
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Install primus
+  pacaur:
+    name:
+      - primus
+      - primus_vk
+    state: present
+  tags:
+    - print_action
+
+- name: Set primus as default Bumblebee bridge
+  lineinfile:
+    path: /etc/bumblebee/bumblebee.conf
+    regexp: '^Bridge=(.+)$'
+    line: Bridge=primus
+    state: present
+  tags:
+    - print_action
+
+- name: Install bbswitch
+  pacaur:
+    name:
+      - bbswitch
+    state: present
+  when: not LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Install bbswitch for the LTS kernel
+  pacaur:
+    name:
+      - bbswitch-dkms
+    state: present
+  when: LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Enable bumblebeed service
+  service:
+    name: bumblebeed.service
+    enabled: yes
+  tags:
+    - print_action

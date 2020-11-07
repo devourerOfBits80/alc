@@ -1,0 +1,38 @@
+---
+- name: Install TLP packages
+  pacaur:
+    name: '{{ TLP_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+    - tlp
+
+- name: Push the TLP configuration file
+  template:
+    src: tlp.conf.j2
+    dest: /etc/tlp.conf
+  notify:
+    - restart TLP service
+  tags:
+    - print_action
+    - tlp
+
+- name: Mask systemd radio service
+  command: systemctl mask systemd-rfkill.service
+  tags:
+    - print_action
+    - tlp
+
+- name: Mask systemd radio socket
+  command: systemctl mask systemd-rfkill.socket
+  tags:
+    - print_action
+    - tlp
+
+- name: Enable TLP service
+  service:
+    name: tlp.service
+    enabled: yes
+  tags:
+    - print_action
+    - tlp

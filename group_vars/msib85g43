@@ -6,6 +6,13 @@ HOSTNAME: TOMAHAWK-MSIB85G43
 
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: desktop
+SECONDARY_DRIVE: /dev/sdb
 OPTICAL_DISC_DRIVE_SUPPORTED: True
 BLUETOOTH_SUPPORTED: True
 BLUETOOTH_ENABLED: True
+INTEGRATED_GPU_DRIVERS:
+    - xf86-video-intel
+    - vulkan-intel
+    - libva-intel-driver
+GUC_HUC_FIRMWARE_LOADING_ENABLED: False
+INTEL_FASTBOOT_ENABLED: False

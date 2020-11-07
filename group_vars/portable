@@ -3,3 +3,10 @@
 
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: portable
+INTEGRATED_GPU_DRIVERS:
+    - xf86-video-intel
+    - vulkan-intel
+    - intel-media-driver
+DISCRETE_GPU_DRIVERS:
+    - nvidia
+    - nvidia-settings

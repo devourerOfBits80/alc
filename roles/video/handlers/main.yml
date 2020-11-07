@@ -1,0 +1,14 @@
+---
+- name: remove leading whitespaces
+  replace:
+    path: /etc/mkinitcpio.conf
+    regexp: '^MODULES=\(\s*(.*)\)$'
+    replace: 'MODULES=(\1)'
+    after: '# MODULES'
+    before: '# BINARIES'
+  changed_when: no
+
+- name: regenerate initramfs
+  command: 'mkinitcpio -P'
+  tags:
+    - print_action

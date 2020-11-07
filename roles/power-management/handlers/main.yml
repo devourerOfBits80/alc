@@ -1,0 +1,7 @@
+---
+- name: restart TLP service
+  service:
+    name: tlp.service
+    state: restarted
+  tags:
+    - print_action

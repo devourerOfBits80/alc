@@ -1,0 +1,26 @@
+---
+- name: Push logind configuration file
+  template:
+    src: logind.conf.j2
+    dest: /etc/systemd/logind.conf
+  tags:
+    - print_action
+
+- name: Install tool to diagnose issues with power consumption and power management
+  pacaur:
+    name:
+      - powertop
+    state: present
+  tags:
+    - print_action
+
+- name: Install program to easily change brightness on backlight-controllers
+  pacaur:
+    name:
+      - light
+    state: present
+  tags:
+    - print_action
+
+- include: tlp.yml
+  when: MACHINE_TYPE == 'portable'
