@@ -1,0 +1,28 @@
+---
+- name: Install libinput gestures
+  pacaur:
+    name:
+      - libinput-gestures
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Add user to the input group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: input
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Enable libinput gestures autostarting
+  command: 'libinput-gestures-setup autostart'
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action

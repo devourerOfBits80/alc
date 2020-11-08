@@ -1,0 +1,3 @@
+---
+- include: apparmor.yml
+  when: APPARMOR_ENABLED | default(True)

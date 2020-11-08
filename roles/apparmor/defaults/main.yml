@@ -1,0 +1,3 @@
+---
+GRUB_CONFIG_FILE_PATH: /boot/grub/grub.cfg
+REFIND_CONFIG_FILE_PATH: /boot/refind_linux.conf

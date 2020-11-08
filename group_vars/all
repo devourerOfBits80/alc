@@ -85,3 +85,13 @@ MTP_SUPPORTED: True
 #DISCRETE_GPU_DRIVERS:
 #    - nvidia    # install the 'nvidia-lts' driver for use with the LTS kernel
 #    - nvidia-settings
+LOGITECH_SOLAAR_ENABLED: False
+
+# AppArmor security model
+APPARMOR_ENABLED: True
+
+# Uncomplicated Firewall configuration
+UFW_ENABLED: True
+TRUSTED_ADDRESSES_AND_SUBNETS:
+#    - 192.168.0.0/24
+    - 192.168.1.0/24

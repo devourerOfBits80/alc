@@ -1,0 +1,14 @@
+---
+- name: restart ufw service
+  service:
+    name: ufw.service
+    state: restarted
+  tags:
+    - print_action
+
+- name: reload firewall
+  ufw:
+    state: reloaded
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action

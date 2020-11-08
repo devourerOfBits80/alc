@@ -1,0 +1,34 @@
+---
+- name: Check if the GRUB boot loader is installed
+  command: pacman -Qi grub
+  register: grub_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Check whether the GRUB default configuration file contains AppArmor kernel parameters
+  command: 'grep -Fwq "{{ APPARMOR_KERNEL_PARAMETERS }}" {{ GRUB_DEFAULT_CONFIG_FILE_PATH }}'
+  register: apparmor_kernel_parameters_checking_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: not grub_package_querying_result.failed
+
+- name: Enable AppArmor kernel parameters for the GRUB boot loader
+  replace:
+    path: '{{ GRUB_DEFAULT_CONFIG_FILE_PATH }}'
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=\"(.*)\"$'
+    replace: 'GRUB_CMDLINE_LINUX_DEFAULT="\1 {{ APPARMOR_KERNEL_PARAMETERS }}"'
+  when: >
+    not grub_package_querying_result.failed and
+    apparmor_kernel_parameters_checking_result.failed
+  tags:
+    - print_action
+
+- name: Regenerate the GRUB configuration file
+  command: 'grub-mkconfig -o {{ GRUB_CONFIG_FILE_PATH }}'
+  when: >
+    not grub_package_querying_result.failed and
+    apparmor_kernel_parameters_checking_result.failed
+  tags:
+    - print_action

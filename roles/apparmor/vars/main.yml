@@ -1,0 +1,3 @@
+---
+APPARMOR_KERNEL_PARAMETERS: apparmor=1 lsm=lockdown,yama,apparmor
+GRUB_DEFAULT_CONFIG_FILE_PATH: /etc/default/grub

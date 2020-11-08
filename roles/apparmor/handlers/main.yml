@@ -1,0 +1,7 @@
+---
+- name: restart AppArmor service
+  service:
+    name: apparmor.service
+    state: restarted
+  tags:
+    - print_action

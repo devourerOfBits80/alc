@@ -15,4 +15,7 @@
     - { role: vm, tags: ['vm'], when: 'MACHINE_TYPE == "virtual"' }
     - { role: video, tags: ['video'], when: 'MACHINE_TYPE != "virtual"' }
     - { role: power-management, tags: ['power-management'] }
+    - { role: pointing-devices, tags: ['pointing-devices'] }
+    - { role: apparmor, tags: ['apparmor'] }
+    - { role: ufw, tags: ['ufw'] }
     - { role: finalize, tags: ['finalize'] }

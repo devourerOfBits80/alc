@@ -23,3 +23,5 @@
     - hardware
     - vm
     - video
+    - pointing-devices
+    - apparmor

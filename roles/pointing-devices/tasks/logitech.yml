@@ -1,0 +1,26 @@
+---
+- name: Create plugdev group
+  group:
+    name: plugdev
+    system: yes
+    state: present
+  tags:
+    - print_action
+    - user
+
+- name: Add user to the plugdev group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: plugdev
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Install Solaar
+  pacaur:
+    name:
+      - solaar
+    state: present
+  tags:
+    - print_action

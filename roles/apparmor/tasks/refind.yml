@@ -1,0 +1,26 @@
+---
+- name: Check if the rEFInd boot manager is installed
+  command: pacman -Qi refind
+  register: refind_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Check whether the rEFInd configuration file contains AppArmor kernel parameters
+  command: 'grep -Fwq "{{ APPARMOR_KERNEL_PARAMETERS }}" {{ REFIND_CONFIG_FILE_PATH }}'
+  register: apparmor_kernel_parameters_checking_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: not refind_package_querying_result.failed
+
+- name: Enable AppArmor kernel parameters for the rEFInd boot manager
+  replace:
+    path: '{{ REFIND_CONFIG_FILE_PATH }}'
+    regexp: '^\"(.*)root=PARTUUID=(.*)\"$'
+    replace: '"\1root=PARTUUID=\2 {{ APPARMOR_KERNEL_PARAMETERS }}"'
+  when: >
+    not refind_package_querying_result.failed and
+    apparmor_kernel_parameters_checking_result.failed
+  tags:
+    - print_action

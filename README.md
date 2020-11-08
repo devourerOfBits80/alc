@@ -62,3 +62,7 @@ Some older machines have problems with too slow launching the desktop environmen
 > \$ pacman -S haveged  
 > \$ systemctl start haveged.service  
 > \$ systemctl enable haveged.service
+
+### AppArmor and Uncomplicated Firewall
+
+For machine protection, *alc* will have installed and configured: *AppArmor*, which is a *Mandatory Access Control* system, implemented upon the *Linux Security Modules*; and a popular net filter manager, *Uncomplicated Firewall*. Both these security utils can be separately disabled in the *group_vars/all* file, but it is strongly recommended to leave them enabled as default. In the case of the firewall, there is also a possibility to declare your own trusted addresses and subnets.

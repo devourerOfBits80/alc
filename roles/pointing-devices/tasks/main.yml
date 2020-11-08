@@ -1,0 +1,23 @@
+---
+- name: Install libinput packages
+  pacaur:
+    name:
+      - libinput
+      - xf86-input-libinput
+    state: present
+  tags:
+    - print_action
+
+- name: Copy touchpad configuration file
+  copy:
+    src: 30-touchpad.conf
+    dest: /etc/X11/xorg.conf.d/30-touchpad.conf
+  when: MACHINE_TYPE == 'portable'
+  tags:
+    - print_action
+
+- include: libinput-gestures.yml
+  when: MACHINE_TYPE == 'portable'
+
+- include: logitech.yml
+  when: LOGITECH_SOLAAR_ENABLED | default(False)

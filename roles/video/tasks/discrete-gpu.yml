@@ -10,7 +10,7 @@
   set_fact:
     DISCRETE_GPU_DRIVER_NAME: 'nvidia'
   changed_when: no
-  when: '"nvidia" in DISCRETE_GPU_DRIVERS' and not LTS_KERNEL
+  when: ('"nvidia" in DISCRETE_GPU_DRIVERS') and not LTS_KERNEL
 
 - name: Set the nvidia driver fact for the LTS kernel
   set_fact:

@@ -1,0 +1,93 @@
+---
+- name: Install AppArmor packages
+  pacaur:
+    name:
+      - audit
+      - apparmor
+    state: present
+  tags:
+    - print_action
+
+# GRUB bootloader configuration
+- name: Check if the GRUB configuration file exists
+  stat:
+    path: '{{ GRUB_CONFIG_FILE_PATH }}'
+  register: grub_configuration_file
+  changed_when: no
+
+- include: grub.yml
+  when: grub_configuration_file.stat.exists
+
+# rEFInd bootloader configuration
+- name: Check if UEFI mode is available
+  stat:
+    path: /sys/firmware/efi/efivars
+  register: uefi_mode_directory
+  changed_when: no
+
+- name: Check if the rEFInd configuration file exists
+  stat:
+    path: '{{ REFIND_CONFIG_FILE_PATH }}'
+  register: refind_linux_configuration_file
+  changed_when: no
+
+- include: refind.yml
+  when: >
+    uefi_mode_directory.stat.exists and
+    refind_linux_configuration_file.stat.exists
+
+# allow user to read audit logs
+- name: Create an audit system group
+  group:
+    name: audit
+    system: yes
+    state: present
+  tags:
+    - print_action
+    - user
+
+- name: Add user to the audit group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: audit
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Set the audit group as a default log group
+  replace:
+    path: /etc/audit/auditd.conf
+    regexp: '^\#*\s*log_group\s*=\s*(.*)$'
+    replace: 'log_group = audit'
+  tags:
+    - print_action
+
+# speed-up AppArmor start by caching profiles
+- name: Enable caching AppArmor profiles
+  lineinfile:
+    path: /etc/apparmor/parser.conf
+    regexp: '^#?\s*write-cache$'
+    line: 'write-cache'
+    state: present
+  notify:
+    - restart AppArmor service
+  tags:
+    - print_action
+
+# start and enable required services
+- name: Start and enable Audit framework service
+  service:
+    name: auditd.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action
+
+- name: Start and enable AppArmor service
+  service:
+    name: apparmor.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action

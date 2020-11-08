@@ -21,3 +21,4 @@ INTEGRATED_GPU_DRIVERS:
 DISCRETE_GPU_DRIVERS:
     - nvidia
     - nvidia-settings
+LOGITECH_SOLAAR_ENABLED: False

@@ -1,0 +1,55 @@
+---
+- name: Install Uncomplicated Firewall
+  pacaur:
+    name:
+      - ufw
+      - ufw-extras
+    state: present
+  tags:
+    - print_action
+
+- name: Stop and disable iptables service
+  service:
+    name: iptables.service
+    enabled: no
+    state: stopped
+  changed_when: no
+
+- name: Stop and disable iptables IPv6 service
+  service:
+    name: ip6tables.service
+    enabled: no
+    state: stopped
+  changed_when: no
+
+- name: Reset firewall to installation defaults
+  ufw:
+    state: reset
+  tags:
+    - print_action
+
+- name: Enable Uncomplicated Firewall
+  ufw:
+    logging: medium
+    policy: deny
+    state: enabled
+  tags:
+    - print_action
+
+- name: Allow all access from pre-defined addresses and subnets
+  ufw:
+    rule: allow
+    from_ip: '{{ item }}'
+  loop: '{{ TRUSTED_ADDRESSES_AND_SUBNETS }}'
+  when: TRUSTED_ADDRESSES_AND_SUBNETS is defined
+  tags:
+    - print_action
+
+- name: Enable ufw service
+  service:
+    name: ufw.service
+    enabled: yes
+  notify:
+    - restart ufw service
+  tags:
+    - print_action
