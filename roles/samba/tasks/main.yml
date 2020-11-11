@@ -1,0 +1,52 @@
+---
+- name: Instal Samba packages
+  pacaur:
+    name:
+      - smbclient
+      - samba
+    state: present
+  notify:
+    - load CIFS kernel module
+  tags:
+    - print_action
+
+- name: Create Samba configuration directory
+  file:
+    path: /etc/samba
+    state: directory
+  changed_when: no
+
+- name: Push the Samba configuration file
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+  tags:
+    - print_action
+
+- name: Allow connections to the CIFS ports
+  ufw:
+    name: CIFS
+    rule: allow
+  notify:
+    - reload firewall
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- include: client.yml
+  when: NETBIOS_WINS_HOST_NAMES_RESOLVING | default(True)
+
+- include: server.yml
+  when: SAMBA_SERVER_ENABLED | default(True)
+
+- name: Start and enable nmb service
+  service:
+    name: nmb.service
+    state: started
+    enabled: yes
+  when: >
+    (SAMBA_SERVER_ENABLED | default(True)) or
+    (NETBIOS_WINS_HOST_NAMES_RESOLVING | default(True))
+  tags:
+    - print_action

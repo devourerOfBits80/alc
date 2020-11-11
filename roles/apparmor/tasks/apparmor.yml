@@ -91,3 +91,10 @@
     enabled: yes
   tags:
     - print_action
+
+# create directory for site-specific additions and overrides
+- name: Create the AppArmor local profiles directory
+  file:
+    path: /etc/apparmor.d/local
+    state: directory
+  changed_when: no

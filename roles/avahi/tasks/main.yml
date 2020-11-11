@@ -1,0 +1,51 @@
+---
+- name: Install Avahi packages
+  pacaur:
+    name:
+      - nss-mdns
+      - avahi
+    state: present
+  tags:
+    - print_action
+
+- name: Check whether the Name Service Switch configuration file contains mdns_minimal driver
+  command: 'grep -Fwq "mdns_minimal [NOTFOUND=return]" /etc/nsswitch.conf'
+  register: nsswitch_mdns_driver_checking_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Enable the mdns_minimal driver for Avahi
+  replace:
+    path: /etc/nsswitch.conf
+    regexp: '^hosts:\s(.*)\sresolve\s\[\!UNAVAIL=return\]\s(.*)$'
+    replace: 'hosts: \1 mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] \2'
+  when: nsswitch_mdns_driver_checking_result.failed
+  tags:
+    - print_action
+
+- name: Stop and disable systemd resolved service
+  service:
+    name: systemd-resolved.service
+    state: stopped
+    enabled: no
+  changed_when: no
+
+- name: Start and enable Avahi daemon service
+  service:
+    name: avahi-daemon.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action
+
+- name: Allow connections to the Bonjour protocol ports
+  ufw:
+    name: Bonjour
+    rule: allow
+  notify:
+    - reload firewall
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw

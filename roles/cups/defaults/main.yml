@@ -1,0 +1,12 @@
+---
+CUPS_SOCKET_ACTIVATION: True
+STORE_CUPS_PDF_FILES_ON_USER_ACCOUNT: True
+CUPS_PDF_FILES_DIRECTORY: cups-pdf
+PRINTER_DRIVERS:
+  - ghostscript
+  - gsfonts
+  - foomatic-db-engine
+  - foomatic-db
+  - foomatic-db-ppds
+  - gutenprint
+  - foomatic-db-gutenprint-ppds

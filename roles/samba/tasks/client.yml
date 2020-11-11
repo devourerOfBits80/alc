@@ -1,0 +1,40 @@
+---
+- name: Update the AppArmor winbindd profile to avoid issue with the Samba Winbind Daemon
+  blockinfile:
+    path: /etc/apparmor.d/local/usr.sbin.winbindd
+    block: |
+      /var/cache/samba/msg.lock/* rwk,
+      /run/winbindd.pid rwk,
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} of the profile update management block'
+    state: present
+    create: yes
+  when: APPARMOR_ENABLED | default(True)
+  tags:
+    - print_action
+    - apparmor
+
+- name: Check whether the Name Service Switch configuration file contains wins driver
+  command: 'grep -Fwq "wins" /etc/nsswitch.conf'
+  register: nsswitch_wins_driver_checking_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
+- name: Enable the wins driver for Samba
+  replace:
+    path: /etc/nsswitch.conf
+    regexp: '^hosts:\s(.*)$'
+    replace: 'hosts: \1 wins'
+  when: nsswitch_wins_driver_checking_result.failed
+  tags:
+    - print_action
+
+- name: Start and enable winbind service
+  service:
+    name: winbind.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action

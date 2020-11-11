@@ -1,0 +1,7 @@
+---
+- name: load CIFS kernel module
+  command: modprobe cifs
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action

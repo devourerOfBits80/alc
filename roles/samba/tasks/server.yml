@@ -1,0 +1,32 @@
+---
+- name: Check if the data directory exists
+  stat:
+    path: /data
+  register: data_directory
+  changed_when: no
+
+- name: Update the AppArmor smbd profile to aviod the Samba permission issues
+  blockinfile:
+    path: /etc/apparmor.d/local/usr.sbin.smbd
+    block: |
+      /data/ rk,
+      /data/** lrwk,
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} of the profile update management block'
+    state: present
+    create: yes
+  when: >
+    (APPARMOR_ENABLED | default(True)) and
+    data_directory.stat.exists and data_directory.stat.isdir
+  tags:
+    - print_action
+    - apparmor
+
+- name: Start and enable smb service
+  service:
+    name: smb.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action

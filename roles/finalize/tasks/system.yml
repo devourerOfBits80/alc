@@ -25,3 +25,5 @@
     - video
     - pointing-devices
     - apparmor
+    - cups
+    - sane

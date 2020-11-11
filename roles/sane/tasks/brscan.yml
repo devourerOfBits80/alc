@@ -1,0 +1,73 @@
+---
+- name: Set a command arguments fact for the Brother network scanner configuration
+  set_fact:
+    BROTHER_SCANNER_CONFIG_COMMAND_ARGS: >-
+      -a name=BROTHER_SCANNER model={{ BROTHER_SCANNER_MODEL }} ip={{ BROTHER_SCANNER_IP_ADDRESS }}
+  changed_when: no
+  when: BROTHER_SCANNER_MODEL is defined and BROTHER_SCANNER_IP_ADDRESS is defined
+  tags:
+    - brscan
+
+- name: Configure the Brother brscan2 models device
+  command: 'brsaneconfig2 {{ BROTHER_SCANNER_CONFIG_COMMAND_ARGS }}'
+  ignore_errors: yes
+  no_log: yes
+  when: >
+    BROTHER_SCANNER_CONFIG_COMMAND_ARGS is defined and
+    (AUR_CUSTOM_SCANNER_DRIVERS | select("search", "brscan2") | list | count > 0)
+  tags:
+    - print_action
+    - brscan
+
+- name: Configure the Brother brscan3 models device
+  command: 'brsaneconfig3 {{ BROTHER_SCANNER_CONFIG_COMMAND_ARGS }}'
+  ignore_errors: yes
+  no_log: yes
+  when: >
+    BROTHER_SCANNER_CONFIG_COMMAND_ARGS is defined and
+    (AUR_CUSTOM_SCANNER_DRIVERS | select("search", "brscan3") | list | count > 0)
+  tags:
+    - print_action
+    - brscan
+
+- name: Configure the Brother brscan4 models device
+  command: 'brsaneconfig4 {{ BROTHER_SCANNER_CONFIG_COMMAND_ARGS }}'
+  ignore_errors: yes
+  no_log: yes
+  when: >
+    BROTHER_SCANNER_CONFIG_COMMAND_ARGS is defined and
+    (AUR_CUSTOM_SCANNER_DRIVERS | select("search", "brscan4") | list | count > 0)
+  tags:
+    - print_action
+    - brscan
+
+- name: Configure the Brother brscan5 models device
+  command: 'brsaneconfig5 {{ BROTHER_SCANNER_CONFIG_COMMAND_ARGS }}'
+  ignore_errors: yes
+  no_log: yes
+  when: >
+    BROTHER_SCANNER_CONFIG_COMMAND_ARGS is defined and
+    (AUR_CUSTOM_SCANNER_DRIVERS | select("search", "brscan5") | list | count > 0)
+  tags:
+    - print_action
+    - brscan
+
+- name: Add brscan-skey user to the lp group
+  user:
+    name: brscan-skey
+    groups: lp
+    append: yes
+  when: '"brscan-skey" in AUR_CUSTOM_SCANNER_DRIVERS'
+  tags:
+    - print_action
+    - brscan
+
+- name: Start and enable brscan-skey service
+  service:
+    name: brscan-skey.service
+    state: started
+    enabled: yes
+  when: '"brscan-skey" in AUR_CUSTOM_SCANNER_DRIVERS'
+  tags:
+    - print_action
+    - brscan

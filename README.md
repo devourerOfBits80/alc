@@ -66,3 +66,7 @@ Some older machines have problems with too slow launching the desktop environmen
 ### AppArmor and Uncomplicated Firewall
 
 For machine protection, *alc* will have installed and configured: *AppArmor*, which is a *Mandatory Access Control* system, implemented upon the *Linux Security Modules*; and a popular net filter manager, *Uncomplicated Firewall*. Both these security utils can be separately disabled in the *group_vars/all* file, but it is strongly recommended to leave them enabled as default. In the case of the firewall, there is also a possibility to declare your own trusted addresses and subnets.
+
+### Peripheral devices (printers and scanners)
+
+*alc* can configure a network area and support for peripheral devices like printers (*CUPS*) or scanners (*SANE*). There are several related parameters in the *group_vars/all* file, that can be adjusted according to the user's expectations. Among other things, it is a possibility to declare additional (custom) drivers using the AUR_CUSTOM_PRINTER_DRIVERS or the AUR_CUSTOM_SCANNER_DRIVERS list variable.

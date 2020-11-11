@@ -1,8 +1,9 @@
 ---
 ### SYSTEM PLAYBOOK SETTINGS ###
 
-# Unique name to identify your machine on a network
+# Unique name to identify your machine on a network and the NT domain / workgroup name
 HOSTNAME: TEST-VM
+WORKGROUP: TOMAHAWK
 
 # Root account configuration
 ROOT:
@@ -95,3 +96,28 @@ UFW_ENABLED: True
 TRUSTED_ADDRESSES_AND_SUBNETS:
 #    - 192.168.0.0/24
     - 192.168.1.0/24
+
+# Peripheral devices
+SAMBA_SERVER_ENABLED: True
+ALLOW_CONNECTIONS_FROM_SUBNETS: 192.168.1.  # leave empty to allow Samba connections from any public machine
+WINS_SERVER_IP_ADDRESS: 192.168.1.1     # leave empty to skip WINS server configuration
+DEFAULT_CUPS_PAPER_SIZE: a4     # set of values: a3, a4, a5, b5, letter, legal, executive, note or 11x17
+STORE_CUPS_PDF_FILES_ON_USER_ACCOUNT: True
+CUPS_PDF_FILES_DIRECTORY: cups-pdf
+PRINTER_DRIVERS:
+    - ghostscript
+    - gsfonts
+    - foomatic-db-engine
+    - foomatic-db
+    - foomatic-db-ppds
+    - foomatic-db-nonfree
+    - foomatic-db-nonfree-ppds
+    - gutenprint
+    - foomatic-db-gutenprint-ppds
+#AUR_CUSTOM_PRINTER_DRIVERS:
+#    - min12xxw
+SANE_SUPPORTED: True
+#SCANNER_DRIVERS:
+#    - hplip
+#AUR_CUSTOM_SCANNER_DRIVERS:
+#    - pfufs

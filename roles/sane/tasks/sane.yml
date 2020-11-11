@@ -1,0 +1,41 @@
+---
+- name: Install SANE packages
+  pacaur:
+    name:
+      - ipp-usb
+      - sane-airscan
+    state: present
+  tags:
+    - print_action
+
+- name: Add user to the scanner group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: scanner
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Install scanner drivers
+  pacaur:
+    name: '{{ SCANNER_DRIVERS }}'
+    state: present
+  when: SCANNER_DRIVERS is defined
+  tags:
+    - print_action
+
+- name: Install AUR custom scanner drivers
+  pacaur:
+    name: '{{ AUR_CUSTOM_SCANNER_DRIVERS }}'
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  when: AUR_CUSTOM_SCANNER_DRIVERS is defined
+  tags:
+    - print_action
+
+- include: brscan.yml
+  when: >
+    AUR_CUSTOM_SCANNER_DRIVERS is defined and
+    (AUR_CUSTOM_SCANNER_DRIVERS | select("search", "brscan") | list | count > 0)

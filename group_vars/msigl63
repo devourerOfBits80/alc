@@ -22,3 +22,18 @@ DISCRETE_GPU_DRIVERS:
     - nvidia
     - nvidia-settings
 LOGITECH_SOLAAR_ENABLED: False
+
+# Uncomplicated Firewall configuration
+TRUSTED_ADDRESSES_AND_SUBNETS:
+    - 192.168.0.0/24
+    - 192.168.1.0/24
+
+# Peripheral devices
+ALLOW_CONNECTIONS_FROM_SUBNETS: 192.168.0. 192.168.1.
+AUR_CUSTOM_PRINTER_DRIVERS:
+    - brother-dcpj152w
+AUR_CUSTOM_SCANNER_DRIVERS:
+    - brscan4
+    - brscan-skey
+BROTHER_SCANNER_MODEL: BROTHER_DCP-J152W
+BROTHER_SCANNER_IP_ADDRESS: 192.168.1.2

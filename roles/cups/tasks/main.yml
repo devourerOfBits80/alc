@@ -1,0 +1,113 @@
+---
+- name: Install CUPS packages
+  pacaur:
+    name:
+      - cups
+      - cups-pdf
+    state: present
+  tags:
+    - print_action
+
+- name: Allow connections to the IPP ports
+  ufw:
+    name: IPP
+    rule: allow
+  notify:
+    - reload firewall
+  when: >
+    (UFW_ENABLED | default(True)) and
+    (SAMBA_SERVER_ENABLED | default(True))
+  tags:
+    - print_action
+    - ufw
+
+- name: Start and enable CUPS service
+  service:
+    name: org.cups.cupsd.service
+    state: started
+    enabled: yes
+  when: not CUPS_SOCKET_ACTIVATION
+  tags:
+    - print_action
+
+- name: Enable CUPS socket
+  service:
+    name: org.cups.cupsd.socket
+    enabled: yes
+  when: CUPS_SOCKET_ACTIVATION
+  tags:
+    - print_action
+
+- name: Create printers administration group
+  group:
+    name: printadmin
+    system: yes
+    state: present
+  tags:
+    - print_action
+    - user
+
+- name: Add user to the lp and printers administration group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: lp,printadmin
+    append: yes
+  tags:
+    - print_action
+    - user
+
+- name: Assign the printers administration group to the CUPS SystemGroup
+  lineinfile:
+    path: /etc/cups/cups-files.conf
+    regexp: '^SystemGroup\s.*$'
+    line: 'SystemGroup sys root wheel printadmin'
+    state: present
+  notify:
+    - restart CUPS service
+  tags:
+    - print_action
+
+- name: Set default CUPS paper size
+  lineinfile:
+    path: /etc/papersize
+    line: '{{ DEFAULT_CUPS_PAPER_SIZE | default("a4") }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Create the user directory for storing CUPS PDF files
+  file:
+    path: /home/{{ USER.NAME }}/{{ CUPS_PDF_FILES_DIRECTORY }}
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+  when: STORE_CUPS_PDF_FILES_ON_USER_ACCOUNT
+  tags:
+    - print_action
+
+- name: Set the CUPS PDF files storing location
+  lineinfile:
+    path: /etc/cups/cups-pdf.conf
+    regexp: '^#?Out\s(\/var|\$\{HOME\})\/.*$'
+    line: 'Out ${HOME}/{{ CUPS_PDF_FILES_DIRECTORY }}'
+    state: present
+  when: STORE_CUPS_PDF_FILES_ON_USER_ACCOUNT
+  tags:
+    - print_action
+
+- name: Install printer drivers
+  pacaur:
+    name: '{{ PRINTER_DRIVERS }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install AUR custom printer drivers
+  pacaur:
+    name: '{{ AUR_CUSTOM_PRINTER_DRIVERS }}'
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  when: AUR_CUSTOM_PRINTER_DRIVERS is defined
+  tags:
+    - print_action
