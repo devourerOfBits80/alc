@@ -1,0 +1,123 @@
+---
+- name: Create an empty server authorized keys file
+  file:
+    path: /home/{{ USER.NAME }}/.ssh/authorized_keys
+    state: touch
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push the SSH server banner file
+  template:
+    src: sshd_banner.j2
+    dest: /etc/ssh/sshd_banner
+  tags:
+    - print_action
+
+- name: Set the SSH server welcome message
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*Banner(.*)$'
+    line: 'Banner /etc/ssh/sshd_banner'
+    state: present
+  tags:
+    - print_action
+
+- name: Set the SSH server port
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*Port(.*)$'
+    line: 'Port {{ SSH_SERVER_PORT }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Set the ed25519 as a default host key
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*HostKey(.*)ed25519_key\s*$'
+    line: 'HostKey /etc/ssh/ssh_host_ed25519_key'
+    state: present
+  tags:
+    - print_action
+
+- name: Force public key authentication for the SSH server
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*PasswordAuthentication(.*)$'
+    line: 'PasswordAuthentication {{ FORCE_SSH_PUBLIC_KEY_AUTH | default(True) | ternary("no", "yes") }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Deny remote connections with the root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*PermitRootLogin(.*)$'
+    line: 'PermitRootLogin no'
+    state: present
+  tags:
+    - print_action
+
+- name: Allow only the user's group to access SSH remotely
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*AllowGroups(.*)$'
+    line: 'AllowGroups {{ USER.GROUP }}'
+    insertafter: '^#?\s*MaxSessions(.*)$'
+    state: present
+  tags:
+    - print_action
+
+- name: Set the authentication attempts number for SSH connections
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*MaxAuthTries(.*)$'
+    line: 'MaxAuthTries {{ SSH_MAX_AUTH_TRIES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Set the open sessions number for SSH connections
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?\s*MaxSessions(.*)$'
+    line: 'MaxSessions {{ SSH_MAX_SESSIONS }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Allow limited connections to the SSH server port
+  ufw:
+    name: SSH
+    rule: limit
+  notify:
+    - reload firewall
+  when: (UFW_ENABLED | default(True)) and (SSH_SERVER_PORT == 22)
+  tags:
+    - print_action
+    - ufw
+
+- name: Allow limited connections to the custom SSH server port
+  ufw:
+    to_port: '{{ SSH_SERVER_PORT }}'
+    proto: tcp
+    rule: limit
+  notify:
+    - reload firewall
+  when: (UFW_ENABLED | default(True)) and (SSH_SERVER_PORT != 22)
+  tags:
+    - print_action
+    - ufw
+
+- name: Start and enable SSH daemon service
+  service:
+    name: sshd.service
+    state: started
+    enabled: yes
+  tags:
+    - print_action
+
+- include: sshguard.yml

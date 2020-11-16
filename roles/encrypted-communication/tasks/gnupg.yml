@@ -1,0 +1,50 @@
+---
+- name: Install complete and free implementation of the OpenPGP standard
+  pacaur:
+    name:
+      - gnupg
+    state: present
+  tags:
+    - print_action
+
+- name: Create the user's home GnuPG directory
+  file:
+    path: /home/{{ USER.NAME }}{{ GNUPGHOME }}
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0700
+  tags:
+    - print_action
+
+- name: Create GnuPG home variable in the Bash shell configuration file
+  lineinfile:
+    path: /home/{{ USER.NAME }}/.bashrc
+    regexp: '^#?\s*export\s+GNUPGHOME=(.*)$'
+    line: 'export GNUPGHOME=~{{ GNUPGHOME }}'
+    state: present
+    create: yes
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- name: Create GnuPG home variable in the Zsh shell environment variables file
+  lineinfile:
+    path: /home/{{ USER.NAME }}/.zshenv
+    regexp: '^#?\s*export\s+GNUPGHOME=(.*)$'
+    line: 'export GNUPGHOME=~{{ GNUPGHOME }}'
+    state: present
+    create: yes
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action

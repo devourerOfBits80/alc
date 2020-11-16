@@ -1,0 +1,79 @@
+---
+- name: Install a front-end to SSH Agent
+  pacaur:
+    name:
+      - keychain
+    state: present
+  tags:
+    - print_action
+
+- name: Start SSH Agent automatically for the Bash shell
+  blockinfile:
+    path: /home/{{ USER.NAME }}/.bashrc
+    block: '{{ lookup("file", role_path + "/files/ssh-agent.sh") }}'
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} the rule for automatically starting the SSH Agent'
+    state: present
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- name: Start SSH Agent automatically for the Zsh shell
+  blockinfile:
+    path: /home/{{ USER.NAME }}/.zshrc
+    block: '{{ lookup("file", role_path + "/files/ssh-agent.sh") }}'
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} the rule for automatically starting the SSH Agent'
+    state: present
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action
+
+- name: Create the user's systemd directory
+  file:
+    path: /home/{{ USER.NAME }}/.config/systemd/user
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0755
+  tags:
+    - print_action
+
+- name: Copy the user's SSH Agent service
+  copy:
+    src: ssh-agent.service
+    dest: /home/{{ USER.NAME }}/.config/systemd/user/ssh-agent.service
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  tags:
+    - print_action
+
+- name: Add SSH authorization socket variable to the user's pam environment file
+  lineinfile:
+    path: /home/{{ USER.NAME }}/.pam_environment
+    line: 'SSH_AUTH_SOCK DEFAULT="${XDG_RUNTIME_DIR}/ssh-agent.socket"'
+    state: present
+    create: yes
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0644
+  tags:
+    - print_action
+
+- name: Start and enable SSH Agent service with the user's systemd
+  systemd:
+    name: ssh-agent.service
+    state: started
+    enabled: yes
+    scope: user
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action

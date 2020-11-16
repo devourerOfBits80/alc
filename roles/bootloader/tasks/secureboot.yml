@@ -61,7 +61,7 @@
 - name: Update the pacman hook for updating rEFInd on ESP
   lineinfile:
     path: /etc/pacman.d/hooks/refind.hook
-    regexp: '^Exec=/usr/bin/(.*)$'
+    regexp: '^Exec=\/usr\/bin\/(.*)$'
     line: 'Exec=/usr/bin/{{ REFIND_INSTALL_COMMAND }} --shim /usr/share/shim-signed/shimx64.efi --localkeys'
     insertafter: '^\[Action\]$'
     state: present

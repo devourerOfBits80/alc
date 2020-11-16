@@ -1,0 +1,15 @@
+---
+- include: gnupg.yml
+
+- include: openssh.yml
+
+- name: Install FUSE client based on the SSH File Transfer Protocol
+  pacaur:
+    name:
+      - sshfs
+    state: present
+  tags:
+    - print_action
+
+- include: ssh-agent.yml
+  when: SSH_AGENT_ENABLED | default(True)

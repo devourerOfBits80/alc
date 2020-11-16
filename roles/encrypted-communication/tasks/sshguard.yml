@@ -1,0 +1,45 @@
+---
+- name: Install the SSH brute force detector
+  pacaur:
+    name:
+      - sshguard
+    state: present
+  tags:
+    - print_action
+
+- name: Enable the SSHGuard control over the SSH daemon for the UFW
+  blockinfile:
+    path: /etc/ufw/before.rules
+    block: |
+      :sshguard - [0:0]
+      -A ufw-before-input -p tcp --dport {{ SSH_SERVER_PORT }} -j sshguard
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} the rule of hand off control for sshd to sshguard'
+    insertafter: '^\-A\s+ufw\-before\-output\s+\-o\s+lo\s+\-j\s+ACCEPT$'
+    state: present
+  notify:
+    - reload firewall
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Push the SSHGuard configuration file
+  template:
+    src: sshguard.conf.j2
+    dest: /etc/sshguard.conf
+    force: yes
+    mode: 0644
+  tags:
+    - print_action
+
+- name: Start and enable SSHGuard service
+  service:
+    name: sshguard.service
+    state: started
+    enabled: yes
+  notify:
+    - restart SSH daemon service
+  tags:
+    - print_action

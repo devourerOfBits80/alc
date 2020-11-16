@@ -1,0 +1,7 @@
+---
+- name: restart SSH daemon service
+  service:
+    name: sshd.service
+    state: restarted
+  tags:
+    - print_action

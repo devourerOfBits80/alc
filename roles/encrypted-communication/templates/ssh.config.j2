@@ -1,0 +1,16 @@
+# global options
+Ciphers aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+ServerAliveInterval 120
+ServerAliveCountMax 3
+TCPKeepAlive yes
+
+AddKeysToAgent yes
+
+User {{ USER.NAME }}
+
+
+# host-specific options
+#Host MY-SERVER
+#    Hostname    MY-SERVER-ADDRESS
+#    Port        MY-SERVER-PORT

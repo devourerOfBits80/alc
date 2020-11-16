@@ -1,0 +1,7 @@
+---
+GNUPGHOME: /.gnupg  # relative path in the user's home directory
+SSH_SERVER_PORT: 22
+SSH_MAX_AUTH_TRIES: 4
+SSH_MAX_SESSIONS: 8
+SSH_BANNING_THRESHOLD: 3   # block attackers after N attempt(s)
+SSH_BLACKLIST_THRESHOLD: 9   # permanently block attackers after N attempt(s)

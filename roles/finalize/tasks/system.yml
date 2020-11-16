@@ -27,3 +27,4 @@
     - apparmor
     - cups
     - sane
+    - encrypted-communication

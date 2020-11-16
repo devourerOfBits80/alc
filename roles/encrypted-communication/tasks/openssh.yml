@@ -1,0 +1,32 @@
+---
+- name: Install OpenSSH packages
+  pacaur:
+    name:
+      - openssh
+      - autossh
+    state: present
+  tags:
+    - print_action
+
+- name: Create the user's SSH configuration directory
+  file:
+    path: /home/{{ USER.NAME }}/.ssh
+    state: directory
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0700
+  tags:
+    - print_action
+
+- name: Push the SSH client configuration file
+  template:
+    src: ssh.config.j2
+    dest: /home/{{ USER.NAME }}/.ssh/config
+    owner: '{{ USER.NAME }}'
+    group: '{{ USER.GROUP }}'
+    mode: 0600
+  tags:
+    - print_action
+
+- include: ssh-daemon.yml
+  when: SSH_DAEMON_ENABLED | default(True)

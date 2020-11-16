@@ -121,3 +121,8 @@ SANE_SUPPORTED: True
 #    - hplip
 #AUR_CUSTOM_SCANNER_DRIVERS:
 #    - pfufs
+
+# Encrypted communication (GnuPG and SSH)
+SSH_DAEMON_ENABLED: True
+FORCE_SSH_PUBLIC_KEY_AUTH: True     # disable (True) / enable (False) password authentication
+SSH_AGENT_ENABLED: True

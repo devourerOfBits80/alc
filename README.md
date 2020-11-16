@@ -69,4 +69,26 @@ For machine protection, *alc* will have installed and configured: *AppArmor*, wh
 
 ### Peripheral devices (printers and scanners)
 
-*alc* can configure a network area and support for peripheral devices like printers (*CUPS*) or scanners (*SANE*). There are several related parameters in the *group_vars/all* file, that can be adjusted according to the user's expectations. Among other things, it is a possibility to declare additional (custom) drivers using the AUR_CUSTOM_PRINTER_DRIVERS or the AUR_CUSTOM_SCANNER_DRIVERS list variable.
+*alc* can configure a network area and support for peripheral devices like printers (*CUPS*) or scanners (*SANE*). There are several related parameters in the *group_vars/all* file, that can be adjusted according to the user's expectations. Among other things, it is a possibility to declare additional (custom) drivers using the *AUR_CUSTOM_PRINTER_DRIVERS* or the *AUR_CUSTOM_SCANNER_DRIVERS* list variable.
+
+### Encrypted communication (GnuPG and SSH)
+
+To protect the machine communication, *alc* configures the *GnuPG* and the *OpenSSH* services. The first of them does not have configuration parameters, but the second one does, and a few of these options are quite important. For example: via the *SSH_DAEMON_ENABLED* variable, you can enable or disable an *SSH* server; via the *FORCE_SSH_PUBLIC_KEY_AUTH* variable, you can block or unblock the password authentication on the *SSH* server; finally, via the *SSH_AGENT_ENABLED* variable, you can activate or deactivate an *SSH Agent*. Besides, by adding the *SSH_SERVER_PORT* variable to the *group_vars/all* file, there is a possibility to change the *SSH* server listening port (default 22).
+
+For using encrypted communication, it is required to have a pair of public and private keys. To generate them, you can use the commands below:
+
+- ***Generating a GnuPG key pair***
+
+> \$ gpg --full-gen-key (for getting alternative ciphers, add the *--expert* option)
+
+- ***Generating an SSH key pair***
+
+> \$ ssh-keygen -C "\$(whoami)@\$(uname -n)-\$(date -I)" (for the Ed25519 key type, add the *-t ed25519* option)  
+> \$ chmod 400 ~/.ssh/id_rsa (for the Ed25519 key type, use the *id_ed25519* file)
+
+To start the encrypted communication between two machines, securely and conveniently, using the SSH protocol without allowing the password authorization, send the public key to the remote server, run the SSH Agent on the local machine, and add to its the private key.
+
+> \$ ssh-copy-id -i ~/.ssh/id_rsa.pub username@remote-server.org (for a non-default SSH server port, use *-p {port}* option)  
+> \$ ssh-agent  
+> \$ eval \$(ssh-agent)  
+> \$ ssh-add ~/.ssh/id_rsa
