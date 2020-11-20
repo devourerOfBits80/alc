@@ -23,7 +23,7 @@
 
 - name: Start and enable CUPS service
   service:
-    name: org.cups.cupsd.service
+    name: cups.service
     state: started
     enabled: yes
   when: not CUPS_SOCKET_ACTIVATION
@@ -32,7 +32,7 @@
 
 - name: Enable CUPS socket
   service:
-    name: org.cups.cupsd.socket
+    name: cups.socket
     enabled: yes
   when: CUPS_SOCKET_ACTIVATION
   tags:

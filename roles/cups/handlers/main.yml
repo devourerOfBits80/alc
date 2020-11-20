@@ -1,7 +1,7 @@
 ---
 - name: restart CUPS service
   service:
-    name: org.cups.cupsd.service
+    name: cups.service
     state: restarted
   tags:
     - print_action
