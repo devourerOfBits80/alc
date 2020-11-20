@@ -1,0 +1,50 @@
+---
+- name: Install ZIP archiving and compression utilities
+  pacaur:
+    name:
+      - zip
+      - unzip
+    state: present
+  tags:
+    - print_action
+
+- name: Install 7zip command-line file archiver with high compression ratio
+  pacaur:
+    name:
+      - p7zip
+    state: present
+  tags:
+    - print_action
+
+- name: Install RAR compression utility
+  pacaur:
+    name:
+      - rar
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Install less popular archiving, compression and repair tools
+  pacaur:
+    name: '{{ ARCHIVING_TOOLS }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install script for managing file archives of various types
+  pacaur:
+    name:
+      - atool
+    state: present
+  tags:
+    - print_action
+
+- name: Install input filter for the pager less
+  pacaur:
+    name:
+      - lesspipe
+    state: present
+  tags:
+    - print_action

@@ -1,0 +1,63 @@
+---
+- name: Install font rasterization library
+  pacaur:
+    name:
+      - freetype2
+    state: present
+  tags:
+    - print_action
+
+- name: Install library for configuring and customizing font access
+  pacaur:
+    name:
+      - fontconfig
+    state: present
+  tags:
+    - print_action
+
+- name: Install 2D graphics library with support for multiple output devices
+  pacaur:
+    name:
+      - cairo
+    state: present
+  tags:
+    - print_action
+
+- name: Install font packages
+  pacaur:
+    name: '{{ FONTS }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install AUR font packages
+  pacaur:
+    name: '{{ AUR_FONTS }}'
+    state: present
+  become: yes
+  become_user: '{{ USER.NAME }}'
+  tags:
+    - print_action
+
+- name: Copy the fonts configuration file
+  copy:
+    src: local.conf
+    dest: /etc/fonts/local.conf
+  tags:
+    - print_action
+
+- name: Create a symbolic link to subpixel rendering configuration file
+  file:
+    src: /etc/fonts/conf.avail/10-sub-pixel-rgb.conf
+    path: /etc/fonts/conf.d/10-sub-pixel-rgb.conf
+    state: link
+  tags:
+    - print_action
+
+- name: Create a symbolic link to LCD filter configuration file
+  file:
+    src: /etc/fonts/conf.avail/11-lcdfilter-default.conf
+    path: /etc/fonts/conf.d/11-lcdfilter-default.conf
+    state: link
+  tags:
+    - print_action

@@ -52,3 +52,7 @@ BROTHER_SCANNER_IP_ADDRESS: 192.168.1.2
 # Encrypted communication (GnuPG and SSH)
 SSH_DAEMON_ENABLED: False
 SSH_AGENT_ENABLED: False
+
+# Backup (rdiff-backup)
+USER_ACCOUNTS_BACKUP: False
+FCRON_SERVICE_ENABLED: False

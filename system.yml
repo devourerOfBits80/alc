@@ -22,4 +22,7 @@
     - { role: cups, tags: ['cups'] }
     - { role: sane, tags: ['sane'] }
     - { role: encrypted-communication, tags: ['encrypted-communication'] }
+    - { role: fonts, tags: ['fonts'] }
+    - { role: archiving, tags: ['archiving'] }
+    - { role: backup, tags: ['backup'] }
     - { role: finalize, tags: ['finalize'] }

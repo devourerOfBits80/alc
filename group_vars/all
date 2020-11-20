@@ -126,3 +126,8 @@ SANE_SUPPORTED: True
 SSH_DAEMON_ENABLED: True
 FORCE_SSH_PUBLIC_KEY_AUTH: True     # disable (True) / enable (False) password authentication
 SSH_AGENT_ENABLED: True
+
+# Backup (rdiff-backup)
+USER_ACCOUNTS_BACKUP: False     # locally it only makes sense if you have installed a secondary drive
+BACKUP_LOCATION: /data/.backup/home     # it can be a remote SSH connection (eg. user@hostname.net::/remote-backup-dir)
+DAILY_BACKUP: False    # if disabled, a backup is made weekly

@@ -1,0 +1,45 @@
+---
+FONTS:
+  - tamsyn-font
+  - terminus-font
+  - gnu-free-fonts
+  - noto-fonts
+  - ttf-bitstream-vera
+  - ttf-croscore
+  - ttf-dejavu
+  - ttf-droid
+  - ttf-ibm-plex
+  - ttf-liberation
+  - ttf-linux-libertine
+  - font-bh-ttf
+  - tex-gyre-fonts
+  - ttf-roboto
+  - ttf-ubuntu-font-family
+  - adobe-source-code-pro-fonts
+  - ttf-anonymous-pro
+  - ttf-fira-code
+  - ttf-hack
+  - ttf-inconsolata
+  - ttf-jetbrains-mono
+  - ttf-roboto-mono
+  - adobe-source-sans-pro-fonts
+  - cantarell-fonts
+  - inter-font
+  - ttf-carlito
+  - ttf-opensans
+  - gentium-plus-font
+  - ttf-caladea
+  - noto-fonts-emoji
+AUR_FONTS:
+  - ttf-courier-prime
+  - ttf-dejavu-sans-code
+  - ttf-iosevka
+  - ttf-mononoki
+  - ttf-andika
+  - ttf-merriweather-sans
+  - ttf-oswald
+  - ttf-selawik
+  - ttf-signika
+  - ttf-heuristica
+  - ttf-merriweather
+  - ttf-symbola

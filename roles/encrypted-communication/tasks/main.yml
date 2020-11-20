@@ -13,3 +13,11 @@
 
 - include: ssh-agent.yml
   when: SSH_AGENT_ENABLED | default(True)
+
+- name: Install mobile shell, surviving disconnects with local echo and line editing
+  pacaur:
+    name:
+      - mosh
+    state: present
+  tags:
+    - print_action

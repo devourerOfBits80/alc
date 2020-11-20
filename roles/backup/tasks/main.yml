@@ -1,0 +1,38 @@
+---
+- name: Install a fast and versatile file copying tool for remote and local files
+  pacaur:
+    name:
+      - rsync
+    state: present
+  tags:
+    - print_action
+
+- name: Install a utility for local / remote mirroring and incremental backups
+  pacaur:
+    name:
+      - rdiff-backup
+    state: present
+  tags:
+    - print_action
+
+- name: Install a feature-rich cron implementation
+  pacaur:
+    name:
+      - fcron
+    state: present
+  tags:
+    - print_action
+
+- name: Start and enable fcron service
+  service:
+    name: fcron.service
+    state: started
+    enabled: yes
+  when: >
+    (USER_ACCOUNTS_BACKUP | default(False)) or
+    (FCRON_SERVICE_ENABLED | default(True))
+  tags:
+    - print_action
+
+- include: backup.yml
+  when: USER_ACCOUNTS_BACKUP | default(False)

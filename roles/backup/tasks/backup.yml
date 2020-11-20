@@ -1,0 +1,32 @@
+---
+- name: Create the backup location directory
+  file:
+    path: '{{ BACKUP_LOCATION }}'
+    state: directory
+    mode: 0750
+  when: >
+    BACKUP_LOCATION is regex("^(\/\.?[a-zA-Z0-9_-]+)*\/?$") and
+    SECONDARY_DRIVE is defined and (SECONDARY_DRIVE != None)
+  tags:
+    - print_action
+
+- name: Set the user accounts backup script directory fact
+  set_fact:
+    BACKUP_SCRIPT_DIRECTORY: /etc/cron.{{ DAILY_BACKUP | default(False) | ternary("daily", "weekly") }}
+  changed_when: no
+
+- name: Create the user accounts backup script directory
+  file:
+    path: '{{ BACKUP_SCRIPT_DIRECTORY }}'
+    state: directory
+    mode: 0755
+  tags:
+    - print_action
+
+- name: Push the user accounts backup script
+  template:
+    src: home-backup.j2
+    dest: '{{ BACKUP_SCRIPT_DIRECTORY }}/home-backup'
+    mode: 0755
+  tags:
+    - print_action
