@@ -1,0 +1,5 @@
+---
+- name: activate user profiles
+  command: /usr/local/bin/firejail-activate-user-profiles
+  tags:
+    - print_action

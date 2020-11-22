@@ -6,3 +6,10 @@
   when: CURRENT_USER_NAME == 'root'
   tags:
     - mirrorlist
+
+- name: Create the pacman hooks directory (non-system mode)
+  file:
+    path: /etc/pacman.d/hooks
+    state: directory
+  become: yes
+  when: CURRENT_USER_NAME != 'root'

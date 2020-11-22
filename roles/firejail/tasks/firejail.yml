@@ -1,0 +1,61 @@
+---
+- name: Install Firejail SUID sandbox program
+  pacaur:
+    name:
+      - firejail
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Firejail GUI
+  pacaur:
+    name:
+      - firetools
+    state: present
+  become: yes
+  when: FIRETOOLS_ENABLED | default(False)
+  tags:
+    - print_action
+
+- name: Load the firejail-default profile for AppArmor into the kernel
+  command: 'apparmor_parser -r /etc/apparmor.d/firejail-default'
+  become: yes
+  when: APPARMOR_ENABLED | default(True)
+  tags:
+    - print_action
+
+- name: Copy the Firejail package update hook
+  copy:
+    src: firejail-update.hook
+    dest: /etc/pacman.d/hooks/firejail-update.hook
+  become: yes
+  when: APPARMOR_ENABLED | default(True)
+  tags:
+    - print_action
+
+- name: Enable globally AppArmor support
+  lineinfile:
+    path: /etc/firejail/globals.local
+    line: apparmor
+    state: present
+    create: yes
+  become: yes
+  when: APPARMOR_ENABLED | default(True)
+  tags:
+    - print_action
+
+- name: Add blacklist items to the globals file
+  lineinfile:
+    path: /etc/firejail/globals.local
+    line: 'blacklist {{ item }}'
+    state: present
+    create: yes
+  become: yes
+  with_items: '{{ FIREJAIL_BLACKLIST }}'
+  when: FIREJAIL_BLACKLIST is defined and (FIREJAIL_BLACKLIST != None)
+  tags:
+    - print_action
+
+- include: mapping.yaml
+  when: MAP_SYSTEM_APPLICATIONS | default(True)

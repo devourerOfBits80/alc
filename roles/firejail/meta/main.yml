@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: hooks }
+  - { role: firejail-activator }

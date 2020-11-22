@@ -22,6 +22,14 @@ Finally, adjust the playbooks' execution settings to your expectations (see the 
 
 > \$ ansible-playbook -i hosts -l desktop system.yml (for mobile devices replace *desktop* keyword with *portable*)
 
+Subsequently, when the *system.yml* playbook execution is finished, reboot your machine and log into the created user account. The system is now fully installed, so logging into the root account will not be needed anymore. If you wish to install a desktop environment (only *KDE Plasma* is currently available), move the *alc* repository from the root into your local account, change its owner and execute the second playbook *plasma.yml* with the *--ask-become-pass* argument.
+
+> \$ sudo cp -R /root/alc ~/alc  
+> \$ sudo rm -rf /root/alc  
+> \$ sudo chown -R *USERNAME*:*GROUP* ~/alc (use a proper username and group)  
+> \$ cd alc  
+> \$ ansible-playbook -i hosts -l desktop --ask-become-pass plasma.yml (use *portable* instead of *desktop* for mobile devices)
+
 ## Playbooks' execution settings
 
 *alc* has many playbooks' execution settings that can be pre-configured. They are mostly available in the *group_vars/all* file. Some of them (especially the most important) have been described below.
@@ -103,3 +111,7 @@ To start the encrypted communication between two machines, securely and convenie
 For making a full system backup, the *rsync* tool can be used instead of *rdiff-backup*. Remember that the command below has to be executed with the root privileges.
 
 > \$ rsync -aAXHv --exclude={"/dev/\*","/proc/\*","/sys/\*","/tmp/\*","/run/\*","/mnt/\*","/media/\*","/lost+found"} / /path/to/backup
+
+### Firejail
+
+In the second phase of the post-installation process (the desktop environment playbook execution, like *plasma.yml*), *alc* will install the *Firejail*, which is a *SUID* sandbox program. If the *AppArmor* has been installed in the previous phase, *Firejail* will integrate with it and highly increase the system security. In that case, most of the applications will be permanently launching inside the sandbox. To avoid this effect (not recommended), disable the *Firejail* in the *group_vars/all* file using the *FIREJAIL_ENABLED* boolean variable.

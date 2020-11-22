@@ -1,0 +1,10 @@
+[Trigger]
+Operation=Upgrade
+Type=Package
+Target=firejail
+
+[Action]
+Description=Load the new firejail-default profile for AppArmor into the kernel
+When=PostTransaction
+Depends=apparmor
+Exec=/usr/bin/apparmor_parser -r /etc/apparmor.d/firejail-default

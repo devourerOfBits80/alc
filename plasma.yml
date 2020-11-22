@@ -1,0 +1,8 @@
+---
+- name: alc KDE Plasma playbook
+  hosts: vm:desktop:portable:hp650:msigl63:msib85g43
+  become: no
+  roles:
+    - { role: firejail, tags: ['firejail'] }
+    - { role: language-checking, tags: ['language-checking'] }
+    - { role: finalize, tags: ['finalize'] }

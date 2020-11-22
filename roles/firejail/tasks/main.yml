@@ -1,0 +1,3 @@
+---
+- include: firejail.yml
+  when: FIREJAIL_ENABLED | default(True)

@@ -1,0 +1,10 @@
+---
+ASPELL_PACKAGES:
+  - aspell
+  - aspell-en
+HUNSPELL_PACKAGES:
+  - hunspell
+  - hunspell-en_US
+THESAURUS_PACKAGES:
+  - libmythes
+  - mythes-en

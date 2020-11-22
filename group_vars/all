@@ -131,3 +131,27 @@ SSH_AGENT_ENABLED: True
 USER_ACCOUNTS_BACKUP: False     # locally it only makes sense if you have installed a secondary drive
 BACKUP_LOCATION: /data/.backup/home     # it can be a remote SSH connection (eg. user@hostname.net::/remote-backup-dir)
 DAILY_BACKUP: False    # if disabled, a backup is made weekly
+
+
+### DESKTOP ENVIRONMENT ###
+
+# SUID sandbox configuration
+FIREJAIL_ENABLED: True
+FIRETOOLS_ENABLED: False    # GUI for Firejail
+FIREJAIL_BLACKLIST:
+    - ~/cups-pdf
+MAP_SYSTEM_APPLICATIONS: True   # enable or disable applications mapping installed by the 'system.yml' playbook
+
+# Language checking
+ASPELL_PACKAGES:
+    - aspell
+    - aspell-en
+    - aspell-pl
+HUNSPELL_PACKAGES:
+    - hunspell
+    - hunspell-en_US
+    - hunspell-pl
+THESAURUS_PACKAGES:
+    - libmythes
+    - mythes-en
+    - mythes-pl

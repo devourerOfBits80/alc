@@ -1,0 +1,106 @@
+---
+- name: Map makepkg script to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/makepkg
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  tags:
+    - print_action
+
+- name: Map nano editor to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  with_items:
+    - nano
+    - rnano
+  when: ("nano" in SHELL_PACKAGES) | default(False)
+  tags:
+    - print_action
+
+- name: Map vim editor to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  with_items:
+    - rview
+    - rvim
+    - vim
+    - vimdiff
+    - vimtutor
+    - xxd
+  when: ("vim" in SHELL_PACKAGES) | default(False)
+  tags:
+    - print_action
+
+- name: Map Ncdu analyzer to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/ncdu
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  when: ("ncdu" in SHELL_PACKAGES) | default(False)
+  tags:
+    - print_action
+
+- name: Map GnuPG applications to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  with_items:
+    - gpg
+    - gpg2
+    - gpg-agent
+  tags:
+    - print_action
+
+- name: Map OpenSSH applications to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  with_items:
+    - scp
+    - sftp
+    - ssh
+    - ssh-agent
+  tags:
+    - print_action
+
+- name: Map archiving utils to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  notify:
+    - activate user profiles
+  with_items:
+    - unzip
+    - 7z
+    - 7za
+    - 7zr
+    - unrar
+    - atool
+  tags:
+    - print_action

@@ -1,0 +1,17 @@
+---
+- name: Create the user's Firejail configuration directory
+  file:
+    path: ~/.config/firejail
+    state: directory
+  changed_when: no
+
+- name: Copy the Firejail profiles activation script
+  copy:
+    src: firejail-activate-user-profiles.sh
+    dest: /usr/local/bin/firejail-activate-user-profiles
+    mode: 0755
+  become: yes
+  notify:
+    - activate user profiles
+  tags:
+    - print_action

@@ -1,0 +1,62 @@
+---
+- name: Install interactive spell-checking program for Unix
+  pacaur:
+    name: '{{ ASPELL_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install spell checker and morphological analyzer library
+  pacaur:
+    name: '{{ HUNSPELL_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a fast and safe spellchecking C++ library
+  pacaur:
+    name:
+      - nuspell
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install hyphenation rules
+  pacaur:
+    name:
+      - hyphen
+      - hyphen-en
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install thesaurus packages
+  pacaur:
+    name: '{{ THESAURUS_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install wrapper library for generic spell checking
+  pacaur:
+    name:
+      - enchant
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install open source language checker
+  pacaur:
+    name:
+      - jre-openjdk-headless
+      - languagetool
+    state: present
+  become: yes
+  tags:
+    - print_action
