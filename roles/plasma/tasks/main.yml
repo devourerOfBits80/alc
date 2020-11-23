@@ -1,0 +1,106 @@
+---
+- name: Install KDE Plasma
+  pacaur:
+    name:
+      - plasma
+      - plasma-wayland-session
+    state: present
+    force: yes
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Phonon packages
+  pacaur:
+    name: '{{ PHONON_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install PulseAudio volume control
+  pacaur:
+    name:
+      - pavucontrol-qt
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install KDE Plasma applications
+  pacaur:
+    name: '{{ KDE_PLASMA_APPLICATIONS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a feature-rich and easy to handle CD burning application
+  pacaur:
+    name:
+      - k3b
+    state: present
+  become: yes
+  when: OPTICAL_DISC_DRIVE_SUPPORTED | default(False)
+  tags:
+    - print_action
+
+- name: Install KDE Plasma front-end for cron
+  pacaur:
+    name:
+      - kcron
+    state: present
+  become: yes
+  when: FCRON_SERVICE_ENABLED | default(True)
+  tags:
+    - print_action
+
+- name: Install Image Scanning application
+  pacaur:
+    name:
+      - skanlite
+    state: present
+  become: yes
+  when: SANE_SUPPORTED | default(True)
+  tags:
+    - print_action
+
+- name: Install KDE Plasma extensions
+  pacaur:
+    name: '{{ KDE_PLASMA_EXTENSIONS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a dock based on Plasma Frameworks
+  pacaur:
+    name:
+      - latte-dock
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install KDE Plasma applets
+  pacaur:
+    name: '{{ KDE_PLASMA_APPLETS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install additional KDE Plasma applets
+  pacaur:
+    name: '{{ KDE_PLASMA_APPLETS_AUR }}'
+    state: present
+  tags:
+    - print_action
+
+- include: firejail-plasma.yml
+  when: FIREJAIL_ENABLED | default(True)
+
+- include: kwallet.yml
+
+- include: kde-connect.yml
+  when: KDE_CONNECT_ENABLED | default(True)

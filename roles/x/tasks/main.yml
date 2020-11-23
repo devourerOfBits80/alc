@@ -1,0 +1,60 @@
+---
+- name: Install Xorg packages
+  pacaur:
+    name: '{{ XORG_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install application to control X from the command line
+  pacaur:
+    name:
+      - xautomation
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install buffers synchronization tool
+  pacaur:
+    name:
+      - autocutsel
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install utility to handle an auto-detection of connected display hardware
+  pacaur:
+    name:
+      - autorandr
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a lightweight passphrase dialog for SSH
+  pacaur:
+    name:
+      - x11-ssh-askpass
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install GTK front-end for Uncomplicated Firewall
+  pacaur:
+    name:
+      - gufw
+    state: present
+  become: yes
+  when: >
+    (UFW_ENABLED | default(True)) and
+    (GUFW_ENABLED | default(False))
+  tags:
+    - print_action
+
+- include: xdg.yml
+
+- include: themes.yml

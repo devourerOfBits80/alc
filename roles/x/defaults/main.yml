@@ -1,0 +1,12 @@
+---
+XORG_PACKAGES:
+  - xorg-server
+  - xorg-apps
+CURSOR_THEMES:
+  - xcursor-comix
+  - xcursor-premium
+ICON_THEMES:
+  - arc-icon-theme
+  - deepin-icon-theme
+  - elementary-icon-theme
+  - papirus-icon-theme

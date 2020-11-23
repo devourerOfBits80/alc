@@ -1,0 +1,25 @@
+---
+- name: Install Cursor Themes
+  pacaur:
+    name: '{{ CURSOR_THEMES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Icon Themes
+  pacaur:
+    name: '{{ ICON_THEMES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Arch Linux wallpapers
+  pacaur:
+    name:
+      - archlinux-wallpaper
+    state: present
+  become: yes
+  tags:
+    - print_action

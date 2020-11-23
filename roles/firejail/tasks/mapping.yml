@@ -5,8 +5,6 @@
     path: /usr/local/bin/makepkg
     state: link
   become: yes
-  notify:
-    - activate user profiles
   tags:
     - print_action
 
@@ -16,8 +14,6 @@
     path: /usr/local/bin/{{ item }}
     state: link
   become: yes
-  notify:
-    - activate user profiles
   with_items:
     - nano
     - rnano
@@ -31,8 +27,6 @@
     path: /usr/local/bin/{{ item }}
     state: link
   become: yes
-  notify:
-    - activate user profiles
   with_items:
     - rview
     - rvim
@@ -50,8 +44,6 @@
     path: /usr/local/bin/ncdu
     state: link
   become: yes
-  notify:
-    - activate user profiles
   when: ("ncdu" in SHELL_PACKAGES) | default(False)
   tags:
     - print_action
@@ -62,8 +54,6 @@
     path: /usr/local/bin/{{ item }}
     state: link
   become: yes
-  notify:
-    - activate user profiles
   with_items:
     - gpg
     - gpg2
@@ -77,8 +67,6 @@
     path: /usr/local/bin/{{ item }}
     state: link
   become: yes
-  notify:
-    - activate user profiles
   with_items:
     - scp
     - sftp
@@ -93,8 +81,6 @@
     path: /usr/local/bin/{{ item }}
     state: link
   become: yes
-  notify:
-    - activate user profiles
   with_items:
     - unzip
     - 7z

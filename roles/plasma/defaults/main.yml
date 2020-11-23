@@ -1,0 +1,15 @@
+---
+PHONON_PACKAGES:
+  - phonon-qt5-gstreamer
+  - gst-libav
+  - gst-plugins-good
+  - gst-plugins-ugly
+  - gst-plugins-bad
+KDE_PLASMA_APPLETS:
+  - plasma5-applets-active-window-control
+  - plasma5-applets-thermal-monitor
+KDE_PLASMA_APPLETS_AUR:
+  - plasma5-applets-latte-separator
+  - plasma5-applets-latte-spacer
+  - plasma5-applets-netspeed
+  - plasma5-applets-tiledmenu

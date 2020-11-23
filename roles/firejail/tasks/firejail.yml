@@ -5,6 +5,8 @@
       - firejail
     state: present
   become: yes
+  notify:
+    - activate user profiles
   tags:
     - print_action
 
@@ -57,5 +59,5 @@
   tags:
     - print_action
 
-- include: mapping.yaml
+- include: mapping.yml
   when: MAP_SYSTEM_APPLICATIONS | default(True)

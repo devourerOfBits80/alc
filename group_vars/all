@@ -96,6 +96,7 @@ UFW_ENABLED: True
 TRUSTED_ADDRESSES_AND_SUBNETS:
 #    - 192.168.0.0/24
     - 192.168.1.0/24
+GUFW_ENABLED: False     # GUI for Uncomplicated Firewall
 
 # Peripheral devices
 SAMBA_SERVER_ENABLED: True
@@ -155,3 +156,6 @@ THESAURUS_PACKAGES:
     - libmythes
     - mythes-en
     - mythes-pl
+
+# KDE Plasma configuration
+KDE_CONNECT_ENABLED: True

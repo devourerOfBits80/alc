@@ -1,0 +1,48 @@
+---
+- name: Install KWallet PAM integration
+  pacaur:
+    name:
+      - kwallet-pam
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an ssh-add helper that uses kwallet and kpassworddialog
+  pacaur:
+    name:
+      - ksshaskpass
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the autostart scripts directory
+  file:
+    path: ~/.config/autostart-scripts
+    state: directory
+  tags:
+    - print_action
+
+- name: Copy the ssh-add autostart script
+  copy:
+    src: ssh-add.sh
+    dest: ~/.config/autostart-scripts/ssh-add.sh
+    mode: 0755
+  tags:
+    - print_action
+
+- name: Create the KDE Plasma workspace environment directory
+  file:
+    path: ~/.config/plasma-workspace/env
+    state: directory
+  tags:
+    - print_action
+
+- name: Copy the askpass workspace environment script
+  copy:
+    src: askpass.sh
+    dest: ~/.config/plasma-workspace/env/askpass.sh
+    mode: 0755
+  tags:
+    - print_action

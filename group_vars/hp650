@@ -56,3 +56,9 @@ SSH_AGENT_ENABLED: False
 # Backup (rdiff-backup)
 USER_ACCOUNTS_BACKUP: False
 FCRON_SERVICE_ENABLED: False
+
+
+### DESKTOP ENVIRONMENT ###
+
+# KDE Plasma configuration
+KDE_CONNECT_ENABLED: False

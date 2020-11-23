@@ -1,0 +1,16 @@
+---
+- name: Install XDG user directories package
+  pacaur:
+    name:
+      - xdg-user-dirs
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create default user directories
+  command: xdg-user-dirs-update --force
+  environment:
+    LC_ALL: C
+  tags:
+    - print_action

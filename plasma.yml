@@ -5,4 +5,6 @@
   roles:
     - { role: firejail, tags: ['firejail'] }
     - { role: language-checking, tags: ['language-checking'] }
+    - { role: x, tags: ['x'] }
+    - { role: plasma, tags: ['plasma'] }
     - { role: finalize, tags: ['finalize'] }

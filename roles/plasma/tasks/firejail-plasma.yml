@@ -1,0 +1,112 @@
+---
+- name: Map pavucontrol-qt to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/pavucontrol-qt
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Ark to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/ark
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Dolphin to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/dolphin
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Kate to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/kate
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map KCalc to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/kcalc
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map KFind to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/kfind
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map KNotes to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/knotes
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Okular to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/okular
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Spectacle to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/spectacle
+    state: link
+  become: yes
+  tags:
+    - print_action
+    - firejail
+
+- name: Map K3b to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/k3b
+    state: link
+  become: yes
+  when: OPTICAL_DISC_DRIVE_SUPPORTED | default(False)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Skanlite to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/skanlite
+    state: link
+  become: yes
+  when: SANE_SUPPORTED | default(True)
+  tags:
+    - print_action
+    - firejail

@@ -1,0 +1,37 @@
+---
+KDE_PLASMA_APPLICATIONS:
+  - ark
+  - dolphin
+  - filelight
+  - kamoso
+  - kate
+  - kbackup
+  - kcalc
+  - kcharselect
+  - kdf
+  - kfind
+  - kgpg
+  - kleopatra
+  - kmousetool
+  - knotes
+  - kompare
+  - konsole
+  - kteatime
+  - ktimer
+  - kwalletmanager
+  - okular
+  - partitionmanager
+  - print-manager
+  - spectacle
+  - sweeper
+KDE_PLASMA_EXTENSIONS:
+  - dolphin-plugins
+  - ffmpegthumbs
+  - kdegraphics-mobipocket
+  - kdegraphics-thumbnailers
+  - kdenetwork-filesharing
+  - kdepim-addons
+  - kdialog
+  - keditbookmarks
+  - kio-gdrive
+  - kipi-plugins

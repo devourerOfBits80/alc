@@ -1,0 +1,39 @@
+---
+- name: Install KDE Connect
+  pacaur:
+    name:
+      - kdeconnect
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy KDE Connect UFW custom rule
+  copy:
+    src: ufw-kdeconnect
+    dest: /etc/ufw/applications.d/ufw-kdeconnect
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Update KDE Connect UFW application definition
+  command: ufw app update KDEConnect
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Allow connections to the KDE Connect ports
+  ufw:
+    name: KDEConnect
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
