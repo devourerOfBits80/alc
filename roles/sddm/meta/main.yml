@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: validators }
+  - { role: gnome-keyring }
+  - { role: avatar }

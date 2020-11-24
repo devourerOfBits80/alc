@@ -1,0 +1,49 @@
+---
+- name: Install GNOME Keyring packages
+  pacaur:
+    name:
+      - gnome-keyring
+      - libsecret
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the PAM login file that supports gnome-keyring-daemon autostarting
+  copy:
+    src: login.pam
+    dest: /etc/pam.d/login
+    mode: 0644
+  become: yes
+  tags:
+    - print_action
+
+- name: Enable the GNOME Keyring for the Bash shell applications
+  blockinfile:
+    path: ~/.bash_profile
+    block: '{{ lookup("file", role_path + "/files/gnome-keyring.sh") }}'
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} the rule for starting the GNOME Keyring for shell applications'
+    state: present
+    create: yes
+  when: >
+    (SHELL_GNOME_KEYRING_ENABLED | default(False)) and
+    (USER.SHELL is defined and USER.SHELL is search("/bin/bash"))
+  tags:
+    - print_action
+
+- name: Enable the GNOME Keyring for the Zsh shell applications
+  blockinfile:
+    path: ~/.zshenv
+    block: '{{ lookup("file", role_path + "/files/gnome-keyring.sh") }}'
+    marker_begin: '# Begin'
+    marker_end: '# End'
+    marker: '{mark} the rule for starting the GNOME Keyring for shell applications'
+    state: present
+    create: yes
+  when: >
+    (SHELL_GNOME_KEYRING_ENABLED | default(False)) and
+    (USER.SHELL is not defined or USER.SHELL is search("/bin/zsh"))
+  tags:
+    - print_action

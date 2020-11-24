@@ -1,0 +1,49 @@
+---
+- name: Install SDDM packages
+  pacaur:
+    name:
+      - sddm
+      - sddm-kcm
+      - qt5-virtualkeyboard
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Push the SDDM configuration file
+  template:
+    src: sddm.conf.j2
+    dest: /etc/sddm.conf
+    mode: 0644
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the SDDM Xsetup configuration script
+  lineinfile:
+    path: /usr/share/sddm/scripts/Xsetup
+    line: 'setxkbmap "{{ X_KEYBOARD_MAP | default("en_US") }}"'
+    state: present
+    create: yes
+    mode: 0755
+  become: yes
+  tags:
+    - print_action
+
+- name: Set permissions to the home directory for the SDDM user
+  command: 'setfacl -m u:sddm:x ~/'
+  tags:
+    - print_action
+
+- name: Set permissions to the avatar link for the SDDM user
+  command: 'setfacl -m u:sddm:r ~/.face.icon'
+  tags:
+    - print_action
+
+- name: Enable SDDM service
+  service:
+    name: sddm.service
+    enabled: yes
+  become: yes
+  tags:
+    - print_action

@@ -1,13 +1,4 @@
 ---
-- name: Map makepkg script to Firejail
-  file:
-    src: /usr/bin/firejail
-    path: /usr/local/bin/makepkg
-    state: link
-  become: yes
-  tags:
-    - print_action
-
 - name: Map nano editor to Firejail
   file:
     src: /usr/bin/firejail

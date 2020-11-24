@@ -1,0 +1,51 @@
+[Autologin]
+# If true and User and Session are set automatic login will kick in again on
+# session exit, otherwise it will work only the first time.
+Relogin=false
+
+# Name of the session to automatically log in when the system starts first
+# time.
+Session=
+
+# Name of the user to automatically log in when the system starts first time.
+User=
+
+
+[General]
+# Halt command.
+HaltCommand=/usr/bin/systemctl poweroff
+
+# Set the Qt input method for the greeter.
+InputMethod=qtvirtualkeyboard
+
+# Change numlock state when sddm-greeter starts. Valid values are on, off
+# or none. If property is set to none, numlock won't be changed.
+{% if NUMLOCK_ON_BY_DEFAULT is not defined %}Numlock=none
+{% elif NUMLOCK_ON_BY_DEFAULT %}Numlock=on
+{% else %}Numlock=off
+{% endif %}
+# Reboot command.
+RebootCommand=/usr/bin/systemctl reboot
+
+
+[Theme]
+# Name of the current theme.
+Current=breeze
+
+# Name of the cursor theme to be set before starting the display server.
+CursorTheme=Oxygen_White
+
+
+[Users]
+# Comma-separated list of Shells of users that shouldn't show up in the user
+# list.
+HideShells=/bin/false,/sbin/nologin,/usr/bin/nologin
+
+# Comma-separated list of Users that shouldn't show up in the user list.
+HideUsers=
+
+# Maximum user id of the users to be listed in the user interface.
+MaximumUid=60000
+
+# Minimum user id of the users to be listed in the user interface.
+MinimumUid=1000

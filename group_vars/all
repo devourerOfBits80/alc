@@ -157,5 +157,10 @@ THESAURUS_PACKAGES:
     - mythes-en
     - mythes-pl
 
+# X Window System settings
+X_KEYBOARD_MAP: pl
+NUMLOCK_ON_BY_DEFAULT: True
+
 # KDE Plasma configuration
+SHELL_GNOME_KEYRING_ENABLED: False  # disable or enable GNOME Keyring for applications run through the terminal
 KDE_CONNECT_ENABLED: True
