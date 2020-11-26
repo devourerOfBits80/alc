@@ -115,3 +115,13 @@ For making a full system backup, the *rsync* tool can be used instead of *rdiff-
 ### Firejail
 
 In the second phase of the post-installation process (the desktop environment playbook execution, like *plasma.yml*), *alc* will install the *Firejail*, which is a *SUID* sandbox program. If the *AppArmor* has been installed in the previous phase, *Firejail* will integrate with it and highly increase the system security. In that case, most of the applications will be permanently launching inside the sandbox. To avoid this effect (not recommended), disable the *Firejail* in the *group_vars/all* file using the *FIREJAIL_ENABLED* boolean variable.
+
+### Desktop Environment
+
+*alc* supports installation and configuration of a desktop environment (currently only *KDE Plasma* is available). In this area, there are a few parameters that you may want to change, but the most important is keyboard mapping, a default set to the Polish language. If you wish to set any other language than English, change the *X_KEYBOARD_MAP* variable value to your expectations. Otherwise (for the English language), you can comment on this line. The same rule is related to the *CALENDAR_HOLIDAY_REGIONS* variable. In the case of the commented line, it will have used the United States region (*us_en-us*).
+
+*KDE Plasma* brings with the *KDE Wallet Manager*, where your passwords will be store. To add a new *SSH* key and remember its password in the wallet, use the following command:
+
+> \$ ssh-add /path/to/new/key < /dev/null
+
+Keep in mind that if you want to unlock your *SSH* keys during login, all of them with a name different than *~/.ssh/id_rsa* should be additional declared in the *~/.config/autostart-scripts/ssh-add.sh* file.

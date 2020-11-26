@@ -1,0 +1,14 @@
+---
+- name: Create the local share applications directory
+  file:
+    path: ~/.local/share/applications
+    state: directory
+  changed_when: no
+
+- name: Copy the nvidia-settings desktop entry
+  copy:
+    src: nvidia-settings.desktop
+    dest: ~/.local/share/applications/nvidia-settings.desktop
+    mode: 0600
+  tags:
+    - print_action

@@ -7,5 +7,6 @@
     - { role: language-checking, tags: ['language-checking'] }
     - { role: x, tags: ['x'] }
     - { role: plasma, tags: ['plasma'] }
+    - { role: plasma-theme, tags: ['plasma-theme'] }
     - { role: sddm, tags: ['sddm'] }
     - { role: finalize, tags: ['finalize'] }

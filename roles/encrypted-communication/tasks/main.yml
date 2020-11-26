@@ -21,3 +21,14 @@
     state: present
   tags:
     - print_action
+
+- name: Allow connections to the Mosh ports
+  ufw:
+    name: mosh
+    rule: allow
+  notify:
+    - reload firewall
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw

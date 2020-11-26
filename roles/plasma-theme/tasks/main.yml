@@ -1,0 +1,122 @@
+---
+- name: Create the KDE4 configuration directory
+  file:
+    path: ~/.kde4/share/config
+    state: directory
+  changed_when: no
+
+- name: Copy the kdeglobals configuration file for KDE4
+  copy:
+    src: kde4globals
+    dest: ~/.kde4/share/config/kdeglobals
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy the kdeglobals configuration file for KDE Plasma
+  copy:
+    src: kdeglobals
+    dest: ~/.config/kdeglobals
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push the kcminputrc configuration file
+  template:
+    src: kcminputrc.j2
+    dest: ~/.config/kcminputrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy screen locker configuration file
+  copy:
+    src: kscreenlockerrc
+    dest: ~/.config/kscreenlockerrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy device automounter configuration file
+  copy:
+    src: kded_device_automounterrc
+    dest: ~/.config/kded_device_automounterrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy application launching configuration file
+  copy:
+    src: klaunchrc
+    dest: ~/.config/klaunchrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy clipboard configuration file
+  copy:
+    src: klipperrc
+    dest: ~/.config/klipperrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push the user's trash configuration file
+  template:
+    src: ktrashrc.j2
+    dest: ~/.config/ktrashrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push window manager configuration file
+  template:
+    src: kwinrc.j2
+    dest: ~/.config/kwinrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push the KDE Plasma desktop configuration file
+  template:
+    src: plasma-org.kde.plasma.desktop-appletsrc.j2
+    dest: ~/.config/plasma-org.kde.plasma.desktop-appletsrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push notifications configuration file
+  template:
+    src: plasmanotifyrc.j2
+    dest: ~/.config/plasmanotifyrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Push calendar holiday regions configuration file
+  template:
+    src: plasma_calendar_holiday_regions.j2
+    dest: ~/.config/plasma_calendar_holiday_regions
+    mode: 0600
+  tags:
+    - print_action
+
+- include: gtk.yml
+
+- include: applications.yml
+
+- include: latte-dock.yml
+  when: LATTE_DOCK_ENABLED | default(True)
+
+- name: Check if the Bumblebee package is installed
+  command: pacman -Qi bumblebee
+  register: bumblebee_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: MACHINE_TYPE == 'portable'
+
+- include: nvidia-settings.yml
+  when: >
+    (MACHINE_TYPE == 'portable') and
+    not bumblebee_package_querying_result.failed

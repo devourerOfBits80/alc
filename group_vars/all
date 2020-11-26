@@ -163,4 +163,7 @@ NUMLOCK_ON_BY_DEFAULT: True
 
 # KDE Plasma configuration
 SHELL_GNOME_KEYRING_ENABLED: False  # disable or enable GNOME Keyring for applications run through the terminal
+LATTE_DOCK_ENABLED: True
 KDE_CONNECT_ENABLED: True
+TASKBAR_ON_TOP: True
+CALENDAR_HOLIDAY_REGIONS: pl_pl

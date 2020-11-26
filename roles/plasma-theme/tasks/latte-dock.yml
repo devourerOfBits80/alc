@@ -1,0 +1,34 @@
+---
+- name: Create the KDE Plasma autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+  changed_when: no
+
+- name: Copy the Latte Dock autostart entry file
+  copy:
+    src: org.kde.latte-dock.desktop
+    dest: ~/.config/autostart/org.kde.latte-dock.desktop
+  tags:
+    - print_action
+
+- name: Create the Latte Dock profiles directory
+  file:
+    path: ~/.config/latte
+    state: directory
+  changed_when: no
+
+- name: Push default Latte Dock profile configuration
+  template:
+    src: Default.layout.latte.j2
+    dest: ~/.config/latte/Default.layout.latte
+  tags:
+    - print_action
+
+- name: Copy the Latte Dock configuration file
+  copy:
+    src: lattedockrc
+    dest: ~/.config/lattedockrc
+    mode: 0600
+  tags:
+    - print_action

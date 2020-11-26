@@ -1,0 +1,16 @@
+[DesktopIcons]
+Size=48
+
+[General]
+fixed=Fira Code,10,-1,5,50,0,0,0,0,0
+shadeSortColumn=true
+
+[Icons]
+Theme=Papirus
+
+[KDE]
+ShowDeleteCommand=false
+SingleClick=false
+
+[PanelIcons]
+Size=32

@@ -1,0 +1,56 @@
+---
+- name: Copy the Konsole configuration file
+  copy:
+    src: konsolerc
+    dest: ~/.config/konsolerc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy the Dolphin file manager configuration file
+  copy:
+    src: dolphinrc
+    dest: ~/.config/dolphinrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy the Kate editor configuration file
+  copy:
+    src: katerc
+    dest: ~/.config/katerc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Create default save location directory for Spectacle
+  file:
+    path: ~/Pictures/Screenshots
+    state: directory
+  tags:
+    - print_action
+
+- name: Push the Spectacle configuration file
+  template:
+    src: spectaclerc.j2
+    dest: ~/.config/spectaclerc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Create default save location directory for Skanlite
+  file:
+    path: ~/Pictures/Scanner
+    state: directory
+  when: SANE_SUPPORTED | default(True)
+  tags:
+    - print_action
+
+- name: Push the Skanlite configuration file
+  template:
+    src: skanliterc.j2
+    dest: ~/.config/skanliterc
+    mode: 0600
+  when: SANE_SUPPORTED | default(True)
+  tags:
+    - print_action

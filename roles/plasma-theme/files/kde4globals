@@ -1,0 +1,19 @@
+[DesktopIcons]
+Size=48
+
+[General]
+shadeSortColumn=true
+
+[Icons]
+Theme=Papirus
+
+[KDE]
+ShowIconsInMenuItems=true
+ShowIconsOnPushButtons=true
+
+[PanelIcons]
+Size=32
+
+[Toolbar style]
+ToolButtonStyle=TextBesideIcon
+ToolButtonStyleOtherToolbars=TextBesideIcon

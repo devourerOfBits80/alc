@@ -1,0 +1,107 @@
+---
+- name: Install a cross-platform process and system utilities module for Python
+  pacaur:
+    name:
+      - python-psutil
+    state: present
+  become: yes
+  changed_when: no
+
+- name: Disable screen reader for GTK
+  dconf:
+    key: "/org/gnome/desktop/a11y/applications/screen-reader-enabled"
+    value: "false"
+  tags:
+    - print_action
+
+- name: Set GTK Cursor Theme
+  dconf:
+    key: "/org/gnome/desktop/interface/cursor-theme"
+    value: "'Oxygen_White'"
+  tags:
+    - print_action
+
+- name: Turn on the animations for GTK
+  dconf:
+    key: "/org/gnome/desktop/interface/enable-animations"
+    value: "true"
+  tags:
+    - print_action
+
+- name: Set GTK font name
+  dconf:
+    key: "/org/gnome/desktop/interface/font-name"
+    value: "'Noto Sans,  10'"
+  tags:
+    - print_action
+
+- name: Set GTK Theme
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'Breeze'"
+  tags:
+    - print_action
+
+- name: Set GTK Icon Theme
+  dconf:
+    key: "/org/gnome/desktop/interface/icon-theme"
+    value: "'Papirus'"
+  tags:
+    - print_action
+
+- name: Set GTK toolbar style
+  dconf:
+    key: "/org/gnome/desktop/interface/toolbar-style"
+    value: "'both-horiz'"
+  tags:
+    - print_action
+
+- name: Set window decoration layout for GTK
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/button-layout"
+    value: "'icon:minimize,maximize,close'"
+  tags:
+    - print_action
+
+- name: Uninstall a cross-platform process and system utilities module for Python
+  pacaur:
+    name:
+      - python-psutil
+    state: absent
+    extra_args: '-s -n'
+  become: yes
+  changed_when: no
+
+- name: Create the GTK3 configuration directory
+  file:
+    path: ~/.config/gtk-3.0
+    state: directory
+  changed_when: no
+
+- name: Copy the GTK3 settings file
+  copy:
+    src: gtk3settings.ini
+    dest: ~/.config/gtk-3.0/settings.ini
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Create XSettings configuration directory
+  file:
+    path: ~/.config/xsettingsd
+    state: directory
+  changed_when: no
+
+- name: Copy XSettings configuration file
+  copy:
+    src: xsettingsd.conf
+    dest: ~/.config/xsettingsd/xsettingsd.conf
+  tags:
+    - print_action
+
+- name: Copy the GTK2 configuration file
+  copy:
+    src: gtkrc
+    dest: ~/.gtkrc-2.0
+  tags:
+    - print_action

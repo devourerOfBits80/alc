@@ -1,0 +1,6 @@
+[General]
+IgnoreSelection=true
+KeepClipboardContents=false
+MaxClipItems=10
+PreventEmptyClipboard=false
+SelectionTextOnly=false
