@@ -1,0 +1,63 @@
+---
+- name: Install KeePass
+  pacaur:
+    name:
+      - keepassxc
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install clipboard support for KeePass
+  pacaur:
+    name: '{{ KEEPASS_CLIPBOARD_SUPPORT_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the KeePass configuration directory
+  file:
+    path: ~/.config/keepassxc
+    state: directory
+  changed_when: no
+
+- name: Copy the KeePass configuration file
+  copy:
+    src: keepassxc
+    dest: ~/.config/keepassxc/keepassxc
+  tags:
+    - print_action
+
+- name: Map KeePass to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/keepassxc
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map KeePass CLI to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/keepassxc-cli
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map KeePass proxy to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/keepassxc-proxy
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

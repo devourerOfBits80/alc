@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Applications (bauh-tray)
+Exec=/usr/bin/bauh-tray
+Icon=bauh

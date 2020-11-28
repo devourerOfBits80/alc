@@ -1,0 +1,9 @@
+[Animation]
+Frames=18
+
+[Appearance]
+BackgroundColorOpacity=80
+Translucency=true
+
+[Window]
+KeepOpen=false

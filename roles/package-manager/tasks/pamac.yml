@@ -1,0 +1,36 @@
+---
+- name: Install Pamac
+  pacaur:
+    name:
+      - pamac-aur
+    state: present
+  tags:
+    - print_action
+
+- name: Install Pamac tray icon using appindicator which feets better in KDE
+  pacaur:
+    name:
+      - pamac-tray-appindicator
+    state: present
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Install ZSH completions for Pamac
+  pacaur:
+    name:
+      - pamac-zsh-completions
+    state: present
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action
+
+- name: Copy the Pamac configuration file
+  copy:
+    src: pamac.conf
+    dest: /etc/pamac.conf
+  become: yes
+  tags:
+    - print_action

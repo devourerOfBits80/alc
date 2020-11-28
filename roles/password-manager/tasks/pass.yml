@@ -1,0 +1,86 @@
+---
+- name: Install pass packages
+  pacaur:
+    name: '{{ PASS_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Import a PGP key that is required by the pass extensions
+  command: 'gpg --recv-keys 06A26D531D56C42D66805049C5469996F0DF68EC'
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action
+
+- name: Install the pass extension for importing data from most of the existing password managers
+  pacaur:
+    name:
+      - pass-import
+    state: present
+  tags:
+    - print_action
+
+- name: Install the pass extension that provides an easy flow for updating passwords
+  pacaur:
+    name:
+      - pass-update
+    state: present
+  tags:
+    - print_action
+
+- name: Install the pass extension for auditing your password repository
+  pacaur:
+    name:
+      - python-zxcvbn
+      - pass-audit
+    state: present
+  tags:
+    - print_action
+
+- name: Install optional dependencies for the pass importing extension
+  pacaur:
+    name:
+      - python-cryptography
+      - python-pykeepass
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create a password store directory
+  file:
+    path: '~{{ PASSWORD_STORE_DIRECTORY }}'
+    state: directory
+  tags:
+    - print_action
+
+- name: Create a password store directory variable in the Bash shell profile file
+  lineinfile:
+    path: ~/.bash_profile
+    regexp: '^#?\s*export\s+PASSWORD_STORE_DIR=(.*)$'
+    line: 'export PASSWORD_STORE_DIR=~{{ PASSWORD_STORE_DIRECTORY }}'
+    state: present
+    create: yes
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- name: Create a password store directory variable in the Zsh shell environment variables file
+  lineinfile:
+    path: ~/.zshenv
+    regexp: '^#?\s*export\s+PASSWORD_STORE_DIR=(.*)$'
+    line: 'export PASSWORD_STORE_DIR=~{{ PASSWORD_STORE_DIRECTORY }}'
+    state: present
+    create: yes
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action
+
+- include: qtpass.yml
+  when: QTPASS_ENABLED | default(True)

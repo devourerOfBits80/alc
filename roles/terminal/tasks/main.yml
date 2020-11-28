@@ -1,0 +1,41 @@
+---
+- name: Install Konsole
+  pacaur:
+    name:
+      - konsole
+    state: present
+  become: yes
+  when: >
+    (TERMINAL_EMULATOR == 'konsole') and
+    not PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Uninstall Konsole
+  pacaur:
+    name:
+      - konsole
+    state: absent
+    extra_args: '-s -n'
+  become: yes
+  changed_when: no
+  when: >
+    (TERMINAL_EMULATOR != 'konsole') and
+    (TERMINAL_EMULATOR != 'yakuake') and
+    PLASMA_DESKTOP_INSTALLED
+
+- include: terminator.yml
+  when: TERMINAL_EMULATOR == 'terminator'
+
+- name: Install Terminology
+  pacaur:
+    name:
+      - terminology
+    state: present
+  become: yes
+  when: TERMINAL_EMULATOR == 'terminology'
+  tags:
+    - print_action
+
+- include: yakuake.yml
+  when: TERMINAL_EMULATOR == 'yakuake'

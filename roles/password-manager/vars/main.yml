@@ -1,0 +1,6 @@
+---
+PASS_PACKAGES:
+  - pass
+  - pass-otp
+  - qrencode
+  - dmenu

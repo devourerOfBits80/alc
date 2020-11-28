@@ -9,4 +9,7 @@
     - { role: plasma, tags: ['plasma'] }
     - { role: plasma-theme, tags: ['plasma-theme'] }
     - { role: sddm, tags: ['sddm'] }
+    - { role: package-manager, tags: ['package-manager'] }
+    - { role: terminal, tags: ['terminal'] }
+    - { role: password-manager, tags: ['password-manager'] }
     - { role: finalize, tags: ['finalize'] }

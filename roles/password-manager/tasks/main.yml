@@ -1,0 +1,15 @@
+---
+- name: Install password generator for creating easily memorable passwords
+  pacaur:
+    name:
+      - pwgen
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- include: pass.yml
+  when: PASSWORD_MANAGER == 'pass'
+
+- include: keepass.yml
+  when: PASSWORD_MANAGER == 'keepass'

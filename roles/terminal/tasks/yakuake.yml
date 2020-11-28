@@ -1,0 +1,17 @@
+---
+- name: Install Yakuake
+  pacaur:
+    name:
+      - yakuake
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the Yakuake configuration file
+  copy:
+    src: yakuakerc
+    dest: ~/.config/yakuakerc
+    mode: 0600
+  tags:
+    - print_action

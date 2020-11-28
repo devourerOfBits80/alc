@@ -1,0 +1,16 @@
+aur: true
+aur_build_only_chosen: true
+aur_remove_build_dir: true
+automatch_providers: true
+check_dependency_breakage: true
+clean_cached: true
+edit_aur_pkgbuild: false
+mirrors_sort_limit: 10
+optimize: true
+refresh_mirrors_startup: false
+repositories: true
+repositories_mthread_download: true
+suggest_optdep_uninstall: true
+suggest_unneeded_uninstall: true
+sync_databases: true
+sync_databases_startup: true

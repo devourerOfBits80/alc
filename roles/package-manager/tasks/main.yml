@@ -1,0 +1,30 @@
+---
+- name: Install Discover
+  pacaur:
+    name:
+      - discover
+    state: present
+  become: yes
+  when: >
+    (PACKAGE_MANAGER == 'discover') and
+    not PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Uninstall Discover
+  pacaur:
+    name:
+      - discover
+    state: absent
+    extra_args: '-s -n'
+  become: yes
+  changed_when: no
+  when: >
+    (PACKAGE_MANAGER != 'discover') and
+    PLASMA_DESKTOP_INSTALLED
+
+- include: pamac.yml
+  when: PACKAGE_MANAGER == 'pamac'
+
+- include: bauh.yml
+  when: PACKAGE_MANAGER == 'bauh'

@@ -141,6 +141,7 @@ FIREJAIL_ENABLED: True
 FIRETOOLS_ENABLED: False    # GUI for Firejail
 FIREJAIL_BLACKLIST:
     - ~/cups-pdf
+    - ~/.password-store
 MAP_SYSTEM_APPLICATIONS: True   # enable or disable applications mapping installed by the 'system.yml' playbook
 
 # Language checking
@@ -167,3 +168,13 @@ LATTE_DOCK_ENABLED: True
 KDE_CONNECT_ENABLED: True
 TASKBAR_ON_TOP: True
 CALENDAR_HOLIDAY_REGIONS: pl_pl
+
+# Package Manager
+PACKAGE_MANAGER: bauh   # set of values: discover, pamac or bauh
+
+# Terminal Emulator
+TERMINAL_EMULATOR: yakuake  # set of values: konsole, terminator, terminology or yakuake
+
+# Password Manager
+#PASSWORD_MANAGER: pass  # set of values: pass or keepass
+QTPASS_ENABLED: True    # it has impact only for the pass manager

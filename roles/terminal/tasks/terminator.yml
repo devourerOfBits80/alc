@@ -1,0 +1,22 @@
+---
+- name: Install Terminator
+  pacaur:
+    name:
+      - terminator
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Terminator configuration directory
+  file:
+    path: ~/.config/terminator
+    state: directory
+  changed_when: no
+
+- name: Copy the Terminator configuration file
+  copy:
+    src: terminator.config
+    dest: ~/.config/terminator/config
+  tags:
+    - print_action

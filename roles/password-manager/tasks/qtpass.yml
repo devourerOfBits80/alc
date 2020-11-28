@@ -1,0 +1,22 @@
+---
+- name: Install multi-platform GUI for pass
+  pacaur:
+    name:
+      - qtpass
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the QtPass configuration directory
+  file:
+    path: ~/.config/IJHack
+    state: directory
+  changed_when: no
+
+- name: Copy the QtPass configuration file
+  copy:
+    src: QtPass.conf
+    dest: ~/.config/IJHack/QtPass.conf
+  tags:
+    - print_action

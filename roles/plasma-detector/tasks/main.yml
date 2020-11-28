@@ -1,0 +1,34 @@
+---
+- name: Check if the KDE Plasma X Sessions entry exists
+  stat:
+    path: /usr/share/xsessions/plasma.desktop
+  register: plasma_desktop_xsessions_entry
+  changed_when: no
+
+- name: Set the KDE Plasma X Sessions entry fact
+  set_fact:
+    PLASMA_DESKTOP_INSTALLED: True
+  changed_when: no
+  when: plasma_desktop_xsessions_entry.stat.exists
+
+- name: Check if the plasma-desktop package is installed
+  command: pacman -Qi plasma-desktop
+  register: plasma_desktop_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: PLASMA_DESKTOP_INSTALLED is not defined
+
+- name: Set the fact that KDE Plasma has been installed
+  set_fact:
+    PLASMA_DESKTOP_INSTALLED: True
+  changed_when: no
+  when: >
+    PLASMA_DESKTOP_INSTALLED is not defined and
+    not plasma_desktop_package_querying_result.failed
+
+- name: Set the fact that KDE Plasma is missing
+  set_fact:
+    PLASMA_DESKTOP_INSTALLED: False
+  changed_when: no
+  when: PLASMA_DESKTOP_INSTALLED is not defined

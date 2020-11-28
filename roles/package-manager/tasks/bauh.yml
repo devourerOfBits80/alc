@@ -1,0 +1,82 @@
+---
+- name: Install bauh (ba-oo) graphical interface for managing packages and applications
+  pacaur:
+    name:
+      - bauh
+    state: present
+  tags:
+    - print_action
+
+- name: Install download utilities for bauh
+  pacaur:
+    name:
+      - wget
+      - axel
+      - aria2
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the Web Applications support for bauh
+  pacaur:
+    name:
+      - python-lxml
+      - python-beautifulsoup4
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the aria2 configuration directory
+  file:
+    path: ~/.config/aria2
+    state: directory
+  changed_when: no
+
+- name: Copy the aria2 configuration file
+  copy:
+    src: aria2.conf
+    dest: ~/.config/aria2/aria2.conf
+  tags:
+    - print_action
+
+- name: Create the bauh configuration directory
+  file:
+    path: ~/.config/bauh
+    state: directory
+  changed_when: no
+
+- name: Push the bauh configuration file
+  template:
+    src: config.yml.j2
+    dest: ~/.config/bauh/config.yml
+  tags:
+    - print_action
+
+- name: Copy the bauh configuration file for ARCH repositories
+  copy:
+    src: arch.yml
+    dest: ~/.config/bauh/arch.yml
+  tags:
+    - print_action
+
+- name: Copy the bauh configuration file for AppImage
+  copy:
+    src: appimage.yml
+    dest: ~/.config/bauh/appimage.yml
+  tags:
+    - print_action
+
+- name: Create the Desktop Environment autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+  changed_when: no
+
+- name: Copy the bauh tray autostart entry file
+  copy:
+    src: bauh_tray.desktop
+    dest: ~/.config/autostart/bauh_tray.desktop
+  tags:
+    - print_action

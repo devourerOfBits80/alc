@@ -40,3 +40,9 @@ BROTHER_SCANNER_IP_ADDRESS: 192.168.1.2
 
 # Backup (rdiff-backup)
 USER_ACCOUNTS_BACKUP: False
+
+
+### DESKTOP ENVIRONMENT ###
+
+# Password Manager
+PASSWORD_MANAGER: pass

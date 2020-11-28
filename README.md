@@ -122,6 +122,14 @@ In the second phase of the post-installation process (the desktop environment pl
 
 *KDE Plasma* brings with the *KDE Wallet Manager*, where your passwords will be store. To add a new *SSH* key and remember its password in the wallet, use the following command:
 
-> \$ ssh-add /path/to/new/key < /dev/null
+> \$ ssh-add /path/to/new/key \< /dev/null
 
-Keep in mind that if you want to unlock your *SSH* keys during login, all of them with a name different than *~/.ssh/id_rsa* should be additional declared in the *~/.config/autostart-scripts/ssh-add.sh* file.
+Keep in mind that if you want to unlock your *SSH* keys during login, all of them with a name different than *~/.ssh/id_rsa* should be additionally declared in the *~/.config/autostart-scripts/ssh-add.sh* file.
+
+### Password Manager
+
+There are available two additional password managers, *pass* and *KeePass* (the *KeePassXC* version), but none of them are applying by default because the desktop environment has an integrated wallet/keyring. To enable the expected one, please uncomment the *PASSWORD_MANAGER* variable in the *group_vars/all* file and set its value as you wish.
+
+To quickly initialize a new password store for the *pass*, generate a [*GnuPG* key pair](#encrypted-communication-gnupg-and-ssh) (if you have not it yet) and finally use the *gpg-id* or *email* to create the encrypted store. Of course, this requires to finalize the desktop environment playbook first.
+
+> \$ pass init \<*gpg-id* or *email*\>

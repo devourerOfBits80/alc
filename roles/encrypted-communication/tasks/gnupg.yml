@@ -17,9 +17,9 @@
   tags:
     - print_action
 
-- name: Create GnuPG home variable in the Bash shell configuration file
+- name: Create the GnuPG home variable in the Bash shell profile file
   lineinfile:
-    path: /home/{{ USER.NAME }}/.bashrc
+    path: /home/{{ USER.NAME }}/.bash_profile
     regexp: '^#?\s*export\s+GNUPGHOME=(.*)$'
     line: 'export GNUPGHOME=~{{ GNUPGHOME }}'
     state: present
@@ -33,7 +33,7 @@
   tags:
     - print_action
 
-- name: Create GnuPG home variable in the Zsh shell environment variables file
+- name: Create the GnuPG home variable in the Zsh shell environment variables file
   lineinfile:
     path: /home/{{ USER.NAME }}/.zshenv
     regexp: '^#?\s*export\s+GNUPGHOME=(.*)$'

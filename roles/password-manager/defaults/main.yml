@@ -1,0 +1,6 @@
+---
+PASSWORD_MANAGER: ""
+PASSWORD_STORE_DIRECTORY: /.password-store  # relative path in the user's home directory
+KEEPASS_CLIPBOARD_SUPPORT_PACKAGES:
+  - wl-clipboard  # Wayland support
+  - xclip # X Server support
