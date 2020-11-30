@@ -54,9 +54,14 @@ For *SSD* drives, it is much better to delete only partitions without disk wipin
 
 ### Connect to the internet
 
-In most cases, the network connection via the ethernet cable should work out of the box. The easiest way to configure the network connection via the wireless *LAN* is using the *wifi-menu*. Alternatively, you can use an approach with the *iwctl* client program from the *[iwd](https://wiki.archlinux.org/index.php/Iwd#iwctl)* package.
+In most cases, the network connection via the ethernet cable should work out of the box. The easiest way to configure the network connection via the wireless *LAN* is using the *iwctl* client program from the *[iwd](https://wiki.archlinux.org/index.php/Iwd#iwctl)* package.
 
-> \$ wifi-menu -o
+> \$ iwctl (launch an interactive prompt)  
+> \[iwd\]\# device list  
+> \[iwd\]\# station *device* scan  
+> \[iwd\]\# station *device* get-networks (list all available *WiFi* networks)  
+> \[iwd\]\# station *device* connect *SSID* (connect to expected network)  
+> \[iwd\]\# exit
 
 The connection status may be verified with *ping* command.
 
@@ -70,9 +75,9 @@ Use *timedatectl* to ensure the system clock is up to date.
 
 ## Partitioning
 
-It is a good idea to leave the recommended minimum amount of free space around 15% to 20% of the disk size in the case of *SSD* drives. To identify all available disks, use the *lsblk* (see above) or *fdisk* command.
+It is a good idea to leave the recommended minimum amount of free space around 15% to 20% of the disk size in the case of *SSD* drives. To list partition layout on all block devices use the *parted* command.
 
-> \$ fdisk -l
+> \$ parted -l
 
 ### Create the partitions
 
@@ -80,11 +85,11 @@ It is a good idea to leave the recommended minimum amount of free space around 1
 
 The suggested layout.
 
-|Mount point on the installed system|Partition|Partition type   |Suggested size         |
-|:----------------------------------|:--------|:----------------|:----------------------|
-|/ (boot flag)                      |/dev/sda1|Linux [ext4]     |32GB (32768MB)         |
-|[SWAP]                             |/dev/sda2|Linux swap [swap]|depends on the RAM size|
-|/home                              |/dev/sda3|Linux [ext4]     |remainder of the device|
+|Mount point on the installed system|Partition|Partition type     |Suggested size         |
+|:----------------------------------|:--------|:------------------|:----------------------|
+|/ (boot flag)                      |/dev/sda1|Linux \[ext4\]     |32GB (32768MB)         |
+|\[SWAP\]                           |/dev/sda2|Linux swap \[swap\]|depends on the RAM size|
+|/home                              |/dev/sda3|Linux \[ext4\]     |remainder of the device|
 
 > \$ parted -s /dev/sda mklabel msdos  
 > \$ parted -s /dev/sda mkpart primary ext4 1MiB 32769MiB  
@@ -100,12 +105,12 @@ You can also use the *Linux* partition table editor to modify or verify the part
 
 The suggested layout.
 
-|Mount point on the installed system|Partition|Partition type            |Suggested size         |
-|:----------------------------------|:--------|:-------------------------|:----------------------|
-|/boot                              |/dev/sda1|EFI System [fat32]        |512MB                  |
-|/                                  |/dev/sda2|Linux root (x86-64) [ext4]|32GB (32768MB)         |
-|[SWAP]                             |/dev/sda3|Linux swap [swap]         |depends on the RAM size|
-|/home                              |/dev/sda4|Linux filesystem [ext4]   |remainder of the device|
+|Mount point on the installed system|Partition|Partition type              |Suggested size         |
+|:----------------------------------|:--------|:---------------------------|:----------------------|
+|/boot                              |/dev/sda1|EFI System \[fat32\]        |512MB                  |
+|/                                  |/dev/sda2|Linux root (x86-64) \[ext4\]|32GB (32768MB)         |
+|\[SWAP\]                           |/dev/sda3|Linux swap \[swap\]         |depends on the RAM size|
+|/home                              |/dev/sda4|Linux filesystem \[ext4\]   |remainder of the device|
 
 > \$ parted -s /dev/sda mklabel gpt  
 > \$ parted -s /dev/sda mkpart primary fat32 1MiB 513MiB  
@@ -219,7 +224,7 @@ Update the encrypted partition(s) with the created keyfile and add proper entrie
 - ***UEFI mode***
 
 > \$ cryptsetup luksAddKey /dev/sda4 /etc/crypttab.key  
-> \$ HOMEUUID=\$(blkid /dev/sda4 | awk '{print \$2}' | cut -d '"' -f2)  
+> \$ HOMEUUID=\$(blkid /dev/sda4 | awk '\{print \$2\}' | cut -d '"' -f2)  
 > \$ echo "home UUID=\$HOMEUUID /etc/crypttab.key luks" >> /etc/crypttab
 
 If the additional drive has been installed and encrypted, follow the steps.
@@ -232,12 +237,12 @@ If the additional drive has been installed and encrypted, follow the steps.
 
 - ***UEFI mode***
 
-> \$ DATAUUID=\$(blkid /dev/sdb1 | awk '{print \$2}' | cut -d '"' -f2)  
+> \$ DATAUUID=\$(blkid /dev/sdb1 | awk '\{print \$2\}' | cut -d '"' -f2)  
 > \$ echo "data UUID=\$DATAUUID /etc/crypttab.key luks" >> /etc/crypttab
 
 ### Set the time zone
 
-> \$ ln -sf /usr/share/zoneinfo/{Region}/{City} /etc/localtime  
+> \$ ln -sf /usr/share/zoneinfo/\{Region\}/\{City\} /etc/localtime  
 > \$ hwclock --systohc
 
 ### Configure localization
@@ -322,8 +327,8 @@ For machines which have issues with writing to the *NVRAM* via the *efibootmgr*,
 Add the *rEFInd* configuration. For *LTS* kernel, replace the *initramfs-linux* expression with *initramfs-linux-lts*. In the case when hibernation is not supported, skip the *resume=PARTUUID=\$SWAPPARTUUID* expression wherever it occurs.
 
 > \$ sed -i 's/^timeout .\*/timeout 2/' /boot/EFI/refind/refind.conf  
-> \$ ROOTPARTUUID=\$(blkid /dev/sda2 | awk '{sub(/.*PARTUUID=/,\_,\$0); print}' | cut -d '"' -f2)  
-> \$ SWAPPARTUUID=\$(blkid /dev/sda3 | awk '{sub(/.*PARTUUID=/,\_,\$0); print}' | cut -d '"' -f2) (only if hibernation is supported)  
+> \$ ROOTPARTUUID=\$(blkid /dev/sda2 | awk '\{sub(/.\*PARTUUID=/,\_,\$0); print\}' | cut -d '"' -f2)  
+> \$ SWAPPARTUUID=\$(blkid /dev/sda3 | awk '\{sub(/.\*PARTUUID=/,\_,\$0); print\}' | cut -d '"' -f2) (only if hibernation is supported)  
 > \$ echo "\"Boot using default options\" \"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap quiet loglevel=3 resume=PARTUUID=\$SWAPPARTUUID initrd=initramfs-linux.img\"" > /boot/refind_linux.conf  
 > \$ echo "\"Boot using fallback initramfs\" \"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap initrd=initramfs-linux-fallback.img\"" >> /boot/refind_linux.conf  
 > \$ echo "\"Boot to terminal\" \"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap quiet loglevel=3 resume=PARTUUID=\$SWAPPARTUUID initrd=initramfs-linux.img systemd.unit=multi-user.target\"" >> /boot/refind_linux.conf
@@ -338,5 +343,5 @@ Add the *rEFInd* configuration. For *LTS* kernel, replace the *initramfs-linux* 
 
 If you need to configure the *Wi-Fi* connection, please login as a root and use the command.
 
-> \$ nmcli dev wifi connect [SSID] password [password]  
+> \$ nmcli dev wifi connect \[SSID\] password \[password\]  
 > \$ history -c

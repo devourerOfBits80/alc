@@ -96,7 +96,7 @@ For using encrypted communication, it is required to have a pair of public and p
 
 To start the encrypted communication between two machines, securely and conveniently, using the SSH protocol without allowing the password authentication, send the public key to the remote server, run the SSH Agent on the local machine, and add to its the private key.
 
-> \$ ssh-copy-id -i ~/.ssh/id_rsa.pub username@remote-server.org (for a non-default SSH server port, use *-p {port}* option)  
+> \$ ssh-copy-id -i ~/.ssh/id_rsa.pub username@remote-server.org (for a non-default SSH server port, use *-p \{port\}* option)  
 > \$ ssh-agent  
 > \$ eval \$(ssh-agent)  
 > \$ ssh-add ~/.ssh/id_rsa
@@ -106,11 +106,11 @@ To start the encrypted communication between two machines, securely and convenie
 *alc* supports user accounts incremental backups, but this option is disabled by default because locally it does not make especial sense if you have not installed a secondary drive. To enable this feature, set the *USER_ACCOUNTS_BACKUP* variable value as *True* and make sure that the *BACKUP_LOCATION* variable has a correct path to the local or remote destination directory. There is also a possibility to define backup jobs later, directly from the user account, as its cron jobs. For example, if you want to backup your *Documents* directory every 10 minutes, you can do the following:
 
 > \$ fcrontab -e (text editor should open)  
-> \*/10 \* \* \* \* /usr/bin/rdiff-backup /home/{user}/Documents /path/to/backup (type, save and exit)
+> \*/10 \* \* \* \* /usr/bin/rdiff-backup /home/\{user\}/Documents /path/to/backup (type, save and exit)
 
 For making a full system backup, the *rsync* tool can be used instead of *rdiff-backup*. Remember that the command below has to be executed with the root privileges.
 
-> \$ rsync -aAXHv --exclude={"/dev/\*","/proc/\*","/sys/\*","/tmp/\*","/run/\*","/mnt/\*","/media/\*","/lost+found"} / /path/to/backup
+> \$ rsync -aAXHv --exclude=\{"/dev/\*","/proc/\*","/sys/\*","/tmp/\*","/run/\*","/mnt/\*","/media/\*","/lost\+found"\} / /path/to/backup
 
 ### Firejail
 

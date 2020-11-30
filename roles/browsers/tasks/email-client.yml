@@ -14,7 +14,7 @@
 - name: Push the email client configuration file for Plasma Desktop
   template:
     src: emaildefaults.j2
-    path: ~/.config/emaildefaults
+    dest: ~/.config/emaildefaults
     mode: 0600
   when: PLASMA_DESKTOP_INSTALLED
   tags:

@@ -5,11 +5,12 @@
 {% else %}#--ignore-gpu-blocklist
 #--enable-gpu-rasterization
 #--enable-zero-copy
-{% endif %}{% if PLASMA_DESKTOP_INSTALLED %}
+{% endif %}
 
 # Enable native Wayland support
---enable-features=UseOzonePlatform
---ozone-platform=wayland
+#--enable-features=UseOzonePlatform
+#--ozone-platform=wayland
+{% if PLASMA_DESKTOP_INSTALLED %}
 
 # Force the KWallet password store
 --password-store=kwallet5
