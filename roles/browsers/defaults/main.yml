@@ -1,0 +1,6 @@
+---
+WEB_BROWSERS:
+  - chromium
+FIREFOX_PACKAGES:
+  - firefox
+  - firefox-adblock-plus

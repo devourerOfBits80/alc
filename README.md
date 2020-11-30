@@ -133,3 +133,7 @@ There are available two additional password managers, *pass* and *KeePass* (the 
 To quickly initialize a new password store for the *pass*, generate a [*GnuPG* key pair](#encrypted-communication-gnupg-and-ssh) (if you have not it yet) and finally use the *gpg-id* or *email* to create the encrypted store. Of course, this requires to finalize the desktop environment playbook first.
 
 > \$ pass init \<*gpg-id* or *email*\>
+
+### WEB Browsers
+
+The last step of executing the second phase playbook (desktop environment) is the WEB Browser installation. By using the *WEB_BROWSERS* list variable, there is a possibility to define one or more browsers that will have installed. In this area, there are available *Chromium*, *Google Chrome*, *Opera*, *Vivaldi*, *Brave*, and *Firefox*. The first list item will be the default system browser, and the last one, the temporary email client. If there is only one browser declared, it will set for both mentioned responsibilities.

@@ -12,4 +12,5 @@
     - { role: package-manager, tags: ['package-manager'] }
     - { role: terminal, tags: ['terminal'] }
     - { role: password-manager, tags: ['password-manager'] }
+    - { role: browsers, tags: ['browsers'] }
     - { role: finalize, tags: ['finalize'] }

@@ -1,0 +1,39 @@
+---
+- name: Install Brave
+  pacaur:
+    name:
+      - brave-bin
+    state: present
+  tags:
+    - print_action
+
+- name: Push the Brave configuration file
+  template:
+    src: chromium-flags.conf.j2
+    dest: ~/.config/brave-flags.conf
+  tags:
+    - print_action
+
+- name: Map Brave to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/brave
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Brave access to /etc
+  lineinfile:
+    path: /etc/firejail/brave.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

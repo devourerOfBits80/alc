@@ -42,3 +42,9 @@ USER_ACCOUNTS_BACKUP: True
 
 # Password Manager
 PASSWORD_MANAGER: pass
+
+# WEB Browsers
+WEB_BROWSERS:
+    - opera
+    - chromium
+FORCE_GPU_ACCELERATION: True

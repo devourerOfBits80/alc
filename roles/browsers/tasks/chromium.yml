@@ -1,0 +1,40 @@
+---
+- name: Install Chromium
+  pacaur:
+    name:
+      - chromium
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Push the Chromium configuration file
+  template:
+    src: chromium-flags.conf.j2
+    dest: ~/.config/chromium-flags.conf
+  tags:
+    - print_action
+
+- name: Map Chromium to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/chromium
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Chromium access to /etc
+  lineinfile:
+    path: /etc/firejail/chromium.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

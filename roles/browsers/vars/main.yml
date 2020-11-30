@@ -1,0 +1,10 @@
+---
+VIRTUAL_ETC_ITEMS: group,hostname,hosts,localtime,passwd,asound.conf,nsswitch.conf,resolv.conf,mime.types,firejail,fonts,pulse
+BROWSER_MIMETYPES:
+  - 'application/xml'
+  - 'application/xhtml+xml'
+  - 'text/xml'
+  - 'text/mml'
+  - 'text/html'
+  - 'x-scheme-handler/http'
+  - 'x-scheme-handler/https'

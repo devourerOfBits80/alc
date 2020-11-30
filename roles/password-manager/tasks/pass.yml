@@ -7,12 +7,22 @@
   tags:
     - print_action
 
+- name: Copy the pass extensions code signing key file
+  copy:
+    src: 0xc5469996f0df68ec.asc
+    dest: ~/0xc5469996f0df68ec.asc
+  changed_when: no
+
 - name: Import a PGP key that is required by the pass extensions
-  command: 'gpg --recv-keys 06A26D531D56C42D66805049C5469996F0DF68EC'
-  ignore_errors: yes
-  no_log: yes
+  command: 'gpg --import ~/0xc5469996f0df68ec.asc'
   tags:
     - print_action
+
+- name: Delete the pass extensions code signing key file
+  file:
+    path: ~/0xc5469996f0df68ec.asc
+    state: absent
+  changed_when: no
 
 - name: Install the pass extension for importing data from most of the existing password managers
   pacaur:

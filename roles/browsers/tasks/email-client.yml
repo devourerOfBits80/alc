@@ -1,0 +1,38 @@
+---
+- name: Set an email client fact for Google Chrome
+  set_fact:
+    EMAIL_CLIENT: google-chrome-stable
+  changed_when: no
+  when: EMAIL_CLIENT == 'google-chrome'
+
+- name: Set an email client fact for Vivaldi
+  set_fact:
+    EMAIL_CLIENT: vivaldi-stable
+  changed_when: no
+  when: EMAIL_CLIENT == 'vivaldi'
+
+- name: Push the email client configuration file for Plasma Desktop
+  template:
+    src: emaildefaults.j2
+    path: ~/.config/emaildefaults
+    mode: 0600
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Update an email client fact for Google Chrome
+  set_fact:
+    EMAIL_CLIENT: google-chrome
+  changed_when: no
+  when: EMAIL_CLIENT == 'google-chrome-stable'
+
+- name: Update an email client fact for Brave
+  set_fact:
+    EMAIL_CLIENT: brave-browser
+  changed_when: no
+  when: EMAIL_CLIENT == 'brave'
+
+- name: Assign the browser as an email client to relevant MimeType
+  command: 'xdg-mime default {{ EMAIL_CLIENT }}.desktop x-scheme-handler/mailto'
+  tags:
+    - print_action

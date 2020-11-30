@@ -1,0 +1,91 @@
+---
+- include: chromium.yml
+  when: '"chromium" in WEB_BROWSERS'
+
+- include: google-chrome.yml
+  when: '"google-chrome" in WEB_BROWSERS'
+
+- include: opera.yml
+  when: '"opera" in WEB_BROWSERS'
+
+- include: vivaldi.yml
+  when: '"vivaldi" in WEB_BROWSERS'
+
+- include: brave.yml
+  when: '"brave" in WEB_BROWSERS'
+
+- include: firefox.yml
+  when: '"firefox" in WEB_BROWSERS'
+
+- name: Install Flash Player PPAPI version
+  pacaur:
+    name:
+      - pepper-flash
+    state: present
+  become: yes
+  when: >
+    ("chromium" in WEB_BROWSERS) or
+    ("opera" in WEB_BROWSERS) or
+    ("vivaldi" in WEB_BROWSERS)
+  tags:
+    - print_action
+
+- name: Install a browser plug-in for Java support
+  pacaur:
+    name:
+      - jre-openjdk
+      - icedtea-web
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a library for sending desktop notifications
+  pacaur:
+    name:
+      - libnotify
+    state: present
+  become: yes
+  when: >
+    ("vivaldi" in WEB_BROWSERS) or
+    ("brave" in WEB_BROWSERS) or
+    ("firefox" in WEB_BROWSERS)
+  tags:
+    - print_action
+
+- name: Install browsers integration components for Plasma Desktop
+  pacaur:
+    name:
+      - plasma-browser-integration
+    state: present
+  become: yes
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Install a simple script to vacuum and reindex sqlite databases used by browsers
+  pacaur:
+    name:
+      - profile-cleaner
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Set a default browser fact
+  set_fact:
+    DEFAULT_BROWSER: '{{ WEB_BROWSERS | first }}'
+  changed_when: no
+  when: WEB_BROWSERS != None
+
+- include: default-browser.yml
+  when: DEFAULT_BROWSER is defined
+
+- name: Set a temporary email client fact
+  set_fact:
+    EMAIL_CLIENT: '{{ WEB_BROWSERS | last }}'
+  changed_when: no
+  when: WEB_BROWSERS != None
+
+- include: email-client.yml
+  when: EMAIL_CLIENT is defined

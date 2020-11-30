@@ -1,0 +1,39 @@
+---
+- name: Install Google Chrome
+  pacaur:
+    name:
+      - google-chrome
+    state: present
+  tags:
+    - print_action
+
+- name: Push the Google Chrom configuration file
+  template:
+    src: chromium-flags.conf.j2
+    dest: ~/.config/chrome-flags.conf
+  tags:
+    - print_action
+
+- name: Map Google Chrome to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/google-chrome-stable
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Google Chrome access to /etc
+  lineinfile:
+    path: /etc/firejail/google-chrome-stable.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

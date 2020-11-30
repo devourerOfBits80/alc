@@ -1,0 +1,44 @@
+---
+- name: Install Opera packages
+  pacaur:
+    name:
+      - opera
+      - opera-ffmpeg-codecs
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Opera battery save
+  pacaur:
+    name:
+      - upower
+    state: present
+  become: yes
+  when: MACHINE_TYPE == 'portable'
+  tags:
+    - print_action
+
+- name: Map Opera to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/opera
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Opera access to /etc
+  lineinfile:
+    path: /etc/firejail/opera.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

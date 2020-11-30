@@ -70,3 +70,8 @@ PACKAGE_MANAGER: pamac
 
 # Terminal Emulator
 TERMINAL_EMULATOR: konsole
+
+# WEB Browsers
+WEB_BROWSERS:
+    - opera
+    - google-chrome

@@ -177,4 +177,17 @@ TERMINAL_EMULATOR: yakuake  # set of values: konsole, terminator, terminology or
 
 # Password Manager
 #PASSWORD_MANAGER: pass  # set of values: pass or keepass
-QTPASS_ENABLED: True    # it has impact only for the pass manager
+QTPASS_ENABLED: True    # it only affects the pass (GUI for pass)
+
+# WEB Browsers
+WEB_BROWSERS:   # set of values: chromium, google-chrome, opera, vivaldi, brave or firefox
+    - chromium  # the first one will be the default system browser
+    - vivaldi   # the last one will be the temporary email client
+# affects the Chromium, Google Chrome and Brave
+#FORCE_GPU_ACCELERATION: True
+#BROWSER_DARK_MODE_ENABLED: True
+# affects the Firefox
+#FIREFOX_PACKAGES:
+#  - firefox
+#  - firefox-i18n-pl
+#  - firefox-adblock-plus

@@ -1,0 +1,42 @@
+---
+- name: Install Vivaldi packages
+  pacaur:
+    name:
+      - vivaldi
+      - vivaldi-ffmpeg-codecs
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Vivaldi update FFmpeg hook
+  pacaur:
+    name:
+      - vivaldi-update-ffmpeg-hook
+    state: present
+  tags:
+    - print_action
+
+- name: Map Vivaldi to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/vivaldi-stable
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Vivaldi access to /etc
+  lineinfile:
+    path: /etc/firejail/vivaldi-stable.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

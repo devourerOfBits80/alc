@@ -1,0 +1,36 @@
+---
+- name: Set a default browser fact for Vivaldi
+  set_fact:
+    DEFAULT_BROWSER: vivaldi-stable
+  changed_when: no
+  when: DEFAULT_BROWSER == 'vivaldi'
+
+- name: Set a default browser fact for Brave
+  set_fact:
+    DEFAULT_BROWSER: brave-browser
+  changed_when: no
+  when: DEFAULT_BROWSER == 'brave'
+
+- name: Set a default WEB browser
+  command: 'xdg-settings set default-web-browser {{ DEFAULT_BROWSER }}.desktop'
+  tags:
+    - print_action
+
+- name: Set a default WEB browser for Plasma Desktop
+  lineinfile:
+    path: ~/.config/kdeglobals
+    regexp: '^BrowserApplication\[\$e\]=(.*)$'
+    line: 'BrowserApplication[$e]={{ DEFAULT_BROWSER }}.desktop'
+    insertafter: '^\[General\]$'
+    state: present
+    create: yes
+  changed_when: no
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Assign the default WEB browser to relevant MimeTypes
+  command: 'xdg-mime default {{ DEFAULT_BROWSER }}.desktop {{ item }}'
+  with_items: '{{ BROWSER_MIMETYPES }}'
+  tags:
+    - print_action

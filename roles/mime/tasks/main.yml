@@ -1,0 +1,27 @@
+---
+- name: Install command line tools that assist applications with a variety of desktop integration tasks
+  pacaur:
+    name:
+      - xdg-utils
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install command line utilities for working with desktop entries
+  pacaur:
+    name:
+      - desktop-file-utils
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the Freedesktop.org Shared MIME Info
+  pacaur:
+    name:
+      - shared-mime-info
+    state: present
+  become: yes
+  tags:
+    - print_action

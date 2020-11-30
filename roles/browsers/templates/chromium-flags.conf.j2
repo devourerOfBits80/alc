@@ -1,0 +1,23 @@
+# Force GPU acceleration
+{% if FORCE_GPU_ACCELERATION | default(false) %}--ignore-gpu-blocklist
+--enable-gpu-rasterization
+--enable-zero-copy
+{% else %}#--ignore-gpu-blocklist
+#--enable-gpu-rasterization
+#--enable-zero-copy
+{% endif %}{% if PLASMA_DESKTOP_INSTALLED %}
+
+# Enable native Wayland support
+--enable-features=UseOzonePlatform
+--ozone-platform=wayland
+
+# Force the KWallet password store
+--password-store=kwallet5
+{% endif %}
+
+# Enable browser Dark Mode
+{% if BROWSER_DARK_MODE_ENABLED | default(false) %}--force-dark-mode
+--enable-features=WebUIDarkMode
+{% else %}#--force-dark-mode
+#--enable-features=WebUIDarkMode
+{% endif %}
