@@ -1,0 +1,57 @@
+---
+- name: Install NeoMutt
+  pacaur:
+    name:
+      - neomutt
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the NeoMutt configuration directory
+  file:
+    path: ~/.config/neomutt
+    state: directory
+  changed_when: no
+
+- name: Copy the Gmail minimal configuration example for NeoMutt
+  copy:
+    src: neomuttrc
+    dest: ~/.config/neomutt/neomuttrc
+  tags:
+    - print_action
+
+- name: Copy the Firejail profile for NeoMutt
+  copy:
+    src: neomutt.profile
+    dest: ~/.config/firejail/neomutt.profile
+  notify:
+    - activate user profiles
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map NeoMutt to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/neomutt
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Mutt access to /etc
+  lineinfile:
+    path: /etc/firejail/mutt.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

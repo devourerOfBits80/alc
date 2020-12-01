@@ -1,0 +1,13 @@
+---
+KMAIL_PACKAGES:
+  - kmail
+  - kaddressbook
+  - kontact
+  - korganizer
+THUNDERBIRD_PACKAGES:
+  - thunderbird
+  - thunderbird-extension-enigmail
+LIBCANBERRA_PACKAGES:
+  - libcanberra
+  - libcanberra-gstreamer
+  - libcanberra-pulse

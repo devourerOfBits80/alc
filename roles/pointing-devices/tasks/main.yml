@@ -8,6 +8,12 @@
   tags:
     - print_action
 
+- name: Create the X11 xorg.conf.d configuration directory
+  file:
+    path: /etc/X11/xorg.conf.d
+    state: directory
+  changed_when: no
+
 - name: Copy touchpad configuration file
   copy:
     src: 30-touchpad.conf

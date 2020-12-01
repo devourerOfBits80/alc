@@ -1,0 +1,17 @@
+---
+- include: kmail.yml
+  when: '"kmail" in EMAIL_CLIENTS'
+
+- include: thunderbird.yml
+  when: '"thunderbird" in EMAIL_CLIENTS'
+
+- include: neomutt.yml
+  when: '"neomutt" in EMAIL_CLIENTS'
+
+- name: Set a default email client fact
+  set_fact:
+    DEFAULT_EMAIL_CLIENT: '{{ EMAIL_CLIENTS | first }}'
+  changed_when: no
+
+- include: default-email-client.yml
+  when: DEFAULT_EMAIL_CLIENT != 'neomutt'

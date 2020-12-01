@@ -1,0 +1,40 @@
+---
+- name: Install Thunderbird packages
+  pacaur:
+    name: '{{ THUNDERBIRD_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Thunderbird sound support
+  pacaur:
+    name: '{{ LIBCANBERRA_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Thunderbird to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/thunderbird
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict Thunderbird access to /etc
+  lineinfile:
+    path: /etc/firejail/thunderbird.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

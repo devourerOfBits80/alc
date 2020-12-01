@@ -1,0 +1,3 @@
+---
+- include: email-clients.yml
+  when: (EMAIL_CLIENTS | default([]) | length) > 0

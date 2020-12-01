@@ -1,0 +1,61 @@
+# Minimal NeoMutt configuration for Gmail account
+
+# Use an encrypted password (see: https://wiki.archlinux.org/index.php/mutt#Passwords_management)
+#source "gpg -dq $HOME/.my-pwds.gpg |"
+
+# Use the inline password (not recommended - if you are going to use an encrypted one, comment it)
+set my_pass             = "password"
+
+# Set IMAP username and password
+set imap_user           = "your.username@gmail.com"
+set imap_pass           = $my_pass
+
+# Set mailboxes location
+set folder              = "imaps://imap.gmail.com/"
+set spoolfile           = +INBOX
+set postponed           = +[Gmail]/Drafts
+set trash               = +[Gmail]/Trash
+
+# Disable saving outgoing messages (Gmail saves them by default)
+unset record
+
+# Set folders that should be checked regularly for new mail
+mailboxes               = +INBOX
+
+# Store message headers locally to speed things up
+set header_cache        = "~/.cache/neomutt/headers"
+
+# Store messages locally to speed things up, like searching message bodies
+set message_cachedir    = "~/.cache/neomutt/bodies"
+
+# Allow NeoMutt to open a new IMAP connection automatically
+unset imap_passive
+
+# Keep the IMAP connection alive by polling intermittently (time in seconds)
+set imap_keepalive      = 300
+
+# Set new mail checking interval (time in seconds)
+set mail_check          = 120
+
+# Add personal data for outgoing messages
+set realname            = "Your Fullname"
+set from                = $imap_user
+set use_from            = yes
+
+# Set SMTP password
+set smtp_pass           = $imap_pass
+
+# Set SMTP connection details
+set smtp_url            = "smtps://$imap_user:$imap_pass@smtp.gmail.com"
+set ssl_force_tls       = yes
+unset ssl_starttls
+
+# Configure sidebar
+set sidebar_visible     = yes
+set sidebar_format      = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats    = yes
+
+# Miscellaneous
+set beep                = no
+set sort                = threads
+set sort_aux            = last-date-received

@@ -134,7 +134,7 @@ BACKUP_LOCATION: /data/.backup/home     # it can be a remote SSH connection (eg.
 DAILY_BACKUP: False    # if disabled, a backup is made weekly
 
 
-### DESKTOP ENVIRONMENT ###
+### DESKTOP ENVIRONMENT PLAYBOOK SETTINGS ###
 
 # SUID sandbox configuration
 FIREJAIL_ENABLED: True
@@ -188,6 +188,18 @@ WEB_BROWSERS:   # set of values: chromium, google-chrome, opera, vivaldi, brave 
 #BROWSER_DARK_MODE_ENABLED: True
 # affects the Firefox
 #FIREFOX_PACKAGES:
-#  - firefox
-#  - firefox-i18n-pl
-#  - firefox-adblock-plus
+#    - firefox
+#    - firefox-i18n-pl
+#    - firefox-adblock-plus
+
+
+### APPLICATIONS PLAYBOOK SETTINGS ###
+
+# Email Clients
+#EMAIL-CLIENTS:      # set of values: kmail, thunderbird or neomutt
+#    - thunderbird   # the first one will be the default system email client (except for the NeoMutt)
+#    - neomutt
+#THUNDERBIRD_PACKAGES:
+#    - thunderbird
+#    - thunderbird-i18n-pl
+#    - thunderbird-extension-enigmail

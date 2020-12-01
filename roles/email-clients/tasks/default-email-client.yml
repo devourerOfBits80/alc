@@ -1,0 +1,22 @@
+---
+- name: Set a default email client for Plasma Desktop
+  lineinfile:
+    path: ~/.config/emaildefaults
+    regexp: '^EmailClient\[\$e\]=(.*)$'
+    line: 'EmailClient[$e]=/usr/bin/{{ DEFAULT_EMAIL_CLIENT }} %U'
+    insertafter: '^\[PROFILE_(.*)\]$'
+    state: present
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Update a default email client fact for KMail
+  set_fact:
+    DEFAULT_EMAIL_CLIENT: org.kde.kmail2
+  changed_when: no
+  when: DEFAULT_EMAIL_CLIENT == 'kmail'
+
+- name: Assign the default email client to relevant MimeType
+  command: 'xdg-mime default {{ DEFAULT_EMAIL_CLIENT }}.desktop x-scheme-handler/mailto'
+  tags:
+    - print_action

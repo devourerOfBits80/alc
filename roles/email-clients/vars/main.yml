@@ -1,0 +1,2 @@
+---
+VIRTUAL_ETC_ITEMS: group,hostname,hosts,localtime,passwd,asound.conf,nsswitch.conf,resolv.conf,mime.types,firejail,fonts,pulse

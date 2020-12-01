@@ -1,0 +1,7 @@
+---
+- name: alc applications playbook
+  hosts: vm:desktop:portable:hp650:msigl63:msib85g43
+  become: no
+  roles:
+    - { role: email-clients, tags: ['email-clients'] }
+    - { role: finalize, tags: ['finalize'] }

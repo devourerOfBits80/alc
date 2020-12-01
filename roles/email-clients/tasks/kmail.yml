@@ -1,0 +1,32 @@
+---
+- name: Install KMail packages
+  pacaur:
+    name: '{{ KMAIL_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map KMail to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/kmail
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict KMail access to /etc
+  lineinfile:
+    path: /etc/firejail/kmail.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
