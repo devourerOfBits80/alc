@@ -1,0 +1,8 @@
+[General]
+JPEGQuality=80
+
+[MainWindow]
+ToolBarsMovable=Disabled
+
+[ThumbnailView]
+ListVideos=false

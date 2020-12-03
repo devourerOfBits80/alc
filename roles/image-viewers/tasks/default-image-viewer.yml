@@ -1,0 +1,24 @@
+---
+- name: Set a default image viewer fact for Gwenview
+  set_fact:
+    DEFAULT_IMAGE_VIEWER: org.kde.gwenview
+  changed_when: no
+  when: DEFAULT_IMAGE_VIEWER == 'gwenview'
+
+- name: Set a default image viewer fact for nomacs
+  set_fact:
+    DEFAULT_IMAGE_VIEWER: org.nomacs.ImageLounge
+  changed_when: no
+  when: DEFAULT_IMAGE_VIEWER == 'nomacs'
+
+- name: Set a default image viewer fact for Showfoto
+  set_fact:
+    DEFAULT_IMAGE_VIEWER: org.kde.showfoto
+  changed_when: no
+  when: DEFAULT_IMAGE_VIEWER == 'digikam'
+
+- name: Assign the default image viewer to relevant MimeTypes
+  command: 'xdg-mime default {{ DEFAULT_IMAGE_VIEWER }}.desktop {{ item }}'
+  with_items: '{{ IMAGE_VIEWER_MIMETYPES }}'
+  tags:
+    - print_action

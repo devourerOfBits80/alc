@@ -1,0 +1,44 @@
+---
+- name: Install digiKam packages
+  pacaur:
+    name:
+      - qt5-imageformats
+      - digikam
+      - digikam-plugin-gmic
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map digiKam to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/digikam
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Copy the Showfoto Firejail profile
+  copy:
+    src: showfoto.profile
+    dest: ~/.config/firejail/showfoto.profile
+  notify:
+    - activate user profiles
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Showfoto to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/showfoto
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

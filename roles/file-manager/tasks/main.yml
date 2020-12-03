@@ -1,0 +1,6 @@
+---
+- include: krusader.yml
+  when: FILE_MANAGER == 'krusader'
+
+- include: doublecmd.yml
+  when: FILE_MANAGER == 'double-commander'

@@ -208,3 +208,12 @@ LIBREOFFICE_PACKAGES:
     - libreoffice-still-pl
 #UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True  # Pandoc
 MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura
+
+# File Manager
+#FILE_MANAGER: krusader  # set of values: double-commander or krusader
+#DOUBLE_COMMANDER_GTK_VERSION: True
+
+# Image Viewers
+IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
+    - qimgv     # the first one will be the default system image viewer
+    - digikam

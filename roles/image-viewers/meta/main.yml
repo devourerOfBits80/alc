@@ -1,5 +1,5 @@
 ---
 dependencies:
+  - { role: init }
   - { role: firejail-activator }
   - { role: mime }
-  - { role: plasma-detector }

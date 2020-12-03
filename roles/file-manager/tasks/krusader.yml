@@ -1,0 +1,26 @@
+---
+- name: Install a very powerful batch file renamer
+  pacaur:
+    name:
+      - krename
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an advanced twin panel (commander style) file manager
+  pacaur:
+    name:
+      - krusader
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the Krusader configuration file
+  copy:
+    src: krusaderrc
+    dest: ~/.config/krusaderrc
+    mode: 0600
+  tags:
+    - print_action

@@ -1,4 +1,5 @@
 ---
 dependencies:
   - { role: init }
-  - { role: plasma_detector }
+  - { role: mime }
+  - { role: plasma-detector }

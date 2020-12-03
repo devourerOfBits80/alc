@@ -1,17 +1,12 @@
-[General]
-Close After Last=false
-Config Revision=10
-Days Meta Infos=30
-Modified Notification=false
-Quick Open Search Mode=0
-Recent File List Entry Count=10
-Restore Window Configuration=true
-Save Meta Infos=true
-Show Full Path in Title=false
-Show Menu Bar=true
-Show Status Bar=true
-Show Tab Bar=true
-Startup Session=manual
+[Advanced]
+AutoMount=true
+
+[Custom Selection Mode]
+Immediate Context Menu=false
+Left Selects=false
+Right Preserves=true
+ShiftCtrl Left Selects=true
+Space Moves Down=false
 
 [KTextEditor Document]
 Allow End of Line Detection=true
@@ -47,7 +42,7 @@ Word Wrap Column=120
 
 [KTextEditor Editor]
 Encoding Prober Type=1
-Fallback Encoding=ISO 8859-1
+Fallback Encoding=ISO-8859-1
 
 [KTextEditor Renderer]
 Animate Bracket Matching=false
@@ -101,5 +96,22 @@ Word Completion=true
 Word Completion Minimal Word Length=3
 Word Completion Remove Tail=true
 
-[MainWindow]
-ToolBarsMovable=Disabled
+[ListPanelButtons]
+Icons=true
+
+[Look&Feel]
+Equal Button Visible=true
+History Button Visible=false
+Home Button Visible=true
+Mouse Selection=2
+Numeric permissions=true
+Single Instance Mode=true
+Tab Bar Position=top
+
+[Startup]
+Left Side Is Active=true
+Show Cmd Line=false
+Show FN Keys=true
+Show Terminal Emulator=false
+Show status bar=true
+Vertical Mode=false

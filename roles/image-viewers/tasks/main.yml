@@ -1,0 +1,21 @@
+---
+- include: gwenview.yml
+  when: '"gwenview" in IMAGE_VIEWERS'
+
+- include: nomacs.yml
+  when: '"nomacs" in IMAGE_VIEWERS'
+
+- include: qimgv.yml
+  when: '"qimgv" in IMAGE_VIEWERS'
+
+- include: digikam.yml
+  when: '"digikam" in IMAGE_VIEWERS'
+
+- name: Set a default image viewer fact
+  set_fact:
+    DEFAULT_IMAGE_VIEWER: '{{ IMAGE_VIEWERS | first }}'
+  changed_when: no
+  when: IMAGE_VIEWERS | length > 0
+
+- include: default-image-viewer.yml
+  when: DEFAULT_IMAGE_VIEWER is defined

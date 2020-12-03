@@ -1,0 +1,20 @@
+---
+- name: Install a twin-panel (commander-style) file manager (GTK version)
+  pacaur:
+    name:
+      - doublecmd-gtk2
+    state: present
+  become: yes
+  when: DOUBLE_COMMANDER_GTK_VERSION
+  tags:
+    - print_action
+
+- name: Install a twin-panel (commander-style) file manager (Qt5 version)
+  pacaur:
+    name:
+      - doublecmd-qt5
+    state: present
+  become: yes
+  when: not DOUBLE_COMMANDER_GTK_VERSION
+  tags:
+    - print_action

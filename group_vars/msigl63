@@ -62,3 +62,6 @@ EMAIL_CLIENTS:
 
 # Office Tools
 UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
+
+# File Manager
+FILE_MANAGER: krusader

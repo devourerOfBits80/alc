@@ -18,6 +18,7 @@
 #KillOnlyUsers=
 #KillExcludeUsers=root
 #InhibitDelayMaxSec=5
+#UserStopDelaySec=10
 HandlePowerKey=poweroff
 HandleSuspendKey=suspend
 HandleHibernateKey=hibernate
@@ -28,10 +29,12 @@ HandleLidSwitchDocked=ignore
 #HandleLidSwitchExternalPower=suspend
 #HandleLidSwitchDocked=ignore
 {% endif %}
+HandleRebootKey=reboot
 #PowerKeyIgnoreInhibited=no
 #SuspendKeyIgnoreInhibited=no
 #HibernateKeyIgnoreInhibited=no
 #LidSwitchIgnoreInhibited=yes
+#RebootKeyIgnoreInhibited=no
 #HoldoffTimeoutSec=30s
 #IdleAction=ignore
 #IdleActionSec=30min

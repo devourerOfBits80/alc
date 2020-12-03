@@ -7,5 +7,4 @@ ZATHURA_PACKAGES:
   - zathura-cb
   - zathura-djvu
   - zathura-pdf-mupdf
-  - zathura-pdf-poppler
   - zathura-ps

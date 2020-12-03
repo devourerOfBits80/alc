@@ -81,3 +81,7 @@ WEB_BROWSERS:
 
 # Office Tools
 MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: False
+
+# Image Viewers
+IMAGE_VIEWERS:
+    - qimgv
