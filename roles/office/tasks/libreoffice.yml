@@ -1,0 +1,70 @@
+---
+- name: Install LibreOffice packages
+  pacaur:
+    name: '{{ LIBREOFFICE_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install LaTeX extensions
+  pacaur:
+    name: '{{ LATEX_EXTENSIONS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an OpenJDK Java 8 full runtime environment
+  pacaur:
+    name:
+      - jre8-openjdk
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an Open Source style and grammar checker
+  pacaur:
+    name:
+      - libreoffice-extension-languagetool
+    state: present
+  tags:
+    - print_action
+
+- name: Map LibreOffice to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items: '{{ LIBREOFFICE_FIREJAIL_ITEMS }}'
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict LibreOffice access to internet connections
+  lineinfile:
+    path: /etc/firejail/libreoffice.local
+    regexp: '^#?\s*net(.*)$'
+    line: 'net none'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Restrict LibreOffice access to /etc
+  lineinfile:
+    path: /etc/firejail/libreoffice.local
+    regexp: '^#?\s*private-etc(.*)$'
+    line: 'private-etc group,hostname,localtime,passwd,mime.types,firejail,fonts,libreoffice'
+    state: present
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

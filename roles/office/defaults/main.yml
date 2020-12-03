@@ -1,0 +1,11 @@
+---
+LIBREOFFICE_PACKAGES:
+  - libreoffice-still
+  - libreoffice-still-en-gb
+ZATHURA_PACKAGES:
+  - zathura
+  - zathura-cb
+  - zathura-djvu
+  - zathura-pdf-mupdf
+  - zathura-pdf-poppler
+  - zathura-ps

@@ -4,4 +4,5 @@
   become: no
   roles:
     - { role: email-clients, tags: ['email-clients'] }
+    - { role: office, tags: ['office'] }
     - { role: finalize, tags: ['finalize'] }

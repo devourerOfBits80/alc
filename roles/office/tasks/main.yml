@@ -1,0 +1,29 @@
+---
+- include: libreoffice.yml
+
+- include: pandoc.yml
+  when: UNIVERSAL_DOCUMENT_CONVERTER_ENABLED | default(False)
+
+- name: Set default PDF viewer fact for Plasma Desktop
+  set_fact:
+    DEFAULT_PDF_VIEWER: org.kde.okular
+  changed_when: no
+  when: PLASMA_DESKTOP_INSTALLED
+
+- include: zathura.yml
+  when: MINIMALISTIC_DOCUMENT_VIEWER_ENABLED | default(True)
+
+- name: Assign a default PDF viewer to relevant MimeType
+  command: 'xdg-mime default {{ DEFAULT_PDF_VIEWER }}.desktop application/pdf'
+  when: DEFAULT_PDF_VIEWER is defined
+  tags:
+    - print_action
+
+- name: Install a tool to search text in PDF files
+  pacaur:
+    name:
+      - pdfgrep
+    state: present
+  become: yes
+  tags:
+    - print_action

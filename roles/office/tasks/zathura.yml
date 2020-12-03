@@ -1,0 +1,40 @@
+---
+- name: Install Zathura packages
+  pacaur:
+    name: '{{ ZATHURA_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Zathura configuration directory
+  file:
+    path: ~/.config/zathura
+    state: directory
+  changed_when: no
+
+- name: Enable copy to clipboard
+  lineinfile:
+    path: ~/.config/zathura/zathurarc
+    regexp: '^#?\s*set\s+selection-clipboard(.*)$'
+    line: 'set selection-clipboard clipboard'
+    state: present
+    create: yes
+  tags:
+    - print_action
+
+- name: Map Zathura to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/zathura
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Set default PDF viewer fact for Zathura
+  set_fact:
+    DEFAULT_PDF_VIEWER: org.pwmt.zathura
+  changed_when: no

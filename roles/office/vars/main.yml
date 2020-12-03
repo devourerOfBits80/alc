@@ -1,0 +1,20 @@
+---
+LATEX_EXTENSIONS:
+  - jre-openjdk-headless
+  - jre-openjdk
+  - texlive-core
+  - texlive-latexextra
+  - libreoffice-extension-texmaths
+  - libreoffice-extension-writer2latex
+LIBREOFFICE_FIREJAIL_ITEMS:
+  - libreoffice
+  - lobase
+  - localc
+  - lodraw
+  - loffice
+  - lofromtemplate
+  - loimpress
+  - lomath
+  - loweb
+  - lowriter
+  - soffice

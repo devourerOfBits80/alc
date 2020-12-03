@@ -140,7 +140,6 @@ DAILY_BACKUP: False    # if disabled, a backup is made weekly
 FIREJAIL_ENABLED: True
 FIRETOOLS_ENABLED: False    # GUI for Firejail
 FIREJAIL_BLACKLIST:
-    - ~/cups-pdf
     - ~/.password-store
 MAP_SYSTEM_APPLICATIONS: True   # enable or disable applications mapping installed by the 'system.yml' playbook
 
@@ -196,10 +195,16 @@ WEB_BROWSERS:   # set of values: chromium, google-chrome, opera, vivaldi, brave 
 ### APPLICATIONS PLAYBOOK SETTINGS ###
 
 # Email Clients
-#EMAIL-CLIENTS:      # set of values: kmail, thunderbird or neomutt
+#EMAIL_CLIENTS:      # set of values: kmail, thunderbird or neomutt
 #    - thunderbird   # the first one will be the default system email client (except for the NeoMutt)
-#    - neomutt
 #THUNDERBIRD_PACKAGES:
 #    - thunderbird
 #    - thunderbird-i18n-pl
 #    - thunderbird-extension-enigmail
+
+# Office Tools
+LIBREOFFICE_PACKAGES:
+    - libreoffice-still
+    - libreoffice-still-pl
+#UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True  # Pandoc
+MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura

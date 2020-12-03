@@ -43,14 +43,13 @@
     - print_action
     - firejail
 
-- name: Restrict Mutt access to /etc
+- name: Restrict NeoMutt access to /etc
   lineinfile:
-    path: /etc/firejail/mutt.local
+    path: ~/.config/firejail/neomutt.local
     regexp: '^#?\s*private-etc(.*)$'
     line: 'private-etc {{ VIRTUAL_ETC_ITEMS }}'
     state: present
     create: yes
-  become: yes
   when: FIREJAIL_ENABLED | default(True)
   tags:
     - print_action

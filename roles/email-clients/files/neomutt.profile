@@ -1,12 +1,65 @@
 # Firejail profile for NeoMutt
 # Description: Text-based mailreader supporting MIME, GPG, PGP and threading
-# Persistent Mutt definitions
-include /etc/firejail/mutt.profile
-# Persistent global definitions
-include /etc/firejail/globals.local
 # Persistent local customizations
 include neomutt.local
+# Persistent global definitions
+include /etc/firejail/globals.local
 
+noblacklist /var/mail
+noblacklist /var/spool/mail
+noblacklist ${HOME}/.Mail
+noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.cache/mutt
 noblacklist ${HOME}/.cache/neomutt
+noblacklist ${HOME}/.config/mutt
+noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.config/neomutt
+noblacklist ${HOME}/.elinks
+noblacklist ${HOME}/.emacs
+noblacklist ${HOME}/.emacs.d
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mail
+noblacklist ${HOME}/.msmtprc
+noblacklist ${HOME}/.mutt
+noblacklist ${HOME}/.muttrc
+noblacklist ${HOME}/.nanorc
+noblacklist ${HOME}/.neomutt
 noblacklist ${HOME}/.neomuttrc
+noblacklist ${HOME}/.signature
+noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.viminfo
+noblacklist ${HOME}/.vimrc
+noblacklist ${HOME}/.w3m
+noblacklist ${HOME}/Mail
+noblacklist ${HOME}/mail
+noblacklist ${HOME}/postponed
+noblacklist ${HOME}/sent
+
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
+
+include disable-common.inc
+include disable-devel.inc
+include disable-passwdmgr.inc
+include disable-programs.inc
+
+include whitelist-runuser-common.inc
+
+caps.drop all
+netfilter
+no3d
+nodvd
+nogroups
+nonewprivs
+noroot
+nosound
+notv
+nou2f
+novideo
+protocol unix,inet,inet6
+seccomp
+shell none
+
+private-dev
+writable-run-user
+writable-var

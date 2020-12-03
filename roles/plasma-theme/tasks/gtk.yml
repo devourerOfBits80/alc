@@ -1,4 +1,13 @@
 ---
+- name: Install a Material Design theme for GTK
+  pacaur:
+    name:
+      - materia-gtk-theme
+    state: present
+  become: yes
+  tags:
+    - print_action
+
 - name: Install a cross-platform process and system utilities module for Python
   pacaur:
     name:
