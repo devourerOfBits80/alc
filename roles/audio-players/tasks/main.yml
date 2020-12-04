@@ -1,0 +1,41 @@
+---
+- name: Install audio codecs and utils
+  pacaur:
+    name: '{{ AUDIO_CODECS_AND_UTILS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- include: clementine.yml
+  when: '"clementine" in AUDIO_PLAYERS'
+
+- include: audacious.yml
+  when: '"audacious" in AUDIO_PLAYERS'
+
+- include: mpd.yml
+  when: '"mpd" in AUDIO_PLAYERS' or '"cantata" in AUDIO_PLAYERS'
+
+- include: cmus.yml
+  when: '"cmus" in AUDIO_PLAYERS'
+
+- include: spotify.yml
+  when: '"spotify" in AUDIO_PLAYERS'
+
+- name: Set a default audio player fact
+  set_fact:
+    DEFAULT_AUDIO_PLAYER: '{{ AUDIO_PLAYERS | first }}'
+  changed_when: no
+  when: AUDIO_PLAYERS | length > 0
+
+- include: default-audio-player.yml
+  when: >
+    DEFAULT_AUDIO_PLAYER is defined and
+    (DEFAULT_AUDIO_PLAYER != 'cmus') and
+    (DEFAULT_AUDIO_PLAYER != 'spotify')
+
+- include: kid3.yml
+  when: ID3TAG_EDITOR == 'kid3'
+
+- include: picard.yml
+  when: ID3TAG_EDITOR == 'picard'

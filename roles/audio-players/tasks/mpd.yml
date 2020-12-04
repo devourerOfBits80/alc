@@ -1,0 +1,85 @@
+---
+- name: Install mpd service
+  pacaur:
+    name:
+      - mpd
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the mpd playlists directory
+  file:
+    path: ~/.config/mpd/playlists
+    state: directory
+  changed_when: no
+  tags:
+    - print_action
+
+- name: Copy the mpd service configuration file
+  copy:
+    src: mpd.conf
+    dest: ~/.config/mpd/mpd.conf
+  tags:
+    - print_action
+
+- name: Enable the mpd service socket
+  systemd:
+    name: mpd.socket
+    enabled: yes
+    scope: user
+  tags:
+    - print_action
+
+- name: Map mpd service to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/mpd
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Extend the mpd service internet connection protocols
+  lineinfile:
+    path: /etc/firejail/mpd.local
+    regexp: '^#?\s*protocol(.*)$'
+    line: 'protocol unix,inet,inet6,netlink'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Install a minimalist command line interface for mpd service
+  pacaur:
+    name:
+      - mpc
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Cantata Qt5 client for mpd service
+  pacaur:
+    name:
+      - cantata
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Cantata to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/cantata
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

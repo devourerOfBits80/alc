@@ -1,0 +1,15 @@
+---
+AUDIO_CODECS_AND_UTILS:
+  - faad2
+  - ffmpeg
+  - flac
+  - lame
+  - libcue
+  - libmodplug
+  - libmpcdec
+  - libvorbis
+  - mpg123
+  - wavpack
+AUDIO_PLAYERS:
+  - clementine
+ID3TAG_EDITOR: ""

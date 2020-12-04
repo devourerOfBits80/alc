@@ -7,4 +7,5 @@
     - { role: office, tags: ['office'] }
     - { role: file-manager, tags: ['file-manager'] }
     - { role: image-viewers, tags: ['image-viewers'] }
+    - { role: audio-players, tags: ['audio-players'] }
     - { role: finalize, tags: ['finalize'] }

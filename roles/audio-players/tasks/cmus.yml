@@ -1,0 +1,33 @@
+---
+- name: Install C* MUsic Player
+  pacaur:
+    name:
+      - cmus
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the C* MUsic Player configuration directory
+  file:
+    path: ~/.config/cmus
+    state: directory
+  changed_when: no
+
+- name: Copy the C* MUsic Player autosave file
+  copy:
+    src: cmus.autosave
+    dest: ~/.config/cmus/autosave
+  tags:
+    - print_action
+
+- name: Map C* MUsic Player to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/cmus
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

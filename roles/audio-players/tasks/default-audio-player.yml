@@ -1,0 +1,12 @@
+---
+- name: Set a default audio player fact for mpd service
+  set_fact:
+    DEFAULT_AUDIO_PLAYER: cantata
+  changed_when: no
+  when: DEFAULT_AUDIO_PLAYER == 'mpd'
+
+- name: Assign the default audio player to relevant MimeTypes
+  command: 'xdg-mime default {{ DEFAULT_AUDIO_PLAYER }}.desktop {{ item }}'
+  with_items: '{{ AUDIO_PLAYER_MIMETYPES }}'
+  tags:
+    - print_action

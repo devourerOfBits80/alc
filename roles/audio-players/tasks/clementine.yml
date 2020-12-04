@@ -1,0 +1,33 @@
+---
+- name: Install Clementine
+  pacaur:
+    name:
+      - clementine
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Clementine configuration directory
+  file:
+    path: ~/.config/Clementine
+    state: directory
+  changed_when: no
+
+- name: Copy the Clementine configuration file
+  copy:
+    src: Clementine.conf
+    dest: ~/.config/Clementine/Clementine.conf
+  tags:
+    - print_action
+
+- name: Map Clementine to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/clementine
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

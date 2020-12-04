@@ -1,0 +1,57 @@
+---
+- name: Install Audacious
+  pacaur:
+    name:
+      - audacious
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install MIDI plugins for Audacious
+  pacaur:
+    name:
+      - fluidsynth
+      - freepats-general-midi
+      - soundfont-fluid
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Audacious skins directory
+  file:
+    path: ~/.local/share/audacious/Skins
+    state: directory
+  changed_when: no
+
+- name: Copy the Winamp Classic skin for Audacious
+  copy:
+    src: winamp.wsz
+    dest: ~/.local/share/audacious/Skins/Winamp_Classic.wsz
+  tags:
+    - print_action
+
+- name: Create the Audacious configuration directory
+  file:
+    path: ~/.config/audacious
+    state: directory
+  changed_when: no
+
+- name: Push the Audacious configuration file
+  template:
+    src: audacious.j2
+    dest: ~/.config/audacious/config
+  tags:
+    - print_action
+
+- name: Map Audacious to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/audacious
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

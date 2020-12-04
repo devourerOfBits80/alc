@@ -217,3 +217,9 @@ MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura
 IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
     - qimgv     # the first one will be the default system image viewer
     - digikam
+
+# Audio Players
+AUDIO_PLAYERS:      # set of values: clementine, audacious, mpd (cantata), cmus or spotify
+    - clementine    # the first one will be the default system audio player (except for the C* MUsic Player and Spotify)
+    - spotify
+#ID3TAG_EDITOR: picard   # set of values: kid3 or picard

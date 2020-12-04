@@ -65,3 +65,9 @@ UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
 
 # File Manager
 FILE_MANAGER: krusader
+
+# Audio Players
+AUDIO_PLAYERS:
+    - audacious
+    - cmus
+ID3TAG_EDITOR: picard

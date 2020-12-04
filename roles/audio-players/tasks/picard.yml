@@ -1,0 +1,44 @@
+---
+- name: Install MusicBrainz Picard
+  pacaur:
+    name:
+      - picard
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the MusicBrainz Picard optional dependencies
+  pacaur:
+    name:
+      - chromaprint
+      - qt5-multimedia
+      - qt5-translations
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the MusicBrainz Picard configuration directory
+  file:
+    path: ~/.config/MusicBrainz
+    state: directory
+  changed_when: no
+
+- name: Copy the MusicBrainz Picard configuration file
+  copy:
+    src: Picard.ini
+    dest: ~/.config/MusicBrainz/Picard.ini
+  tags:
+    - print_action
+
+- name: Map MusicBrainz Picard to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/picard
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
