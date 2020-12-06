@@ -8,4 +8,5 @@
     - { role: file-manager, tags: ['file-manager'] }
     - { role: image-viewers, tags: ['image-viewers'] }
     - { role: audio-players, tags: ['audio-players'] }
+    - { role: video-players, tags: ['video-players'] }
     - { role: finalize, tags: ['finalize'] }

@@ -89,3 +89,7 @@ IMAGE_VIEWERS:
 # Audio Players
 AUDIO_PLAYERS:
     - audacious
+
+# Video Players
+VIDEO_PLAYERS:
+    - mpv

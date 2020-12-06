@@ -223,3 +223,16 @@ AUDIO_PLAYERS:      # set of values: clementine, audacious, mpd (cantata), cmus 
     - clementine    # the first one will be the default system audio player (except for the C* MUsic Player and Spotify)
     - spotify
 #ID3TAG_EDITOR: picard   # set of values: kid3 or picard
+
+# Video Players
+VIDEO_PLAYERS:  # set of values: dragon, mpv, vlc or kodi
+    - mpv       # the first one will be the default system video player (except for KODI)
+    - kodi
+YOUTUBE_DL_ENABLED: True
+QNAPI_SUBTITLES_DOWNLOADER_ENABLED: True
+#SUBTITLE_EDITOR: aegisub    # set of values: aegisub or gaupol
+# affects the mpv, vlc and partially youtube-dl
+AUDIO_LANGUAGES: pl,en
+SUBTITLE_LANGUAGES: pl,en
+# affects the mpv (be careful with this option)
+#HIGH_QUALITY_VIDEO_RENDERING: True

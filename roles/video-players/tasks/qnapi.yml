@@ -1,0 +1,16 @@
+---
+- name: Install Qt5 client for downloading movie subtitles
+  pacaur:
+    name:
+      - qnapi
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the QNapi configuration file
+  copy:
+    src: qnapi.ini
+    dest: ~/.config/qnapi.ini
+  tags:
+    - print_action

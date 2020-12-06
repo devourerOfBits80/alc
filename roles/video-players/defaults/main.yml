@@ -1,0 +1,12 @@
+---
+VIDEO_CODECS:
+  - libmpeg2
+  - x264
+  - x265
+  - xvidcore
+VIDEO_PLAYERS:
+  - dragon
+HIGH_QUALITY_VIDEO_RENDERING: False
+AUDIO_LANGUAGES: en
+SUBTITLE_LANGUAGES: en
+SUBTITLE_EDITOR: ""

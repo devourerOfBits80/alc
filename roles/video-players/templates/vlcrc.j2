@@ -1,0 +1,86 @@
+###
+###  vlc
+###
+
+###
+### lines beginning with a '#' character are comments
+###
+
+[freetype] # Freetype2 font renderer
+
+# Font (string)
+freetype-font=Bitstream Vera Sans
+
+# Monospace Font (string)
+freetype-monofont=Hack
+
+# Outline thickness (integer)
+freetype-outline-thickness=6
+
+[equalizer] # Equalizer with 10 bands
+
+# Equalizer preset (string)
+equalizer-preset=fullbasstreble
+
+# Global gain (float)
+equalizer-preamp=4.000000
+
+[qt] # Qt interface
+
+# Systray icon (boolean)
+qt-system-tray=0
+
+# Show notification popup on track change (integer)
+qt-notification=0
+
+# Pause the video playback when minimized (boolean)
+qt-pause-minimized=1
+
+# Ask for network policy at start (boolean)
+qt-privacy-ask=0
+
+[jpeg] # JPEG image decoder
+
+# Quality level (integer)
+sout-jpeg-quality=80
+
+[core] # core program
+
+# Audio output module (string)
+aout=any
+
+# Media role (string)
+role=video
+
+# Audio visualizations (string)
+audio-visual=any
+
+# Hide cursor and fullscreen controller after x milliseconds (integer)
+mouse-hide-timeout=500
+
+# Video snapshot directory (or filename) (string)
+snapshot-path=/home/{{ USER.NAME }}/Pictures/Screenshots
+
+# Video snapshot file prefix (string)
+snapshot-prefix=VLC_SCRNSHOT_
+
+# Video snapshot format (string)
+snapshot-format=png
+
+# Video output module (string)
+vout=any
+
+# Audio language (string)
+audio-language={{ AUDIO_LANGUAGES }}
+
+# Subtitle language (string)
+sub-language={{ SUBTITLE_LANGUAGES }}
+
+# Menu language (string)
+menu-language={{ SUBTITLE_LANGUAGES }}
+
+# Allow only one running instance (boolean)
+one-instance=1
+
+# Allow metadata network access (boolean)
+metadata-network-access=1

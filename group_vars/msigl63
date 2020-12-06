@@ -71,3 +71,8 @@ AUDIO_PLAYERS:
     - audacious
     - cmus
 ID3TAG_EDITOR: picard
+
+# Video Players
+VIDEO_PLAYERS:
+    - mpv
+HIGH_QUALITY_VIDEO_RENDERING: True

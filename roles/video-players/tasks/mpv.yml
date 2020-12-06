@@ -1,0 +1,49 @@
+---
+- name: Install mpv
+  pacaur:
+    name:
+      - mpv
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the mpv scripts directory
+  file:
+    path: ~/.config/mpv/scripts
+    state: directory
+  changed_when: no
+
+- name: Push the mpv configuration file
+  template:
+    src: mpv.conf.j2
+    dest: ~/.config/mpv/mpv.conf
+  tags:
+    - print_action
+
+- name: Map mpv to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/mpv
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Install the MPRIS (Media Player Remote Interface Spec) plugin for mpv
+  pacaur:
+    name:
+      - mpv-mpris
+    state: present
+  tags:
+    - print_action
+
+- name: Create a link to the mpv MPRIS script
+  file:
+    src: /usr/lib/mpv/mpris.so
+    dest: ~/.config/mpv/scripts/mpris.so
+    state: link
+  tags:
+    - print_action

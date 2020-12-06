@@ -1,0 +1,48 @@
+---
+- name: Install VLC media player
+  pacaur:
+    name:
+      - vlc
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a Chromecast support for VLC media player
+  pacaur:
+    name:
+      - libmicrodns
+      - protobuf
+    state: present
+  become: yes
+  when: NETBIOS_WINS_HOST_NAMES_RESOLVING | default(True)
+  tags:
+    - print_action
+
+- name: Create the VLC media player configuration directory
+  file:
+    path: ~/.config/vlc
+    state: directory
+  changed_when: no
+
+- name: Push the VLC media player configuration file
+  template:
+    src: vlcrc.j2
+    dest: ~/.config/vlc/vlcrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Map VLC media player to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - cvlc
+    - vlc
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

@@ -10,12 +10,9 @@ SECONDARY_DRIVE: /dev/sdb
 OPTICAL_DISC_DRIVE_SUPPORTED: True
 BLUETOOTH_SUPPORTED: True
 BLUETOOTH_ENABLED: True
-INTEGRATED_GPU_DRIVERS:
-    - xf86-video-intel
-    - vulkan-intel
-    - libva-intel-driver
-GUC_HUC_FIRMWARE_LOADING_ENABLED: False
-INTEL_FASTBOOT_ENABLED: False
+DISCRETE_GPU_DRIVERS:
+    - nvidia
+    - nvidia-settings
 LOGITECH_SOLAAR_ENABLED: True
 
 # Uncomplicated Firewall configuration
@@ -67,3 +64,10 @@ AUDIO_PLAYERS:
     - audacious
     - mpd
 ID3TAG_EDITOR: picard
+
+# Video Players
+VIDEO_PLAYERS:
+    - mpv
+    - vlc
+SUBTITLE_EDITOR: aegisub
+HIGH_QUALITY_VIDEO_RENDERING: True

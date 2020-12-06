@@ -1,0 +1,14 @@
+--ignore-errors
+
+#--no-playlist
+--yes-playlist
+
+--buffer-size 2048
+
+# Output filename template (save in ~/Videos/YouTube)
+-o ~/Videos/YouTube/%(autonumber)s-%(title)s.%(ext)s
+
+# Prefer 1080p or lower video resolutions
+-f bestvideo[ext=mp4][height<1200]+bestaudio[ext=m4a]/bestvideo[ext=webm][height<1200]+bestaudio[ext=webm]/bestvideo[height<1200]+bestaudio/best[height<1200]/best
+
+--sub-lang {{ SUBTITLE_LANGUAGES }}

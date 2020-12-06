@@ -1,0 +1,64 @@
+---
+- name: Install video codecs
+  pacaur:
+    name: '{{ VIDEO_CODECS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the screenshots directory for video players
+  file:
+    path: ~/Pictures/Screenshots
+    state: directory
+  tags:
+    - print_action
+
+- include: dragon.yml
+  when: '"dragon" in VIDEO_PLAYERS'
+
+- include: mpv.yml
+  when: '"mpv" in VIDEO_PLAYERS'
+
+- include: vlc.yml
+  when: '"vlc" in VIDEO_PLAYERS'
+
+- include: kodi.yml
+  when: '"kodi" in VIDEO_PLAYERS'
+
+- name: Set a default video player fact
+  set_fact:
+    DEFAULT_VIDEO_PLAYER: '{{ VIDEO_PLAYERS | first }}'
+  changed_when: no
+  when: VIDEO_PLAYERS | length > 0
+
+- include: default-video-player.yml
+  when: >
+    DEFAULT_VIDEO_PLAYER is defined and
+    (DEFAULT_VIDEO_PLAYER != 'kodi')
+
+- include: youtube-dl.yml
+  when: YOUTUBE_DL_ENABLED | default(True)
+
+- include: qnapi.yml
+  when: QNAPI_SUBTITLES_DOWNLOADER_ENABLED | default(True)
+
+- name: Install a subtitle editor with ASS/SSA support
+  pacaur:
+    name:
+      - aegisub
+    state: present
+  become: yes
+  when: SUBTITLE_EDITOR == 'aegisub'
+  tags:
+    - print_action
+
+- name: Install an editor for text-based subtitles
+  pacaur:
+    name:
+      - gaupol
+    state: present
+  become: yes
+  when: SUBTITLE_EDITOR == 'gaupol'
+  tags:
+    - print_action

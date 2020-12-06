@@ -1,0 +1,12 @@
+---
+- name: Set a default video player fact for Dragon Player
+  set_fact:
+    DEFAULT_VIDEO_PLAYER: org.kde.dragonplayer
+  changed_when: no
+  when: DEFAULT_VIDEO_PLAYER == 'dragon'
+
+- name: Assign the default video player to relevant MimeTypes
+  command: 'xdg-mime default {{ DEFAULT_VIDEO_PLAYER }}.desktop {{ item }}'
+  with_items: '{{ VIDEO_PLAYER_MIMETYPES }}'
+  tags:
+    - print_action

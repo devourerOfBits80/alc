@@ -1,0 +1,18 @@
+---
+VIDEO_PLAYER_MIMETYPES:
+  - 'video/dv'
+  - 'video/mpeg'
+  - 'video/ogg'
+  - 'video/mp4'
+  - 'video/quicktime'
+  - 'video/vnd.mpegurl'
+  - 'video/vnd.rn-realvideo'
+  - 'video/webm'
+  - 'video/x-flv'
+  - 'video/x-matroska'
+  - 'video/x-matroska-3d'
+  - 'video/x-ms-wmp'
+  - 'video/x-ms-wmv'
+  - 'video/x-msvideo'
+  - 'video/x-ogm+ogg'
+  - 'video/x-theora+ogg'
