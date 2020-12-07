@@ -1,0 +1,41 @@
+---
+- name: Install a program to flash OS images to SD cards and USB drives
+  pacaur:
+    name:
+      - etcher-bin
+    state: present
+  when: '"etcher" in DISK_IMAGE_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a Linux program to create Windows USB stick installer from a Windows DVD or an image
+  pacaur:
+    name:
+      - woeusb
+    state: present
+  become: yes
+  when: '"woeusb" in DISK_IMAGE_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a command-line tool to create bootable USB drive for ISO/WIM/IMG/VHD(x)/EFI files
+  pacaur:
+    name:
+      - ventoy-bin
+    state: present
+  when: '"ventoy" in DISK_IMAGE_TOOLS'
+  tags:
+    - print_action
+
+- name: Install an all in one ISO tool
+  pacaur:
+    name:
+      - acetoneiso2
+    state: present
+  become: yes
+  when: '"acetoneiso" in DISK_IMAGE_TOOLS'
+  tags:
+    - print_action
+
+- include: cdemu.yml
+  when: '"cdemu" in DISK_IMAGE_TOOLS'

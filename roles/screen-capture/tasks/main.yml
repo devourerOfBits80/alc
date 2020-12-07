@@ -1,0 +1,3 @@
+---
+- include: screen-capture.yml
+  when: (SCREEN_CAPTURE_TOOLS | default([]) | length) > 0

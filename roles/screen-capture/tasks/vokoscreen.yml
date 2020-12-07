@@ -1,0 +1,51 @@
+---
+- name: Install an easy to use screencast creator
+  pacaur:
+    name:
+      - vokoscreen
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the vokoscreenNG screencast directory
+  file:
+    path: ~/Videos/Screencast
+    state: directory
+  tags:
+    - print_action
+
+- name: Create the vokoscreenNG configuration directory
+  file:
+    path: ~/.config/vokoscreenNG
+    state: directory
+  changed_when: no
+
+- name: Push the vokoscreenNG configuration file
+  template:
+    src: vokoscreenNG.ini.j2
+    dest: ~/.config/vokoscreenNG/vokoscreenNG.ini
+  tags:
+    - print_action
+
+- name: Copy the vokoscreenNG Firejail profile
+  copy:
+    src: vokoscreenNG.profile
+    dest: ~/.config/firejail/vokoscreenNG.profile
+  notify:
+    - activate user profiles
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map vokoscreenNG to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/vokoscreenNG
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

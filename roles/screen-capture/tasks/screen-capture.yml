@@ -1,0 +1,29 @@
+---
+- name: Install a simple command-line screenshot utility for X Window System
+  pacaur:
+    name:
+      - scrot
+    state: present
+  become: yes
+  when: '"scrot" in SCREEN_CAPTURE_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a command-line screenshot utility for Wayland
+  pacaur:
+    name:
+      - grim
+    state: present
+  become: yes
+  when: '"grim" in SCREEN_CAPTURE_TOOLS'
+  tags:
+    - print_action
+
+- include: flameshot.yml
+  when: '"flameshot" in SCREEN_CAPTURE_TOOLS'
+
+- include: simplescreenrecorder.yml
+  when: '"simplescreenrecorder" in SCREEN_CAPTURE_TOOLS'
+
+- include: vokoscreen.yml
+  when: '"vokoscreen" in SCREEN_CAPTURE_TOOLS'

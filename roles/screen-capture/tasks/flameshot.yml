@@ -1,0 +1,40 @@
+---
+- name: Install a powerful yet simple to use screenshot software
+  pacaur:
+    name:
+      - flameshot
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Flameshot screenshots directory
+  file:
+    path: ~/Pictures/Screenshots
+    state: directory
+  tags:
+    - print_action
+
+- name: Create the Flameshot configuration directory
+  file:
+    path: ~/.config/flameshot
+    state: directory
+  changed_when: no
+
+- name: Push the Flameshot configuration file
+  template:
+    src: flameshot.ini.j2
+    dest: ~/.config/flameshot/flameshot.ini
+  tags:
+    - print_action
+
+- name: Map Flameshot to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/flameshot
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

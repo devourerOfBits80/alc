@@ -236,3 +236,13 @@ AUDIO_LANGUAGES: pl,en
 SUBTITLE_LANGUAGES: pl,en
 # affects the mpv (be careful with this option)
 #HIGH_QUALITY_VIDEO_RENDERING: True
+
+# Screen Capture
+SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot, simplescreenrecorder or vokoscreen
+    - flameshot
+    - vokoscreen
+
+# Disk Image Tools
+DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
+    - etcher
+    - cdemu

@@ -9,4 +9,6 @@
     - { role: image-viewers, tags: ['image-viewers'] }
     - { role: audio-players, tags: ['audio-players'] }
     - { role: video-players, tags: ['video-players'] }
+    - { role: screen-capture, tags: ['screen-capture'] }
+    - { role: disk-image-tools, tags: ['disk-image-tools'] }
     - { role: finalize, tags: ['finalize'] }

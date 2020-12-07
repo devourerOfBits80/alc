@@ -93,3 +93,11 @@ AUDIO_PLAYERS:
 # Video Players
 VIDEO_PLAYERS:
     - mpv
+
+# Screen Capture
+SCREEN_CAPTURE_TOOLS:
+    - flameshot
+
+# Disk Image Tools
+DISK_IMAGE_TOOLS:
+    - cdemu

@@ -71,3 +71,16 @@ VIDEO_PLAYERS:
     - vlc
 SUBTITLE_EDITOR: aegisub
 HIGH_QUALITY_VIDEO_RENDERING: True
+
+# Screen Capture
+SCREEN_CAPTURE_TOOLS:
+    - scrot
+    - grim
+    - flameshot
+    - vokoscreen
+
+# Disk Image Tools
+DISK_IMAGE_TOOLS:
+    - etcher
+    - ventoy
+    - cdemu
