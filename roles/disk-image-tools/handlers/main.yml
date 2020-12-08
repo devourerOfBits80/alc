@@ -1,0 +1,8 @@
+---
+- name: load fdrivers for CD/DVD drives
+  command: modprobe sg sr_mod vhba
+  become: yes
+  ignore_errors: yes
+  no_log: yes
+  tags:
+    - print_action

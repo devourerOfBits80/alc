@@ -19,8 +19,11 @@
   tags:
     - print_action
 
+# Flameshot does not work on virtual machines
 - include: flameshot.yml
-  when: '"flameshot" in SCREEN_CAPTURE_TOOLS'
+  when:
+    ("flameshot" in SCREEN_CAPTURE_TOOLS) and
+    (MACHINE_TYPE != 'virtual')
 
 - include: simplescreenrecorder.yml
   when: '"simplescreenrecorder" in SCREEN_CAPTURE_TOOLS'

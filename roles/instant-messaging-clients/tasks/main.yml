@@ -1,0 +1,3 @@
+---
+- include: instant-messaging-clients.yml
+  when: (INSTANT_MESSAGING_CLIENTS | default([]) | length) > 0

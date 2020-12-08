@@ -4,6 +4,7 @@
   become: no
   roles:
     - { role: email-clients, tags: ['email-clients'] }
+    - { role: instant-messaging-clients, tags: ['instant-messaging-clients'] }
     - { role: office, tags: ['office'] }
     - { role: file-manager, tags: ['file-manager'] }
     - { role: image-viewers, tags: ['image-viewers'] }

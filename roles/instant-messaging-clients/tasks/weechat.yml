@@ -1,0 +1,56 @@
+---
+- name: Install a fast, light and extensible IRC client
+  pacaur:
+    name:
+      - weechat
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map WeeChat to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - weechat
+    - weechat-curses
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Install the WeeChat plugin for Slack
+  pacaur:
+    name:
+      - wee-slack
+    state: present
+  tags:
+    - print_action
+
+- name: Create the WeeChat autoload directory
+  file:
+    path: ~/.weechat/python/autoload
+    state: directory
+  changed_when: no
+
+- name: Create a link to the WeeChat emoji configuration file
+  file:
+    src: /usr/lib/weechat/weemoji.json
+    dest: ~/.weechat/weemoji.json
+    state: link
+  tags:
+    - print_action
+
+- name: Create an autoload link to the WeeChat Slack plugin
+  file:
+    src: /usr/lib/weechat/python/wee_slack.py
+    dest: ~/.weechat/python/autoload/wee_slack.py
+    state: link
+  tags:
+    - print_action
+
+- include: weechat-notifications.yml
+  when: WEECHAT_NOTIFICATIONS_ENABLED | default(True)

@@ -1,0 +1,19 @@
+---
+- name: Install Skype for Linux
+  pacaur:
+    name:
+      - skypeforlinux-stable-bin
+    state: present
+  tags:
+    - print_action
+
+- name: Map Skype to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/skypeforlinux
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

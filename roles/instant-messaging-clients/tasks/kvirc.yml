@@ -1,0 +1,31 @@
+---
+- name: Install Qt based IRC client
+  pacaur:
+    name:
+      - kvirc
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the KVIrc Firejail profile
+  copy:
+    src: kvirc.profile
+    dest: ~/.config/firejail/kvirc.profile
+  notify:
+    - activate user profiles
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map KVIrc to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/kvirc
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

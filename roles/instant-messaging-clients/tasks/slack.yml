@@ -1,0 +1,19 @@
+---
+- name: Install Slack Desktop for Linux
+  pacaur:
+    name:
+      - slack-desktop
+    state: present
+  tags:
+    - print_action
+
+- name: Map Slack to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/slack
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

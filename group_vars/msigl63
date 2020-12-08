@@ -66,6 +66,11 @@ UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
 # File Manager
 FILE_MANAGER: krusader
 
+# Image Viewers
+IMAGE_VIEWERS:
+    - qimgv
+    - digikam
+
 # Audio Players
 AUDIO_PLAYERS:
     - audacious
@@ -80,7 +85,6 @@ HIGH_QUALITY_VIDEO_RENDERING: True
 # Screen Capture
 SCREEN_CAPTURE_TOOLS:
     - scrot
-    - grim
     - flameshot
     - vokoscreen
 

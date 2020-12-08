@@ -1,0 +1,20 @@
+---
+- name: Install an official Telegram Desktop client
+  pacaur:
+    name:
+      - telegram-desktop
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Telegram to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/telegram-desktop
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

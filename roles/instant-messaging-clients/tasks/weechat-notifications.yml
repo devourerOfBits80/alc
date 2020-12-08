@@ -1,0 +1,25 @@
+---
+- name: Install library for sending desktop notifications
+  pacaur:
+    name:
+      - libnotify
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Download the WeeChat notification script
+  get_url:
+    url: https://raw.githubusercontent.com/s3rvac/weechat-notify-send/master/notify_send.py
+    dest: ~/.weechat/python/notify_send.py
+    mode: 0644
+  tags:
+    - print_action
+
+- name: Create an autoload link to the WeeChat notification script
+  file:
+    src: ~/.weechat/python/notify_send.py
+    dest: ~/.weechat/python/autoload/notify_send.py
+    state: link
+  tags:
+    - print_action

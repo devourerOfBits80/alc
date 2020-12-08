@@ -1,13 +1,12 @@
-# Firejail profile for vokoscreenNG
-# Description: Easy to use screencast creator
+# Firejail profile for KVIrc
+# Description: Qt based IRC client
 # Persistent local customizations
-include vokoscreenNG.local
+include kvirc.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/vokoscreenNG
-noblacklist ${HOME}/.config/vokoscreenNGrc
-noblacklist ${VIDEOS}
+noblacklist ${HOME}/.config/KVIrc
+noblacklist ${DOWNLOADS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,24 +14,28 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
-include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-apparmor
 caps.drop all
+netfilter
 nodvd
 nogroups
 nonewprivs
 noroot
 notv
 nou2f
-protocol unix
+novideo
+protocol unix,inet,inet6,netlink
 seccomp
 shell none
 tracelog
 
+private-bin kvirc,kvirc-config
 private-cache
 private-dev
 private-tmp
+
+# memory-deny-write-execute

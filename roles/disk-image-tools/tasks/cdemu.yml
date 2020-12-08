@@ -28,18 +28,12 @@
   tags:
     - print_action
 
-- name: Load fdrivers for CD/DVD drives
-  command: modprobe sg sr_mod vhba
-  ignore_errors: yes
-  no_log: yes
-  tags:
-    - print_action
-
-- name: Start and enable CDEmu daemon service
+- name: Enable CDEmu daemon service
   service:
     name: cdemu-daemon.service
-    state: started
     enabled: yes
   become: yes
+  notify:
+    - load fdrivers for CD/DVD drives
   tags:
     - print_action

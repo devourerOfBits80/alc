@@ -202,6 +202,12 @@ WEB_BROWSERS:   # set of values: chromium, google-chrome, opera, vivaldi, brave 
 #    - thunderbird-i18n-pl
 #    - thunderbird-extension-enigmail
 
+# IM Clients
+INSTANT_MESSAGING_CLIENTS:  # set of values: weechat, kvirc, skype, slack, signal or telegram
+    - kvirc
+    - skype
+    - slack
+
 # Office Tools
 LIBREOFFICE_PACKAGES:
     - libreoffice-still
@@ -215,13 +221,13 @@ MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura
 
 # Image Viewers
 IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
-    - qimgv     # the first one will be the default system image viewer
+    - nomacs    # the first one will be the default system image viewer
     - digikam
 
 # Audio Players
 AUDIO_PLAYERS:      # set of values: clementine, audacious, mpd (cantata), cmus or spotify
     - clementine    # the first one will be the default system audio player (except for the C* MUsic Player and Spotify)
-    - spotify
+    - cmus
 #ID3TAG_EDITOR: picard   # set of values: kid3 or picard
 
 # Video Players
@@ -239,7 +245,7 @@ SUBTITLE_LANGUAGES: pl,en
 
 # Screen Capture
 SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot, simplescreenrecorder or vokoscreen
-    - flameshot
+    - flameshot         # not available on a virtual machine
     - vokoscreen
 
 # Disk Image Tools

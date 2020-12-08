@@ -14,7 +14,7 @@
   when: '"audacious" in AUDIO_PLAYERS'
 
 - include: mpd.yml
-  when: '"mpd" in AUDIO_PLAYERS' or '"cantata" in AUDIO_PLAYERS'
+  when: ("mpd" in AUDIO_PLAYERS) or ("cantata" in AUDIO_PLAYERS)
 
 - include: cmus.yml
   when: '"cmus" in AUDIO_PLAYERS'

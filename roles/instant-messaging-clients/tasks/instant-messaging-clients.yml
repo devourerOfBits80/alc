@@ -1,0 +1,18 @@
+---
+- include: weechat.yml
+  when: '"weechat" in INSTANT_MESSAGING_CLIENTS'
+
+- include: kvirc.yml
+  when: '"kvirc" in INSTANT_MESSAGING_CLIENTS'
+
+- include: skype.yml
+  when: '"skype" in INSTANT_MESSAGING_CLIENTS'
+
+- include: slack.yml
+  when: '"slack" in INSTANT_MESSAGING_CLIENTS'
+
+- include: signal.yml
+  when: '"signal" in INSTANT_MESSAGING_CLIENTS'
+
+- include: telegram.yml
+  when: '"telegram" in INSTANT_MESSAGING_CLIENTS'

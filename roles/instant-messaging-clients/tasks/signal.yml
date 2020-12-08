@@ -1,0 +1,20 @@
+---
+- name: Install Signal Private Messenger for Linux
+  pacaur:
+    name:
+      - signal-desktop
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Signal to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/signal-desktop
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
