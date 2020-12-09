@@ -1,0 +1,77 @@
+---
+- name: Install the X Server resource database utility
+  pacaur:
+    name:
+      - xorg-xrdb
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an Open Source Remote Desktop Protocol (RDP) server packages
+  pacaur:
+    name:
+      - xrdp
+      - xorgxrdp-git
+    state: present
+  tags:
+    - print_action
+
+- name: Allow guests to start X Window Server
+  lineinfile:
+    path: /etc/X11/Xwrapper.config
+    regexp: '^#?\s*allowed_users\s*=(.*)$'
+    line: 'allowed_users=anybody'
+    state: present
+    create: yes
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the XRDP UFW custom rule
+  copy:
+    src: ufw-xrdp
+    dest: /etc/ufw/applications.d/ufw-xrdp
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Update the XRDP UFW application definition
+  command: ufw app update XRDP
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Allow connections to the XRDP server ports
+  ufw:
+    name: XRDP
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Start and enable XRDP server service
+  service:
+    name: xrdp.service
+    state: started
+    enabled: yes
+  become: yes
+  tags:
+    - print_action
+
+- name: Start and enable XRDP server session manager service
+  service:
+    name: xrdp-sesman.service
+    state: started
+    enabled: yes
+  become: yes
+  tags:
+    - print_action

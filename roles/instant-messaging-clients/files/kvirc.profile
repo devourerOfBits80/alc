@@ -33,7 +33,6 @@ seccomp
 shell none
 tracelog
 
-private-bin kvirc,kvirc-config
 private-cache
 private-dev
 private-tmp

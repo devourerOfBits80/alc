@@ -7,16 +7,6 @@
   tags:
     - print_action
 
-# Support for Flash will be removed in Firefox 85
-- name: Install Flash Player NPAPI version
-  pacaur:
-    name:
-      - flashplugin
-    state: present
-  become: yes
-  tags:
-    - print_action
-
 - name: Map Firefox to Firejail
   file:
     src: /usr/bin/firejail

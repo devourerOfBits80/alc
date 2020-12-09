@@ -60,6 +60,12 @@ FORCE_GPU_ACCELERATION: True
 EMAIL_CLIENTS:
     - neomutt
 
+# IM Clients
+INSTANT_MESSAGING_CLIENTS:
+    - kvirc
+    - skype
+    - slack
+
 # Office Tools
 UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
 
@@ -93,3 +99,10 @@ DISK_IMAGE_TOOLS:
     - etcher
     - ventoy
     - cdemu
+
+# Remote Desktop
+REMOTE_DESKTOP_CLIENTS:
+    - krdc
+    - x2go
+REMOTE_DESKTOP_SERVERS:
+    - x2go

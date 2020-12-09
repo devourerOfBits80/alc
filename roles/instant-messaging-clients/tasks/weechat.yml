@@ -36,11 +36,11 @@
     state: directory
   changed_when: no
 
-- name: Create a link to the WeeChat emoji configuration file
-  file:
-    src: /usr/lib/weechat/weemoji.json
+- name: Download the WeeChat emoji configuration file
+  get_url:
+    url: https://raw.githubusercontent.com/wee-slack/wee-slack/master/weemoji.json
     dest: ~/.weechat/weemoji.json
-    state: link
+    mode: 0644
   tags:
     - print_action
 

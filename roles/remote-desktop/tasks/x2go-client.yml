@@ -1,0 +1,31 @@
+---
+- name: Install the X2Go Qt5 client packages
+  pacaur:
+    name:
+      - xorg-xauth
+      - x2goclient
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Enable X11 forwarding for the X2Go client
+  lineinfile:
+    path: ~/.ssh/config
+    regexp: '^#?\s*ForwardX11(.*)$'
+    line: 'ForwardX11 yes'
+    insertafter: '^#?\s*AddKeysToAgent(.*)$'
+    state: present
+  tags:
+    - print_action
+
+- name: Map X2Go client to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/x2goclient
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

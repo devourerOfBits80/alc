@@ -1,0 +1,15 @@
+---
+- name: restart SSH daemon service
+  service:
+    name: sshd.service
+    state: restarted
+  tags:
+    - print_action
+
+- name: restart SSH daemon service (non-system mode)
+  service:
+    name: sshd.service
+    state: restarted
+  become: yes
+  tags:
+    - print_action

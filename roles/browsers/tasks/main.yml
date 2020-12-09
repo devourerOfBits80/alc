@@ -17,19 +17,6 @@
 - include: firefox.yml
   when: '"firefox" in WEB_BROWSERS'
 
-- name: Install Flash Player PPAPI version
-  pacaur:
-    name:
-      - pepper-flash
-    state: present
-  become: yes
-  when: >
-    ("chromium" in WEB_BROWSERS) or
-    ("opera" in WEB_BROWSERS) or
-    ("vivaldi" in WEB_BROWSERS)
-  tags:
-    - print_action
-
 - name: Install a browser plug-in for Java support
   pacaur:
     name:

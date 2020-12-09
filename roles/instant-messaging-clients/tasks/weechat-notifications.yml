@@ -1,5 +1,5 @@
 ---
-- name: Install library for sending desktop notifications
+- name: Install a library for sending desktop notifications
   pacaur:
     name:
       - libnotify

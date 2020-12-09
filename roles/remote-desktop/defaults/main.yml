@@ -1,0 +1,6 @@
+---
+X2GO_SERVER_TOOLS:
+  - xorg-xauth
+  - xorg-xhost
+  - qt5-svg
+  - qt5-tools

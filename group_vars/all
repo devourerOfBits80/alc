@@ -204,7 +204,7 @@ WEB_BROWSERS:   # set of values: chromium, google-chrome, opera, vivaldi, brave 
 
 # IM Clients
 INSTANT_MESSAGING_CLIENTS:  # set of values: weechat, kvirc, skype, slack, signal or telegram
-    - kvirc
+    - weechat
     - skype
     - slack
 
@@ -252,3 +252,9 @@ SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot, simplescreenrec
 DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
     - etcher
     - cdemu
+
+# Remote Desktop
+#REMOTE_DESKTOP_CLIENTS:     # set of values: krdc or x2go
+#    - x2go
+#REMOTE_DESKTOP_SERVERS:     # set of values: krfb, x2go or xrdp
+#    - x2go

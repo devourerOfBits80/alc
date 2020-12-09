@@ -1,0 +1,11 @@
+---
+- include: krfb.yml
+  when: '"krfb" in REMOTE_DESKTOP_SERVERS'
+
+- include: x2go-server.yml
+  when: >
+    ("x2go" in REMOTE_DESKTOP_SERVERS) and
+    (SSH_DAEMON_ENABLED | default(True))
+
+- include: xrdp.yml
+  when: '"xrdp" in REMOTE_DESKTOP_SERVERS'

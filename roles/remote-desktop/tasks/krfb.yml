@@ -1,0 +1,21 @@
+---
+- name: Allow connections to the VNC server ports
+  ufw:
+    name: VNC
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Install KDE Plasma Desktop Sharing utility
+  pacaur:
+    name:
+      - krfb
+    state: present
+  become: yes
+  tags:
+    - print_action

@@ -1,0 +1,4 @@
+[XRDP]
+title=XRDP server
+description=XRDP server
+ports=3389/tcp|3389/udp

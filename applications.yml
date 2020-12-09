@@ -12,4 +12,5 @@
     - { role: video-players, tags: ['video-players'] }
     - { role: screen-capture, tags: ['screen-capture'] }
     - { role: disk-image-tools, tags: ['disk-image-tools'] }
+    - { role: remote-desktop, tags: ['remote-desktop'] }
     - { role: finalize, tags: ['finalize'] }

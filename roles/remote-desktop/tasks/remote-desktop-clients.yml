@@ -1,0 +1,6 @@
+---
+- include: krdc.yml
+  when: '"krdc" in REMOTE_DESKTOP_CLIENTS'
+
+- include: x2go-client.yml
+  when: '"x2go" in REMOTE_DESKTOP_CLIENTS'

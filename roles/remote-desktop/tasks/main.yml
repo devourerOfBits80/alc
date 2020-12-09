@@ -1,0 +1,6 @@
+---
+- include: remote-desktop-clients.yml
+  when: (REMOTE_DESKTOP_CLIENTS | default([]) | length) > 0
+
+- include: remote-desktop-servers.yml
+  when: (REMOTE_DESKTOP_SERVERS | default([]) | length) > 0
