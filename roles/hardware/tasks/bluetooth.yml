@@ -41,7 +41,7 @@
   pacaur:
     name:
       - libldac
-      - pulseaudio-modules-bt-git
+      - pulseaudio-modules-bt
     state: present
   become: yes
   become_user: '{{ USER.NAME }}'

@@ -258,3 +258,10 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 #    - x2go
 #REMOTE_DESKTOP_SERVERS:     # set of values: krfb, x2go or xrdp
 #    - x2go
+# affects the X2Go server
+#X2GO_DESKTOP_SHARING_ENABLED: True
+
+# Graphics Editors and DTP software
+GRAPHICS_EDITORS:   # set of values: kolourpaint, gimp, darktable, krita, inkscape or scribus
+    - gimp
+    - scribus

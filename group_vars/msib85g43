@@ -101,3 +101,10 @@ REMOTE_DESKTOP_CLIENTS:
     - x2go
 REMOTE_DESKTOP_SERVERS:
     - x2go
+X2GO_DESKTOP_SHARING_ENABLED: True
+
+# Graphics Editors and DTP software
+GRAPHICS_EDITORS:
+    - gimp
+    - inkscape
+    - scribus

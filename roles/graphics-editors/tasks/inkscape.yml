@@ -1,0 +1,55 @@
+---
+- name: Install Inkscape
+  pacaur:
+    name:
+      - inkscape
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the Inkscape plugins
+  pacaur:
+    name:
+      - fig2dev
+      - scour
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Check if the touchpad configuration file exists
+  stat:
+    path: /etc/X11/xorg.conf.d/30-touchpad.conf
+  register: touchpad_configuration_file
+  changed_when: no
+  when: MACHINE_TYPE == 'portable'
+
+- name: Unlock a pan using spacebar and mouse
+  lineinfile:
+    path: /etc/X11/xorg.conf.d/30-touchpad.conf
+    regexp: '^#?\s*Option\s+"DisableWhileTyping"(.*)$'
+    line: '        Option "DisableWhileTyping" "0"'
+    insertafter: '^Section\s+"InputClass"$'
+    insertbefore: '^EndSection$'
+    state: present
+  become: yes
+  when: >
+    (MACHINE_TYPE == 'portable') and
+    touchpad_configuration_file.stat.exists
+  tags:
+    - print_action
+
+- name: Map Inkscape to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - inkscape
+    - inkview
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

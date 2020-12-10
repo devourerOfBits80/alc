@@ -39,30 +39,21 @@
   tags:
     - print_action
 
-- name: Map GnuPG applications to Firejail
+- name: Map GnuPG agent to Firejail
   file:
     src: /usr/bin/firejail
-    path: /usr/local/bin/{{ item }}
+    path: /usr/local/bin/gpg-agent
     state: link
   become: yes
-  with_items:
-    - gpg
-    - gpg2
-    - gpg-agent
   tags:
     - print_action
 
-- name: Map OpenSSH applications to Firejail
+- name: Map OpenSSH agent to Firejail
   file:
     src: /usr/bin/firejail
-    path: /usr/local/bin/{{ item }}
+    path: /usr/local/bin/ssh-agent
     state: link
   become: yes
-  with_items:
-    - scp
-    - sftp
-    - ssh
-    - ssh-agent
   tags:
     - print_action
 

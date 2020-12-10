@@ -1,0 +1,23 @@
+---
+- name: Import the X2Go Git Administrator key from a key server
+  command: 'gpg --recv-keys 1AD23D1B8F087A35AB74BDE9F4A7678C9C6B0B2B'
+  tags:
+    - print_action
+
+- name: Install the X2Go desktop sharing classes and tools
+  pacaur:
+    name:
+      - qt5-svg
+      - qt5-tools
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the X2Go add-on tool that allows a user to grant other X2Go users access to the current session
+  pacaur:
+    name:
+      - x2godesktopsharing
+    state: present
+  tags:
+    - print_action

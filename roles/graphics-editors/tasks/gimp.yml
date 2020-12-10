@@ -1,0 +1,32 @@
+---
+- name: Install GIMP
+  pacaur:
+    name:
+      - gimp
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the Poppler glib bindings for PDF support
+  pacaur:
+    name:
+      - poppler-glib
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map GIMP to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - gimp
+    - gimp-2.10
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

@@ -1,0 +1,25 @@
+---
+- name: Install KDE Paint Program
+  pacaur:
+    name:
+      - kolourpaint
+    state: present
+  become: yes
+  when: '"kolourpaint" in GRAPHICS_EDITORS'
+  tags:
+    - print_action
+
+- include: gimp.yml
+  when: '"gimp" in GRAPHICS_EDITORS'
+
+- include: darktable.yml
+  when: '"darktable" in GRAPHICS_EDITORS'
+
+- include: krita.yml
+  when: '"krita" in GRAPHICS_EDITORS'
+
+- include: inkscape.yml
+  when: '"inkscape" in GRAPHICS_EDITORS'
+
+- include: scribus.yml
+  when: '"scribus" in GRAPHICS_EDITORS'

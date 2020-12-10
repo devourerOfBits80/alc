@@ -105,3 +105,7 @@ SCREEN_CAPTURE_TOOLS:
 # Disk Image Tools
 DISK_IMAGE_TOOLS:
     - cdemu
+
+# Graphics Editors and DTP software
+GRAPHICS_EDITORS:
+    - kolourpaint
