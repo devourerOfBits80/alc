@@ -16,9 +16,8 @@
 - name: Enable X11 forwarding for the X2Go server
   lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#?\s*X11Forwarding(.*)$'
+    regexp: '^#?X11Forwarding(.*)$'
     line: 'X11Forwarding yes'
-    insertbefore: '^#?\s*Banner(.*)$'
     state: present
   become: yes
   notify:
@@ -29,9 +28,8 @@
 - name: Allow TCP forwarding for the SSH connections
   lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#?\s*AllowTcpForwarding(.*)$'
+    regexp: '^#?AllowTcpForwarding(.*)$'
     line: 'AllowTcpForwarding yes'
-    insertbefore: '^#?\s*Banner(.*)$'
     state: present
   become: yes
   notify:
@@ -42,7 +40,7 @@
 - name: Enable using of localhost for the graphical interface
   lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#?\s*X11UseLocalhost(.*)$'
+    regexp: '^#?X11UseLocalhost(.*)$'
     line: 'X11UseLocalhost yes'
     state: present
   become: yes
@@ -54,7 +52,7 @@
 - name: Set the graphical interface display offset
   lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#?\s*X11DisplayOffset(.*)$'
+    regexp: '^#?X11DisplayOffset(.*)$'
     line: 'X11DisplayOffset 10'
     state: present
   become: yes

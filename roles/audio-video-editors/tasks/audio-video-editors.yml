@@ -1,0 +1,21 @@
+---
+- include: audacity.yml
+  when: '"audacity" in AUDIO_VIDEO_EDITORS'
+
+- include: ocenaudio.yml
+  when: '"ocenaudio" in AUDIO_VIDEO_EDITORS'
+
+- include: openshot.yml
+  when: '"openshot" in AUDIO_VIDEO_EDITORS'
+
+- include: shotcut.yml
+  when: '"shotcut" in AUDIO_VIDEO_EDITORS'
+
+- include: kdenlive.yml
+  when: '"kdenlive" in AUDIO_VIDEO_EDITORS'
+
+- include: pitivi.yml
+  when: '"pitivi" in AUDIO_VIDEO_EDITORS'
+
+- include: blender.yml
+  when: '"blender" in AUDIO_VIDEO_EDITORS'

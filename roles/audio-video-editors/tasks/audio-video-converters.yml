@@ -1,0 +1,16 @@
+---
+- name: Install a command-line multitrack audio processor
+  pacaur:
+    name:
+      - ecasound
+    state: present
+  become: yes
+  when: '"ecasound" in AUDIO_VIDEO_CONVERTERS'
+  tags:
+    - print_action
+
+- include: soundkonverter.yml
+  when: '"soundkonverter" in AUDIO_VIDEO_CONVERTERS'
+
+- include: handbrake.yml
+  when: '"handbrake" in AUDIO_VIDEO_CONVERTERS'

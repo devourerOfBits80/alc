@@ -1,0 +1,19 @@
+---
+- name: Install a fast and versatile file copying tool for remote and local files
+  pacaur:
+    name:
+      - rsync
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a GTK+ GUI for rsync to synchronize folders, files and make backups
+  pacaur:
+    name:
+      - grsync
+    state: present
+  become: yes
+  when: GRSYNC_ENABLED | default(False)
+  tags:
+    - print_action

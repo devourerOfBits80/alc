@@ -1,0 +1,44 @@
+---
+- name: Install a command-line multithreaded video transcoder
+  pacaur:
+    name:
+      - handbrake-cli
+    state: present
+  become: yes
+  when: not HANDBRAKE_GUI_ENABLED
+  tags:
+    - print_action
+
+- name: Install a multithreaded video transcoder
+  pacaur:
+    name:
+      - handbrake
+    state: present
+  become: yes
+  when: HANDBRAKE_GUI_ENABLED
+  tags:
+    - print_action
+
+- name: Copy the HandBrakeCLI Firejail profile
+  copy:
+    src: HandBrakeCLI.profile
+    dest: ~/.config/firejail/HandBrakeCLI.profile
+  notify:
+    - activate user profiles
+  when: >
+    (FIREJAIL_ENABLED | default(True)) and
+    not HANDBRAKE_GUI_ENABLED
+  tags:
+    - print_action
+    - firejail
+
+- name: Map HandBrake to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ HANDBRAKE_GUI_ENABLED | ternary("ghb", "HandBrakeCLI") }}
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

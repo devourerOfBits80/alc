@@ -5,6 +5,20 @@
       "{{ (PACMAN_WRAPPER is defined and (PACMAN_WRAPPER != 'None')) |
       ternary(PACMAN_WRAPPER, 'yay') }}"
   changed_when: no
+  tags:
+    - plasma
+    - package-manager
+    - password-manager
+    - browsers
+    - instant-messaging-clients
+    - office
+    - file-synchronization
+    - image-viewers
+    - audio-players
+    - video-players
+    - disk-image-tools
+    - remote-desktop
+    - audio-video-editors
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -20,8 +34,10 @@
     - browsers
     - instant-messaging-clients
     - office
+    - file-synchronization
     - image-viewers
     - audio-players
     - video-players
     - disk-image-tools
     - remote-desktop
+    - audio-video-editors

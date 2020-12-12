@@ -1,4 +1,25 @@
 ---
+- name: Install a kernel module that emulates SCSI devices
+  pacaur:
+    name:
+      - vhba-module
+    state: present
+  become: yes
+  when: not LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Install a kernel module that emulates SCSI devices for custom kernels
+  pacaur:
+    name:
+      - linux-lts-headers
+      - vhba-module-dkms
+    state: present
+  become: yes
+  when: LTS_KERNEL
+  tags:
+    - print_action
+
 - name: Install CD/DVD-ROM device emulator packages
   pacaur:
     name:
@@ -6,16 +27,6 @@
       - cdemu-client
     state: present
   become: yes
-  tags:
-    - print_action
-
-- name: Install a kernel module that emulates SCSI devices for custom kernels
-  pacaur:
-    name:
-      - vhba-module-dkms
-    state: present
-  become: yes
-  when: LTS_KERNEL
   tags:
     - print_action
 

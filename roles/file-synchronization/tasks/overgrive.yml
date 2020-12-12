@@ -1,0 +1,40 @@
+---
+- name: Download the overGrive package
+  get_url:
+    url: '{{ OVERGRIVE_PACKAGE_REPOSITORY_URL }}/{{ OVERGRIVE_PACKAGE_NAME }}'
+    dest: ~/{{ OVERGRIVE_PACKAGE_NAME }}
+    mode: 0644
+  tags:
+    - print_action
+
+- name: Install overGrive dependencies
+  pacaur:
+    name: '{{ OVERGRIVE_DEPENDENCIES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a complete Google Drive desktop client solution for Linux
+  pacaur:
+    name:
+      - ~/{{ OVERGRIVE_PACKAGE_NAME }}
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Remove the overGrive package
+  file:
+    path: ~/{{ OVERGRIVE_PACKAGE_NAME }}
+    state: absent
+    force: yes
+  become: yes
+  changed_when: no
+
+- name: Copy the overGrive autostart entry file
+  copy:
+    src: overgrive-autostart.desktop
+    dest: ~/.config/autostart/overgrive-autostart.desktop
+  tags:
+    - print_action

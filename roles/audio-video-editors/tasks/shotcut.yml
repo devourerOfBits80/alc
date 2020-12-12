@@ -1,0 +1,29 @@
+---
+- name: Install a cross-platform Qt based Video Editor
+  pacaur:
+    name:
+      - shotcut
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the Steve Harris' LADSPA plug-ins suite
+  pacaur:
+    name:
+      - swh-plugins
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Shotcut to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/shotcut
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

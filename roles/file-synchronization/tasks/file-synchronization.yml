@@ -1,0 +1,60 @@
+---
+- name: Create the desktop environment autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+  changed_when: no
+  when: >
+    ("syncthing" in FILE_SYNCHRONIZATION_TOOLS') or
+    ("overgrive" in FILE_SYNCHRONIZATION_TOOLS)
+
+- name: Install a tool for sync files to and from Google Drive, S3, Swift, Cloudfiles, Dropbox and Google Cloud Storage
+  pacaur:
+    name:
+      - rclone
+    state: present
+  become: yes
+  when: '"rclone" in FILE_SYNCHRONIZATION_TOOLS'
+  tags:
+    - print_action
+
+- include: rsync.yml
+  when: '"rsync" in FILE_SYNCHRONIZATION_TOOLS'
+
+- name: Install a folder comparison and synchronization tool
+  pacaur:
+    name:
+      - freefilesync-bin
+    state: present
+  when: '"freefilesync" in FILE_SYNCHRONIZATION_TOOLS'
+  tags:
+    - print_action
+
+- include: syncthing.yml
+  when: '"syncthing" in FILE_SYNCHRONIZATION_TOOLS'
+
+- include: dropbox.yml
+  when: '"dropbox" in FILE_SYNCHRONIZATION_TOOLS'
+
+- name: Install an application for easy automated syncing between your computers and your MEGA cloud drive
+  pacaur:
+    name:
+      - megasync-bin
+    state: present
+  when: '"megasync" in FILE_SYNCHRONIZATION_TOOLS'
+  tags:
+    - print_action
+
+- name: Check if the overGrive package is available
+  uri:
+    url: '{{ OVERGRIVE_PACKAGE_REPOSITORY_URL }}/{{ OVERGRIVE_PACKAGE_NAME }}'
+    method: HEAD
+  register: overgrive_package_uri
+  changed_when: no
+  when: '"overgrive" in FILE_SYNCHRONIZATION_TOOLS'
+
+- include: overgrive.yml
+  when: >
+    ("overgrive" in FILE_SYNCHRONIZATION_TOOLS) and
+    overgrive_package_uri.status is defined and
+    (overgrive_package_uri.status >= 100) and (overgrive_package_uri.status < 400)

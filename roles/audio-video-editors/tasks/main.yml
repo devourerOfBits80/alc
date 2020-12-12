@@ -1,0 +1,6 @@
+---
+- include: audio-video-editors.yml
+  when: (AUDIO_VIDEO_EDITORS | default([]) | length) > 0
+
+- include: audio-video-converters.yml
+  when: (AUDIO_VIDEO_CONVERTERS | default([]) | length) > 0

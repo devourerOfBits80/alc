@@ -1,0 +1,24 @@
+---
+- name: Install a tray application for Syncthing
+  pacaur:
+    name:
+      - syncthingtray
+    state: present
+    extra_args: '--mflags --nocheck'
+  tags:
+    - print_action
+
+- name: Copy the Syncthing Tray configuration file
+  copy:
+    src: syncthingtray.ini
+    dest: ~/.config/syncthingtray.ini
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Copy the Syncthing Tray autostart entry file
+  copy:
+    src: syncthingtray.desktop
+    dest: ~/.config/autostart/syncthingtray.desktop
+  tags:
+    - print_action

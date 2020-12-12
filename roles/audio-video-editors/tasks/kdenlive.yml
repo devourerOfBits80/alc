@@ -1,0 +1,29 @@
+---
+- name: Install a non-linear video editor for Linux using the MLT video framework
+  pacaur:
+    name:
+      - kdenlive
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an Open Source Computer Vision Library
+  pacaur:
+    name:
+      - opencv
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Kdenlive to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/kdenlive
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

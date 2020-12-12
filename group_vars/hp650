@@ -86,6 +86,11 @@ INSTANT_MESSAGING_CLIENTS:
 # Office Tools
 MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: False
 
+# File Synchronization and Cloud Synchronization Tools
+FILE_SYNCHRONIZATION_TOOLS:
+    - rsync
+GRSYNC_ENABLED: False
+
 # Image Viewers
 IMAGE_VIEWERS:
     - qimgv

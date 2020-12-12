@@ -1,0 +1,38 @@
+---
+- name: Install a fully integrated 3D graphics creation suite
+  pacaur:
+    name:
+      - blender
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Check if the NVIDIA CUDA MPS server is available
+  stat:
+    path: /usr/bin/nvidia-cuda-mps-server
+  register: nvidia_cuda_mps_server
+  changed_when: no
+
+- name: Install the NVIDIA's GPU programming toolkit
+  pacaur:
+    name:
+      - cuda
+    state: present
+  become: yes
+  when: >
+    nvidia_cuda_mps_server.stat.exists and
+    (BLENDER_NVIDIA_CUDA_ENABLED | default(False))
+  tags:
+    - print_action
+
+- name: Map Blender to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/blender
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

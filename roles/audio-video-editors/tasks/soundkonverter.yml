@@ -1,0 +1,31 @@
+---
+- name: Install a front-end to various audio converters
+  pacaur:
+    name:
+      - soundkonverter
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the soundKonverter Firejail profile
+  copy:
+    src: soundkonverter.profile
+    dest: ~/.config/firejail/soundkonverter.profile
+  notify:
+    - activate user profiles
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map soundKonverter to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/soundkonverter
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

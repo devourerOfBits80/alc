@@ -72,6 +72,15 @@ UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
 # File Manager
 FILE_MANAGER: krusader
 
+# File Synchronization and Cloud Synchronization Tools
+FILE_SYNCHRONIZATION_TOOLS:
+    - syncthing
+    - dropbox
+    - overgrive
+SYNCTHING_WEB_GUI_EXTERNAL_ACCESS: False
+SYNCTHING_GTK_GUI_ENABLED: False
+DROPBOX_CLI_ENABLED: False
+
 # Image Viewers
 IMAGE_VIEWERS:
     - qimgv
@@ -104,3 +113,12 @@ DISK_IMAGE_TOOLS:
 REMOTE_DESKTOP_CLIENTS:
     - krdc
     - x2go
+
+# Audio / Video Editors and Converters
+AUDIO_VIDEO_EDITORS:
+    - ocenaudio
+    - shotcut
+AUDIO_VIDEO_CONVERTERS:
+    - ecasound
+    - handbrake
+HANDBRAKE_GUI_ENABLED: False

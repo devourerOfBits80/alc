@@ -1,0 +1,19 @@
+---
+- name: Install a cross-platform, easy to use, fast and functional audio editor
+  pacaur:
+    name:
+      - ocenaudio-bin
+    state: present
+  tags:
+    - print_action
+
+- name: Map ocenaudio to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/ocenaudio
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

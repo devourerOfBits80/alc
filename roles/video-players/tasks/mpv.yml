@@ -47,3 +47,19 @@
     state: link
   tags:
     - print_action
+
+- name: Check if the Bumblebee package is installed
+  command: pacman -Qi bumblebee
+  register: bumblebee_package_querying_result
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+  when: >
+    (MACHINE_TYPE == 'portable') and
+    HIGH_QUALITY_VIDEO_RENDERING
+
+- include: mpv-optirun.yml
+  when: >
+    (MACHINE_TYPE == 'portable') and
+    HIGH_QUALITY_VIDEO_RENDERING and
+    not bumblebee_package_querying_result.failed

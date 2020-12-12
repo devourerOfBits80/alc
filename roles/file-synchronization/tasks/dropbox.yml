@@ -1,0 +1,60 @@
+---
+- name: Import the Dropbox Automatic Signing Key from a key server
+  command: 'gpg --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E'
+  tags:
+    - print_action
+
+- name: Install a free service that lets you bring your photos, docs, and videos anywhere and share them easily
+  pacaur:
+    name:
+      - dropbox
+    state: present
+  tags:
+    - print_action
+
+- name: Install a command line interface for Dropbox
+  pacaur:
+    name:
+      - dropbox-cli
+    state: present
+  when: DROPBOX_CLI_ENABLED | default(False)
+  tags:
+    - print_action
+
+- name: Remove the Dropbox automatic updates directory
+  file:
+    path: '{{ DROPBOX_AUTOUPDATE_DIRECTORY }}'
+    state: absent
+    force: yes
+  become: yes
+  changed_when: no
+
+- name: Create the Dropbox automatic updates locked directory
+  file:
+    path: '{{ DROPBOX_AUTOUPDATE_DIRECTORY }}'
+    state: directory
+    mode: 0000
+  changed_when: no
+
+- name: Allow Dropbox LAN Synchronization
+  ufw:
+    name: Dropbox
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Map Dropbox to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/dropbox
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

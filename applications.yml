@@ -7,6 +7,7 @@
     - { role: instant-messaging-clients, tags: ['instant-messaging-clients'] }
     - { role: office, tags: ['office'] }
     - { role: file-manager, tags: ['file-manager'] }
+    - { role: file-synchronization, tags: ['file-synchronization'] }
     - { role: image-viewers, tags: ['image-viewers'] }
     - { role: audio-players, tags: ['audio-players'] }
     - { role: video-players, tags: ['video-players'] }
@@ -14,4 +15,5 @@
     - { role: disk-image-tools, tags: ['disk-image-tools'] }
     - { role: remote-desktop, tags: ['remote-desktop'] }
     - { role: graphics-editors, tags: ['graphics-editors'] }
+    - { role: audio-video-editors, tags: ['audio-video-editors'] }
     - { role: finalize, tags: ['finalize'] }

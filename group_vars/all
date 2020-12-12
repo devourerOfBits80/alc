@@ -219,6 +219,20 @@ MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura
 #FILE_MANAGER: krusader  # set of values: double-commander or krusader
 #DOUBLE_COMMANDER_GTK_VERSION: True
 
+# File Synchronization and Cloud Synchronization Tools
+FILE_SYNCHRONIZATION_TOOLS:     # set of values: rclone, rsync, freefilesync, syncthing, dropbox, megasync or overgrive
+    - rclone
+    - syncthing
+# affects the rsync
+#GRSYNC_ENABLED: True    # GUI for rsync
+# affects the Syncthing
+SYNCTHING_WEB_GUI_EXTERNAL_ACCESS: False
+SYNCTHING_GTK_GUI_ENABLED: False
+# affects the Dropbox
+#DROPBOX_CLI_ENABLED: True
+# affects the overGrive
+#OVERGRIVE_PACKAGE_NAME: overgrive-3.3.9-0-any.pkg.tar.xz
+
 # Image Viewers
 IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
     - nomacs    # the first one will be the default system image viewer
@@ -265,3 +279,14 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 GRAPHICS_EDITORS:   # set of values: kolourpaint, gimp, darktable, krita, inkscape or scribus
     - gimp
     - scribus
+
+# Audio / Video Editors and Converters
+#AUDIO_VIDEO_EDITORS:    # set of values: audacity, ocenaudio, openshot, shotcut, kdenlive, pitivi or blender
+#    - ocenaudio
+#    - shotcut
+#AUDIO_VIDEO_CONVERTERS:     # set of values: ecasound, soundkonverter or handbrake
+#    - ecasound
+# affects the Blender
+#BLENDER_NVIDIA_CUDA_ENABLED: True
+# affects the HandBrake
+#HANDBRAKE_GUI_ENABLED: True

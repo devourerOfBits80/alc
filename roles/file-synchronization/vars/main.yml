@@ -1,0 +1,12 @@
+---
+DROPBOX_AUTOUPDATE_DIRECTORY: ~/.dropbox-dist
+OVERGRIVE_PACKAGE_REPOSITORY_URL: 'https://www.thefanclub.co.za/sites/default/files/public/overgrive'
+OVERGRIVE_DEPENDENCIES:
+  - libappindicator-gtk3
+  - libnotify
+  - gobject-introspection
+  - python3
+  - python-gobject
+  - python-oauth2client
+  - python-pip
+  - python-pyinotify

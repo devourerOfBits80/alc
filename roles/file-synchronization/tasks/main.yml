@@ -1,0 +1,3 @@
+---
+- include: file-synchronization.yml
+  when: (FILE_SYNCHRONIZATION_TOOLS | default([]) | length) > 0
