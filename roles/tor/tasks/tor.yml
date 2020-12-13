@@ -1,0 +1,80 @@
+---
+- name: Install an anonymizing overlay network packages
+  pacaur:
+    name:
+      - tor
+      - torsocks
+    status: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a command-line status monitor for Tor
+  pacaur:
+    name:
+      - nyx
+    staus: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Tor's systemd unit directory
+  file:
+    path: /etc/systemd/system/tor.service.d
+    state: directory
+  become: yes
+  changed_when: no
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - firejail
+
+- name: Copy the Tor service custom execution file
+  copy:
+    src: tor-service-customexec.conf
+    dest: /etc/systemd/system/tor.service.d/customexec.conf
+  become: yes
+  notify:
+    - reload systemd manager configuration (non-system mode)
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Update the Tor configuration file to run its by the tor user
+  lineinfile:
+    path: /etc/tor/torrc
+    regexp: '^#?User(.*)$'
+    line: 'User tor'
+    state: present
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Tor to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/tor
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow Tor access to /dev
+  lineinfile:
+    path: /etc/firejail/tor.local
+    regexp: '^#?\s*ignore\s+private-dev$'
+    line: 'ignore private-dev'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- include: torbrowser-launcher.yml
+  when: TORBROWSER_LAUNCHER_ENABLED | default(True)

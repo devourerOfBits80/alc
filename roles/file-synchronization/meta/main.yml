@@ -2,4 +2,3 @@
 dependencies:
   - { role: init }
   - { role: ufw-service }
-  - { role: plasma-detector }

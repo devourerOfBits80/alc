@@ -5,8 +5,11 @@
     state: directory
   changed_when: no
   when: >
-    ("syncthing" in FILE_SYNCHRONIZATION_TOOLS') or
+    ("syncthing" in FILE_SYNCHRONIZATION_TOOLS) or
     ("overgrive" in FILE_SYNCHRONIZATION_TOOLS)
+
+- include: rsync.yml
+  when: '"rsync" in FILE_SYNCHRONIZATION_TOOLS'
 
 - name: Install a tool for sync files to and from Google Drive, S3, Swift, Cloudfiles, Dropbox and Google Cloud Storage
   pacaur:
@@ -17,9 +20,6 @@
   when: '"rclone" in FILE_SYNCHRONIZATION_TOOLS'
   tags:
     - print_action
-
-- include: rsync.yml
-  when: '"rsync" in FILE_SYNCHRONIZATION_TOOLS'
 
 - name: Install a folder comparison and synchronization tool
   pacaur:

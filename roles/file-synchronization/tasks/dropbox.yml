@@ -23,7 +23,7 @@
 
 - name: Remove the Dropbox automatic updates directory
   file:
-    path: '{{ DROPBOX_AUTOUPDATE_DIRECTORY }}'
+    path: /home/{{ USER.NAME }}/{{ DROPBOX_AUTOUPDATE_DIRECTORY }}
     state: absent
     force: yes
   become: yes
@@ -31,7 +31,7 @@
 
 - name: Create the Dropbox automatic updates locked directory
   file:
-    path: '{{ DROPBOX_AUTOUPDATE_DIRECTORY }}'
+    path: ~/{{ DROPBOX_AUTOUPDATE_DIRECTORY }}
     state: directory
     mode: 0000
   changed_when: no

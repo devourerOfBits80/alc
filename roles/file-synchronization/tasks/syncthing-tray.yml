@@ -15,10 +15,3 @@
     mode: 0600
   tags:
     - print_action
-
-- name: Copy the Syncthing Tray autostart entry file
-  copy:
-    src: syncthingtray.desktop
-    dest: ~/.config/autostart/syncthingtray.desktop
-  tags:
-    - print_action

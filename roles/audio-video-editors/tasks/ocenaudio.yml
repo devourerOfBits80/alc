@@ -2,7 +2,7 @@
 - name: Install a cross-platform, easy to use, fast and functional audio editor
   pacaur:
     name:
-      - ocenaudio-bin
+      - ocenaudio
     state: present
   tags:
     - print_action

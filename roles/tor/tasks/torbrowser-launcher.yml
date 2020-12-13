@@ -1,0 +1,20 @@
+---
+- name: Install an application to securely and easily download, verify, install, and launch Tor Browser in Linux
+  pacaur:
+    name:
+      - torbrowser-launcher
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Tor Browser Launcher to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/torbrowser-launcher
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

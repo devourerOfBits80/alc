@@ -103,6 +103,20 @@ SCREEN_CAPTURE_TOOLS:
     - flameshot
     - vokoscreen
 
+# Graphics Editors and DTP software
+GRAPHICS_EDITORS:
+    - gimp
+    - scribus
+
+# Audio / Video Editors and Converters
+AUDIO_VIDEO_EDITORS:
+    - shotcut
+AUDIO_VIDEO_CONVERTERS:
+    - ecasound
+    - soundkonverter
+    - handbrake
+HANDBRAKE_GUI_ENABLED: False
+
 # Disk Image Tools
 DISK_IMAGE_TOOLS:
     - etcher
@@ -114,11 +128,6 @@ REMOTE_DESKTOP_CLIENTS:
     - krdc
     - x2go
 
-# Audio / Video Editors and Converters
-AUDIO_VIDEO_EDITORS:
-    - ocenaudio
-    - shotcut
-AUDIO_VIDEO_CONVERTERS:
-    - ecasound
-    - handbrake
-HANDBRAKE_GUI_ENABLED: False
+# Tor
+TOR_ENABLED: True
+TORBROWSER_LAUNCHER_ENABLED: True

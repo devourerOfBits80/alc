@@ -3,3 +3,9 @@
   command: systemctl daemon-reload
   tags:
     - print_action
+
+- name: reload systemd manager configuration (non-system mode)
+  command: systemctl daemon-reload
+  become: yes
+  tags:
+    - print_action

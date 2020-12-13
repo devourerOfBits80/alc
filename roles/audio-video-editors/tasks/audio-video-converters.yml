@@ -9,8 +9,15 @@
   tags:
     - print_action
 
-- include: soundkonverter.yml
+- name: Install a front-end to various audio converters
+  pacaur:
+    name:
+      - soundkonverter
+    state: present
+  become: yes
   when: '"soundkonverter" in AUDIO_VIDEO_CONVERTERS'
+  tags:
+    - print_action
 
 - include: handbrake.yml
   when: '"handbrake" in AUDIO_VIDEO_CONVERTERS'

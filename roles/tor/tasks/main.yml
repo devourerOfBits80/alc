@@ -1,0 +1,3 @@
+---
+- include: tor.yml
+  when: TOR_ENABLED | default(False)

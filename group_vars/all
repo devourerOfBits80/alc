@@ -206,7 +206,6 @@ WEB_BROWSERS:   # set of values: chromium, google-chrome, opera, vivaldi, brave 
 INSTANT_MESSAGING_CLIENTS:  # set of values: weechat, kvirc, skype, slack, signal or telegram
     - weechat
     - skype
-    - slack
 
 # Office Tools
 LIBREOFFICE_PACKAGES:
@@ -220,18 +219,18 @@ MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura
 #DOUBLE_COMMANDER_GTK_VERSION: True
 
 # File Synchronization and Cloud Synchronization Tools
-FILE_SYNCHRONIZATION_TOOLS:     # set of values: rclone, rsync, freefilesync, syncthing, dropbox, megasync or overgrive
-    - rclone
+FILE_SYNCHRONIZATION_TOOLS:     # set of values: rsync, rclone, freefilesync, syncthing, dropbox, megasync or overgrive
+    - rsync
     - syncthing
 # affects the rsync
-#GRSYNC_ENABLED: True    # GUI for rsync
+GRSYNC_ENABLED: False   # GUI for rsync
 # affects the Syncthing
 SYNCTHING_WEB_GUI_EXTERNAL_ACCESS: False
 SYNCTHING_GTK_GUI_ENABLED: False
 # affects the Dropbox
 #DROPBOX_CLI_ENABLED: True
 # affects the overGrive
-#OVERGRIVE_PACKAGE_NAME: overgrive-3.3.9-0-any.pkg.tar.xz
+#OVERGRIVE_PACKAGE_NAME: overgrive-X.X.X-0-any.pkg.tar.xz
 
 # Image Viewers
 IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
@@ -239,15 +238,15 @@ IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
     - digikam
 
 # Audio Players
-AUDIO_PLAYERS:      # set of values: clementine, audacious, mpd (cantata), cmus or spotify
-    - clementine    # the first one will be the default system audio player (except for the C* MUsic Player and Spotify)
+AUDIO_PLAYERS:      # set of values: clementine, audacious, mpd (cantata) or cmus
+    - clementine    # the first one will be the default system audio player (except for the C* MUsic Player)
     - cmus
 #ID3TAG_EDITOR: picard   # set of values: kid3 or picard
 
 # Video Players
 VIDEO_PLAYERS:  # set of values: dragon, mpv, vlc or kodi
     - mpv       # the first one will be the default system video player (except for KODI)
-    - kodi
+    - dragon
 YOUTUBE_DL_ENABLED: True
 QNAPI_SUBTITLES_DOWNLOADER_ENABLED: True
 #SUBTITLE_EDITOR: aegisub    # set of values: aegisub or gaupol
@@ -258,27 +257,13 @@ SUBTITLE_LANGUAGES: pl,en
 #HIGH_QUALITY_VIDEO_RENDERING: True
 
 # Screen Capture
-SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot, simplescreenrecorder or vokoscreen
-    - flameshot         # not available on a virtual machine
+SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot (do not work on VMs), simplescreenrecorder or vokoscreen
+    - scrot
     - vokoscreen
-
-# Disk Image Tools
-DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
-    - etcher
-    - cdemu
-
-# Remote Desktop
-#REMOTE_DESKTOP_CLIENTS:     # set of values: krdc or x2go
-#    - x2go
-#REMOTE_DESKTOP_SERVERS:     # set of values: krfb, x2go or xrdp
-#    - x2go
-# affects the X2Go server
-#X2GO_DESKTOP_SHARING_ENABLED: True
 
 # Graphics Editors and DTP software
 GRAPHICS_EDITORS:   # set of values: kolourpaint, gimp, darktable, krita, inkscape or scribus
     - gimp
-    - scribus
 
 # Audio / Video Editors and Converters
 #AUDIO_VIDEO_EDITORS:    # set of values: audacity, ocenaudio, openshot, shotcut, kdenlive, pitivi or blender
@@ -290,3 +275,19 @@ GRAPHICS_EDITORS:   # set of values: kolourpaint, gimp, darktable, krita, inksca
 #BLENDER_NVIDIA_CUDA_ENABLED: True
 # affects the HandBrake
 #HANDBRAKE_GUI_ENABLED: True
+
+# Disk Image Tools
+DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
+    - cdemu
+
+# Remote Desktop
+#REMOTE_DESKTOP_CLIENTS:     # set of values: krdc or x2go
+#    - x2go
+#REMOTE_DESKTOP_SERVERS:     # set of values: krfb, x2go or xrdp
+#    - x2go
+# affects the X2Go server
+#X2GO_DESKTOP_SHARING_ENABLED: True
+
+# Tor
+#TOR_ENABLED: True
+#TORBROWSER_LAUNCHER_ENABLED: False

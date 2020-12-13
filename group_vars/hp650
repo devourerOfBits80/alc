@@ -84,6 +84,7 @@ INSTANT_MESSAGING_CLIENTS:
     - skype
 
 # Office Tools
+UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: False
 MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: False
 
 # File Synchronization and Cloud Synchronization Tools
@@ -107,10 +108,10 @@ VIDEO_PLAYERS:
 SCREEN_CAPTURE_TOOLS:
     - flameshot
 
-# Disk Image Tools
-DISK_IMAGE_TOOLS:
-    - cdemu
-
 # Graphics Editors and DTP software
 GRAPHICS_EDITORS:
     - kolourpaint
+
+# Disk Image Tools
+DISK_IMAGE_TOOLS:
+    - cdemu

@@ -16,9 +16,9 @@
     - image-viewers
     - audio-players
     - video-players
+    - audio-video-editors
     - disk-image-tools
     - remote-desktop
-    - audio-video-editors
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -38,6 +38,6 @@
     - image-viewers
     - audio-players
     - video-players
+    - audio-video-editors
     - disk-image-tools
     - remote-desktop
-    - audio-video-editors

@@ -19,9 +19,6 @@
 - include: cmus.yml
   when: '"cmus" in AUDIO_PLAYERS'
 
-- include: spotify.yml
-  when: '"spotify" in AUDIO_PLAYERS'
-
 - name: Set a default audio player fact
   set_fact:
     DEFAULT_AUDIO_PLAYER: '{{ AUDIO_PLAYERS | first }}'
@@ -31,8 +28,7 @@
 - include: default-audio-player.yml
   when: >
     DEFAULT_AUDIO_PLAYER is defined and
-    (DEFAULT_AUDIO_PLAYER != 'cmus') and
-    (DEFAULT_AUDIO_PLAYER != 'spotify')
+    (DEFAULT_AUDIO_PLAYER != 'cmus')
 
 - include: kid3.yml
   when: ID3TAG_EDITOR == 'kid3'

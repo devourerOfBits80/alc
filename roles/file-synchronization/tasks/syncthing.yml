@@ -46,7 +46,6 @@
 
 - include: syncthing-tray.yml
   when: >
-    PLASMA_DESKTOP_INSTALLED and
     not SYNCTHING_GTK_GUI_ENABLED and
     (PACMAN_WRAPPER is not defined or (PACMAN_WRAPPER == 'yay'))
 
