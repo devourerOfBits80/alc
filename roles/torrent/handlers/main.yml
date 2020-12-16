@@ -1,0 +1,7 @@
+---
+- name: restart the rTorrent systemd service
+  service:
+    name: rtorrent@{{ USER.NAME }}.service
+    state: restarted
+  tags:
+    - print_action

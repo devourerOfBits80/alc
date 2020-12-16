@@ -5,6 +5,7 @@ include kvirc.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+noblacklist ${HOME}/.kvirc4.rc
 noblacklist ${HOME}/.config/KVIrc
 noblacklist ${DOWNLOADS}
 

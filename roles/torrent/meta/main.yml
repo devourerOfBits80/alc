@@ -1,0 +1,6 @@
+---
+dependencies:
+  - { role: validators }
+  - { role: systemd }
+  - { role: firejail-activator }
+  - { role: ufw-service }

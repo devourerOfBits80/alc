@@ -1,5 +1,5 @@
 ---
-DROPBOX_AUTOUPDATE_DIRECTORY: .dropbox-dist
+DROPBOX_AUTOUPDATE_DIRECTORY: /.dropbox-dist
 OVERGRIVE_PACKAGE_REPOSITORY_URL: 'https://www.thefanclub.co.za/sites/default/files/public/overgrive'
 OVERGRIVE_DEPENDENCIES:
   - libappindicator-gtk3

@@ -17,4 +17,5 @@
     - { role: disk-image-tools, tags: ['disk-image-tools'] }
     - { role: remote-desktop, tags: ['remote-desktop'] }
     - { role: tor, tags: ['tor'] }
+    - { role: torrent, tags: ['torrent'] }
     - { role: finalize, tags: ['finalize'] }

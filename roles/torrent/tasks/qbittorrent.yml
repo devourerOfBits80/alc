@@ -1,0 +1,64 @@
+---
+- name: Install an advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
+  pacaur:
+    name:
+      - qbittorrent
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the qBittorrent configuration directory
+  file:
+    path: ~/.config/qBittorrent
+    state: directory
+  changed_when: no
+
+- name: Create the qBittorrent downloads directory
+  file:
+    path: ~/Downloads/qBittorrent
+    state: directory
+  changed_when: no
+
+- name: Push the qBittorrent configuration file
+  template:
+    src: qBittorrent.conf.j2
+    dest: ~/.config/qBittorrent/qBittorrent.conf
+  tags:
+    - print_action
+
+- name: Map qBittorrent to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/qbittorrent
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow qBittorrent access to the user's Downloads directory
+  lineinfile:
+    path: /etc/firejail/qbittorrent.local
+    regexp: '^#?\s*noblacklist\s+\$\{DOWNLOADS\}$'
+    line: 'noblacklist ${DOWNLOADS}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow connections to the qBittorrent ports
+  ufw:
+    name: qBittorrent
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw

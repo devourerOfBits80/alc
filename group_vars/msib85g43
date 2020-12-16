@@ -132,3 +132,8 @@ X2GO_DESKTOP_SHARING_ENABLED: True
 # Tor
 TOR_ENABLED: True
 TORBROWSER_LAUNCHER_ENABLED: True
+
+# BitTorrent Clients
+TORRENT_CLIENTS:
+    - ktorrent
+    - qbittorrent

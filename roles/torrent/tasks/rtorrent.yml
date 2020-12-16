@@ -1,0 +1,59 @@
+---
+- name: Install an Ncurses BitTorrent client based on libTorrent
+  pacaur:
+    name:
+      - rtorrent
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Push the rTorrent configuration file
+  template:
+    src: rtorrent.rc.j2
+    dest: ~/.rtorrent.rc
+  tags:
+    - print_action
+
+- name: Push the rTorrent systemd service
+  template:
+    src: rtorrent@.service.j2
+    dest: /etc/systemd/system/rtorrent@.service
+  become: yes
+  notify:
+    - reload systemd manager configuration (non-system mode)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map rTorrent to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/rtorrent
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Push the rTorrent Firejail local profile
+  template:
+    src: rtorrent.local.j2
+    dest: /etc/firejail/rtorrent.local
+  become: yes
+  notify:
+    - activate user profiles
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Enable the rTorrent systemd service for current user
+  service:
+    name: rtorrent@{{ USER.NAME }}.service
+    enabled: yes
+  notify:
+    - restart the rTorrent systemd service
+  tags:
+    - print_action

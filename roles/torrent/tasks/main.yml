@@ -1,0 +1,3 @@
+---
+- include: torrent.yml
+  when: (TORRENT_CLIENTS | default([]) | length) > 0

@@ -4,16 +4,7 @@
     name:
       - tor
       - torsocks
-    status: present
-  become: yes
-  tags:
-    - print_action
-
-- name: Install a command-line status monitor for Tor
-  pacaur:
-    name:
-      - nyx
-    staus: present
+    state: present
   become: yes
   tags:
     - print_action

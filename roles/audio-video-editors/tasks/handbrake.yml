@@ -5,7 +5,6 @@
       - handbrake-cli
     state: present
   become: yes
-  when: not HANDBRAKE_GUI_ENABLED
   tags:
     - print_action
 
@@ -25,9 +24,18 @@
     dest: ~/.config/firejail/HandBrakeCLI.profile
   notify:
     - activate user profiles
-  when: >
-    (FIREJAIL_ENABLED | default(True)) and
-    not HANDBRAKE_GUI_ENABLED
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map HandBrakeCLI to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/HandBrakeCLI
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
   tags:
     - print_action
     - firejail
@@ -35,10 +43,12 @@
 - name: Map HandBrake to Firejail
   file:
     src: /usr/bin/firejail
-    path: /usr/local/bin/{{ HANDBRAKE_GUI_ENABLED | ternary("ghb", "HandBrakeCLI") }}
+    path: /usr/local/bin/ghb
     state: link
   become: yes
-  when: FIREJAIL_ENABLED | default(True)
+  when: >
+    (FIREJAIL_ENABLED | default(True)) and
+    HANDBRAKE_GUI_ENABLED
   tags:
     - print_action
     - firejail

@@ -1,0 +1,82 @@
+---
+- name: Install a powerful BitTorrent client for KDE
+  pacaur:
+    name:
+      - ktorrent
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the KTorrent plugins
+  pacaur:
+    name: '{{ KTORRENT_PLUGINS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the KTorrent script to manage it in command line
+  copy:
+    src: kt.sh
+    dest: /usr/local/bin/kt
+    mode: 0755
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the KTorrent temporary files directory
+  file:
+    path: ~/.local/share/ktorrent
+    state: directory
+  changed_when: no
+
+- name: Create the KTorrent completed files directory
+  file:
+    path: ~/Downloads/KTorrent
+    state: directory
+  changed_when: no
+
+- name: Push the KTorrent configuration file
+  template:
+    src: ktorrentrc.j2
+    dest: ~/.config/ktorrentrc
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Map KTorrent to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/ktorrent
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow KTorrent access to the user's Downloads directory
+  lineinfile:
+    path: /etc/firejail/ktorrent.local
+    regexp: '^#?\s*noblacklist\s+\$\{DOWNLOADS\}$'
+    line: 'noblacklist ${DOWNLOADS}'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow connections to the KTorrent ports
+  ufw:
+    name: KTorrent
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw

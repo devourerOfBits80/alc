@@ -1,0 +1,42 @@
+---
+- name: Push the BitTorrent UFW custom rule
+  template:
+    src: ufw-torrent.j2
+    dest: /etc/ufw/applications.d/ufw-torrent
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Update BitTorrent UFW application definition
+  command: ufw app update BitTorrent
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Allow connections to the BitTorrent ports
+  ufw:
+    name: BitTorrent
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- include: rtorrent.yml
+  when: '"rtorrent" in TORRENT_CLIENTS'
+
+- include: ktorrent.yml
+  when: '"ktorrent" in TORRENT_CLIENTS'
+
+- include: qbittorrent.yml
+  when: '"qbittorrent" in TORRENT_CLIENTS'
+
+- include: transmission.yml
+  when: '"transmission" in TORRENT_CLIENTS'

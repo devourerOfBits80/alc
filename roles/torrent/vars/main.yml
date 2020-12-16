@@ -1,0 +1,8 @@
+---
+TRANSMISSION_CLI_FIREJAIL_ITEMS:
+  - transmission-cli
+  - transmission-create
+  - transmission-daemon
+  - transmission-edit
+  - transmission-remote
+  - transmission-show

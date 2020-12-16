@@ -131,3 +131,7 @@ REMOTE_DESKTOP_CLIENTS:
 # Tor
 TOR_ENABLED: True
 TORBROWSER_LAUNCHER_ENABLED: True
+
+# BitTorrent Clients
+TORRENT_CLIENTS:
+    - qbittorrent

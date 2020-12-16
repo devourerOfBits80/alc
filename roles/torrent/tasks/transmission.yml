@@ -1,0 +1,116 @@
+---
+- name: Install a fast, easy, and free BitTorrent client (CLI tools, daemon and web client)
+  pacaur:
+    name:
+      - transmission-cli
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a fast, easy, and free BitTorrent client (GTK+ GUI)
+  pacaur:
+    name:
+      - libnotify
+      - transmission-gtk
+    state: present
+  become: yes
+  when: TRANSMISSION_GTK_VERSION
+  tags:
+    - print_action
+
+- name: Install a fast, easy, and free BitTorrent client (Qt GUI)
+  pacaur:
+    name:
+      - transmission-qt
+    state: present
+  become: yes
+  when: not TRANSMISSION_GTK_VERSION
+  tags:
+    - print_action
+
+- name: Create the Transmission configuration directory
+  file:
+    path: ~/.config/transmission
+    state: directory
+  changed_when: no
+
+- name: Create the Transmission downloads directory
+  file:
+    path: ~/Downloads/Transmission
+    state: directory
+  changed_when: no
+
+- name: Push the Transmission configuration file
+  template:
+    src: settings.json.j2
+    dest: ~/.config/transmission/settings.json
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Map Transmission CLI to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items: '{{ TRANSMISSION_CLI_FIREJAIL_ITEMS }}'
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Transmission GTK to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/transmission-gtk
+    state: link
+  become: yes
+  when: >
+    (FIREJAIL_ENABLED | default(True)) and
+    TRANSMISSION_GTK_VERSION
+  tags:
+    - print_action
+    - firejail
+
+- name: Map Transmission Qt to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/transmission-qt
+    state: link
+  become: yes
+  when: >
+    (FIREJAIL_ENABLED | default(True)) and
+    not TRANSMISSION_GTK_VERSION
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow Transmission access to the user's Downloads directory
+  lineinfile:
+    path: /etc/firejail/{{ item }}.local
+    regexp: '^#?\s*noblacklist\s+\$\{DOWNLOADS\}$'
+    line: 'noblacklist ${DOWNLOADS}'
+    state: present
+    create: yes
+  become: yes
+  with_items:
+    - transmission-gtk
+    - transmission-qt
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow connections to the Transmission ports
+  ufw:
+    name: Transmission
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw

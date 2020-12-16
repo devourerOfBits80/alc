@@ -1,0 +1,10 @@
+---
+TORRENT_INCOMING_TRAFFIC_PORT: 56789
+DISTRIBUTED_HASH_TABLE_PORT: 6881
+RTORRENT_DIRECTORY: /rTorrent   # relative path in the user's home directory
+KTORRENT_PLUGINS:
+  - geoip
+  - kplotting
+  - syndication
+  - taglib
+TRANSMISSION_GTK_VERSION: False

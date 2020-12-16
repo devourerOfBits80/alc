@@ -291,3 +291,11 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 # Tor
 #TOR_ENABLED: True
 #TORBROWSER_LAUNCHER_ENABLED: False
+
+# BitTorrent Clients
+#TORRENT_CLIENTS:    # set of values: rtorrent, ktorrent, qbittorrent or transmission
+#    - ktorrent
+#TORRENT_INCOMING_TRAFFIC_PORT: 56789
+#DISTRIBUTED_HASH_TABLE_PORT: 6881
+# affects the Transmission
+#TRANSMISSION_GTK_VERSION: True
