@@ -1,6 +1,6 @@
 ---
 - name: Allow connections to the VNC server ports
-  ufw:
+  community.general.ufw:
     name: VNC
     rule: allow
   become: yes

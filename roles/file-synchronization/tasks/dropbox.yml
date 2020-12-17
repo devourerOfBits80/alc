@@ -37,7 +37,7 @@
   changed_when: no
 
 - name: Allow Dropbox LAN Synchronization
-  ufw:
+  community.general.ufw:
     name: Dropbox
     rule: allow
   become: yes

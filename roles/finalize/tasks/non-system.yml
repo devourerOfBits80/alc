@@ -19,6 +19,7 @@
     - audio-video-editors
     - disk-image-tools
     - remote-desktop
+    - acestream
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -41,3 +42,4 @@
     - audio-video-editors
     - disk-image-tools
     - remote-desktop
+    - acestream

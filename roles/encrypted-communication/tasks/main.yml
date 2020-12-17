@@ -23,7 +23,7 @@
     - print_action
 
 - name: Allow connections to the Mosh ports
-  ufw:
+  community.general.ufw:
     name: mosh
     rule: allow
   notify:

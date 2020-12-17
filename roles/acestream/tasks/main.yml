@@ -1,0 +1,3 @@
+---
+- include: acestream.yml
+  when: ACESTREAM_ENABLED | default(False)

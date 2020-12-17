@@ -18,7 +18,7 @@
     - ufw
 
 - name: Allow connections to the BitTorrent ports
-  ufw:
+  community.general.ufw:
     name: BitTorrent
     rule: allow
   become: yes

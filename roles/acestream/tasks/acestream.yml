@@ -1,0 +1,48 @@
+---
+- name: Install ACE Stream engine packages
+  pacaur:
+    name:
+      - acestream-engine
+      - acestream-launcher
+    state: present
+  tags:
+    - print_action
+
+- name: Install GTK+ GUI support for the ACE Stream
+  pacaur:
+    name:
+      - python2-libappindicator
+    state: present
+  when: ACESTREAM_GUI_ENABLED | default(False)
+  tags:
+    - print_action
+
+- name: Copy the ACE Stream UFW custom rule
+  copy:
+    src: ufw-acestream
+    dest: /etc/ufw/applications.d/ufw-acestream
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Update ACE Stream UFW application definition
+  command: ufw app update ACEStream
+  become: yes
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw
+
+- name: Allow connections to the ACE Stream ports
+  community.general.ufw:
+    name: ACEStream
+    rule: allow
+  become: yes
+  notify:
+    - reload firewall (non-system mode)
+  when: UFW_ENABLED | default(True)
+  tags:
+    - print_action
+    - ufw

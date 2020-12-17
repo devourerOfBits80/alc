@@ -3,3 +3,12 @@
 
 noblacklist ${HOME}/.rtorrent.rc
 noblacklist ${HOME}{{ RTORRENT_DIRECTORY }}
+
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}/download
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}/log
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}/.session
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}/watch
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}/watch/load
+mkdir ${HOME}{{ RTORRENT_DIRECTORY }}/watch/start
+whitelist ${HOME}{{ RTORRENT_DIRECTORY }}

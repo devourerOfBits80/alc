@@ -47,7 +47,7 @@
     - ufw
 
 - name: Allow connections to the XRDP server ports
-  ufw:
+  community.general.ufw:
     name: XRDP
     rule: allow
   become: yes

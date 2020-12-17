@@ -18,4 +18,5 @@
     - { role: remote-desktop, tags: ['remote-desktop'] }
     - { role: tor, tags: ['tor'] }
     - { role: torrent, tags: ['torrent'] }
+    - { role: acestream, tags: ['acestream'] }
     - { role: finalize, tags: ['finalize'] }

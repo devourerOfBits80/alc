@@ -134,4 +134,7 @@ TORBROWSER_LAUNCHER_ENABLED: True
 
 # BitTorrent Clients
 TORRENT_CLIENTS:
-    - qbittorrent
+    - ktorrent
+
+# ACE Stream Engine
+ACESTREAM_ENABLED: True

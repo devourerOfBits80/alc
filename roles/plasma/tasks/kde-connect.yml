@@ -27,7 +27,7 @@
     - ufw
 
 - name: Allow connections to the KDE Connect ports
-  ufw:
+  community.general.ufw:
     name: KDEConnect
     rule: allow
   become: yes

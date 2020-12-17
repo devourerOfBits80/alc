@@ -40,7 +40,7 @@
     - print_action
 
 - name: Allow connections to the Bonjour protocol ports
-  ufw:
+  community.general.ufw:
     name: Bonjour
     rule: allow
   notify:

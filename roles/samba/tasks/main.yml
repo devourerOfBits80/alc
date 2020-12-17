@@ -24,7 +24,7 @@
     - print_action
 
 - name: Allow connections to the CIFS ports
-  ufw:
+  community.general.ufw:
     name: CIFS
     rule: allow
   notify:

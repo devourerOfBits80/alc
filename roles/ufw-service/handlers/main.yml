@@ -7,14 +7,14 @@
     - print_action
 
 - name: reload firewall
-  ufw:
+  community.general.ufw:
     state: reloaded
   when: UFW_ENABLED | default(True)
   tags:
     - print_action
 
 - name: reload firewall (non-system mode)
-  ufw:
+  community.general.ufw:
     state: reloaded
   become: yes
   when: UFW_ENABLED | default(True)

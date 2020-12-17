@@ -299,3 +299,7 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 #DISTRIBUTED_HASH_TABLE_PORT: 6881
 # affects the Transmission
 #TRANSMISSION_GTK_VERSION: True
+
+# ACE Stream Engine
+#ACESTREAM_ENABLED: True
+#ACESTREAM_GUI_ENABLED: True

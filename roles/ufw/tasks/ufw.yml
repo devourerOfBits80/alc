@@ -23,13 +23,13 @@
   changed_when: no
 
 - name: Reset firewall to installation defaults
-  ufw:
+  community.general.ufw:
     state: reset
   tags:
     - print_action
 
 - name: Enable Uncomplicated Firewall
-  ufw:
+  community.general.ufw:
     logging: medium
     policy: deny
     state: enabled
@@ -37,7 +37,7 @@
     - print_action
 
 - name: Allow all access from pre-defined addresses and subnets
-  ufw:
+  community.general.ufw:
     rule: allow
     from_ip: '{{ item }}'
   loop: '{{ TRUSTED_ADDRESSES_AND_SUBNETS }}'

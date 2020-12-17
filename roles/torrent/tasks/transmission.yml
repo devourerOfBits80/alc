@@ -104,7 +104,7 @@
     - firejail
 
 - name: Allow connections to the Transmission ports
-  ufw:
+  community.general.ufw:
     name: Transmission
     rule: allow
   become: yes

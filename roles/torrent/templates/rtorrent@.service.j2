@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=%I
-Group=%I
+Group={{ USER.GROUP }}
 WorkingDirectory=/home/%I
 ExecStartPre=-/bin/rm -f /home/%I{{ RTORRENT_DIRECTORY }}/.session/rtorrent.lock
 ExecStart={% if (FIREJAIL_ENABLED | default(True)) %}/usr/bin/firejail {% endif %}/usr/bin/rtorrent -o system.daemon.set=true

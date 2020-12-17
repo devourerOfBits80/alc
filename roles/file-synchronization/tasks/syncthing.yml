@@ -9,7 +9,7 @@
     - print_action
 
 - name: Allow connections to the Syncthing service ports
-  ufw:
+  community.general.ufw:
     name: syncthing
     rule: allow
   become: yes
@@ -21,7 +21,7 @@
     - ufw
 
 - name: Allow connections to the Syncthing Web GUI ports
-  ufw:
+  community.general.ufw:
     name: syncthing-gui
     rule: allow
   become: yes

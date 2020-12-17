@@ -52,7 +52,7 @@
     - firejail
 
 - name: Allow connections to the qBittorrent ports
-  ufw:
+  community.general.ufw:
     name: qBittorrent
     rule: allow
   become: yes

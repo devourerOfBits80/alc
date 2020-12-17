@@ -9,7 +9,7 @@
     - print_action
 
 - name: Allow connections to the IPP ports
-  ufw:
+  community.general.ufw:
     name: IPP
     rule: allow
   notify:

@@ -90,7 +90,7 @@
     - print_action
 
 - name: Allow limited connections to the SSH server port
-  ufw:
+  community.general.ufw:
     name: SSH
     rule: limit
   notify:
@@ -101,7 +101,7 @@
     - ufw
 
 - name: Allow limited connections to the custom SSH server port
-  ufw:
+  community.general.ufw:
     to_port: '{{ SSH_SERVER_PORT }}'
     proto: tcp
     rule: limit

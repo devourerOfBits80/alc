@@ -70,7 +70,7 @@
     - firejail
 
 - name: Allow connections to the KTorrent ports
-  ufw:
+  community.general.ufw:
     name: KTorrent
     rule: allow
   become: yes
