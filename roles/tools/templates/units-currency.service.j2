@@ -1,0 +1,12 @@
+[Unit]
+Description=GNU Units currency update service
+After=network.target
+
+[Service]
+Type=oneshot
+StandardOutput=journal
+StandardError=journal
+ExecStart=/usr/bin/{{ UNITS_CURRENCY_UPDATE_COMMAND | default('units_cur') }}
+
+[Install]
+WantedBy=default.target

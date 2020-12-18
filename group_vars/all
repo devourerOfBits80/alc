@@ -214,6 +214,10 @@ LIBREOFFICE_PACKAGES:
 #UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True  # Pandoc
 MINIMALISTIC_DOCUMENT_VIEWER_ENABLED: True  # Zathura
 
+# Education
+#EDUCATION_TOOLS:    # set of values: anki, parley, klavaro or ktouch
+#    - anki
+
 # File Manager
 #FILE_MANAGER: krusader  # set of values: double-commander or krusader
 #DOUBLE_COMMANDER_GTK_VERSION: True
@@ -303,3 +307,23 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 # ACE Stream Engine
 #ACESTREAM_ENABLED: True
 #ACESTREAM_GUI_ENABLED: True
+
+# System and Net Tools
+#SYSTEM_TOOLS:   # set of values: trash-cli, rmlint, screenfetch, conky, stacer, units or meld
+#    - screenfetch
+#    - units
+#NET_TOOLS:  # set of values: iptraf-ng, netsniff-ng, ngrep, bettercap, ettercap, aircrack-ng, kismet, linssid or wireshark
+#    - ngrep
+#    - wireshark
+# affects the rmlint
+#RMLINT_SHREDDER_ENABLED: True   # GUI for rmlint
+# affects the Conky
+#CONKY_MANAGER_ENABLED: True
+# affects the GNU Units
+#UNITS_CURRENCY_UPDATE_COMMAND: units_cur
+#UNITS_CURRENCY_UPDATE_INTERVAL: 21600   # 6 hours in seconds
+# affects the Wireshark
+#WIRESHARK_GUI_ENABLED: True
+
+# VirtualBox
+#VIRTUALBOX_ENABLED: True

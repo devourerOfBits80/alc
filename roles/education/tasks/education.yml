@@ -1,0 +1,19 @@
+---
+- include: anki.yml
+  when: '"anki" in EDUCATION_TOOLS'
+
+- name: Install a Vocabulary Trainer
+  pacaur:
+    name:
+      - parley
+    state: present
+  become: yes
+  when: '"parley" in EDUCATION_TOOLS'
+  tags:
+    - print_action
+
+- include: klavaro.yml
+  when: '"klavaro" in EDUCATION_TOOLS'
+
+- include: ktouch.yml
+  when: '"ktouch" in EDUCATION_TOOLS'

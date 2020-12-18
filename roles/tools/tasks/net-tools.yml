@@ -1,0 +1,83 @@
+---
+- name: Install a console-based network monitoring utility
+  pacaur:
+    name:
+      - iptraf-ng
+    state: present
+  become: yes
+  when: '"iptraf-ng" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a high performance Linux network sniffer for packet inspection
+  pacaur:
+    name:
+      - netsniff-ng
+    state: present
+  become: yes
+  when: '"netsniff-ng" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a grep-like utility that allows you to search for network packets on an interface
+  pacaur:
+    name:
+      - ngrep
+    state: present
+  become: yes
+  when: '"ngrep" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a swiss army knife for network attacks and monitoring
+  pacaur:
+    name:
+      - bettercap
+    state: present
+  become: yes
+  when: '"bettercap" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a network sniffer/interceptor/logger for ethernet LANs
+  pacaur:
+    name:
+      - ettercap
+    state: present
+  become: yes
+  when: '"ettercap" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a key cracker for the 802.11 WEP and WPA-PSK protocols
+  pacaur:
+    name:
+      - aircrack-ng
+    state: present
+  become: yes
+  when: '"aircrack-ng" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a 802.11 layer2 wireless network detector, sniffer, and intrusion detection system
+  pacaur:
+    name:
+      - kismet
+    state: present
+  become: yes
+  when: '"kismet" in NET_TOOLS'
+  tags:
+    - print_action
+
+- name: Install a graphical wireless scanner for Linux
+  pacaur:
+    name:
+      - linssid
+    state: present
+  become: yes
+  when: '"linssid" in NET_TOOLS'
+  tags:
+    - print_action
+
+- include: wireshark.yml
+  when: '"wireshark" in NET_TOOLS'

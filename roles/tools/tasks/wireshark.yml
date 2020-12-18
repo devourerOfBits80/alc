@@ -1,0 +1,43 @@
+---
+- name: Install a command line network traffic and protocol analyzer/sniffer
+  pacaur:
+    name:
+      - wireshark-cli
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a network traffic and protocol analyzer/sniffer (Qt)
+  pacaur:
+    name:
+      - wireshark-qt
+    state: present
+  become: yes
+  when: WIRESHARK_GUI_ENABLED | default(True)
+  tags:
+    - print_action
+
+- name: Map Wireshark to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - tshark
+    - wireshark
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Add user to the wireshark group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: wireshark
+    append: yes
+  become: yes
+  tags:
+    - print_action
+    - user

@@ -1,0 +1,19 @@
+---
+- name: Install a tool to remove duplicates and other lint
+  pacaur:
+    name:
+      - rmlint
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a graphical user interface for rmlint
+  pacaur:
+    name:
+      - rmlint-shredder
+    state: present
+  become: yes
+  when: RMLINT_SHREDDER_ENABLED | default(False)
+  tags:
+    - print_action

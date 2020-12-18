@@ -1,0 +1,70 @@
+---
+- name: Install Conky packages
+  pacaur:
+    name:
+      - conky
+      - hddtemp
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a GUI for managing Conky config files with options to browse and edit themes
+  pacaur:
+    name:
+      - conky-manager
+    state: present
+  become: yes
+  when: CONKY_MANAGER_ENABLED | default(False)
+  tags:
+    - print_action
+
+- name: Create the Conky configuration directory
+  file:
+    path: ~/.config/conky
+    state: directory
+  changed_when: no
+
+- name: Push the Conky configuration file
+  template:
+    src: conky.conf.j2
+    dest: ~/.config/conky/conky.conf
+  tags:
+    - print_action
+
+- name: Create the Desktop Environment autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+  changed_when: no
+
+- name: Copy the Conky autostart entry file
+  copy:
+    src: conky.desktop
+    dest: ~/.config/autostart/conky.desktop
+  tags:
+    - print_action
+
+- name: Map Conky to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/conky
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow Conky access to its configuration directory
+  lineinfile:
+    path: /etc/firejail/conky.local
+    regexp: '^#?\s*noblacklist\s+\$\{HOME\}/\.config/conky$'
+    line: 'noblacklist ${HOME}/.config/conky'
+    state: present
+    create: yes
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

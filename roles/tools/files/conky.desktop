@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Conky
+Exec=/usr/bin/conky --daemonize --pause=4
+StartupNotify=false
+Terminal=false

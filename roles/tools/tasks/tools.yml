@@ -1,0 +1,41 @@
+---
+- name: Install a command line trashcan (recycle bin) interface
+  pacaur:
+    name:
+      - trash-cli
+    state: present
+  become: yes
+  when: '"trash-cli" in SYSTEM_TOOLS'
+  tags:
+    - print_action
+
+- include: rmlint.yml
+  when: '"rmlint" in SYSTEM_TOOLS'
+
+- name: Install a CLI Bash script to show system/theme info in screenshots
+  pacaur:
+    name:
+      - screenfetch
+    state: present
+  become: yes
+  when: '"screenfetch" in SYSTEM_TOOLS'
+  tags:
+    - print_action
+
+- include: conky.yml
+  when: '"conky" in SYSTEM_TOOLS'
+
+- name: Install a Linux System Optimizer and Monitoring
+  pacaur:
+    name:
+      - stacer-bin
+    state: present
+  when: '"stacer" in SYSTEM_TOOLS'
+  tags:
+    - print_action
+
+- include: units.yml
+  when: '"units" in SYSTEM_TOOLS'
+
+- include: meld.yml
+  when: '"meld" in SYSTEM_TOOLS'

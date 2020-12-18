@@ -1,0 +1,3 @@
+---
+- include: education.yml
+  when: (EDUCATION_TOOLS | default([]) | length) > 0

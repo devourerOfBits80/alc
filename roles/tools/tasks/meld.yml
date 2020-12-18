@@ -1,0 +1,20 @@
+---
+- name: Install a tool to compare files, directories and working copies
+  pacaur:
+    name:
+      - meld
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Meld to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/meld
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

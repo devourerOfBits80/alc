@@ -6,6 +6,7 @@
     - { role: email-clients, tags: ['email-clients'] }
     - { role: instant-messaging-clients, tags: ['instant-messaging-clients'] }
     - { role: office, tags: ['office'] }
+    - { role: education, tags: ['education'] }
     - { role: file-manager, tags: ['file-manager'] }
     - { role: file-synchronization, tags: ['file-synchronization'] }
     - { role: image-viewers, tags: ['image-viewers'] }
@@ -19,4 +20,6 @@
     - { role: tor, tags: ['tor'] }
     - { role: torrent, tags: ['torrent'] }
     - { role: acestream, tags: ['acestream'] }
+    - { role: tools, tags: ['tools'] }
+    - { role: virtualbox, tags: ['virtualbox'] }
     - { role: finalize, tags: ['finalize'] }

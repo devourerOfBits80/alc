@@ -1,0 +1,6 @@
+---
+- include: tools.yml
+  when: (SYSTEM_TOOLS | default([]) | length) > 0
+
+- include: net-tools.yml
+  when: (NET_TOOLS | default([]) | length) > 0

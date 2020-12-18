@@ -1,0 +1,40 @@
+---
+- name: Install a GNU Units tool to convert between different units
+  pacaur:
+    name:
+      - units
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Push the GNU Units systemd service
+  template:
+    src: units-currency.service.j2
+    dest: /etc/systemd/system/units-currency.service
+  become: yes
+  notify:
+    - reload systemd manager configuration (non-system mode)
+  tags:
+    - print_action
+    - firejail
+
+- name: Push the GNU Units systemd service timer
+  template:
+    src: units-currency.timer.j2
+    dest: /etc/systemd/system/units-currency.timer
+  become: yes
+  notify:
+    - reload systemd manager configuration (non-system mode)
+  tags:
+    - print_action
+    - firejail
+
+- name: Enable the GNU Units systemd service timer
+  service:
+    name: units-currency.timer
+    enabled: yes
+  notify:
+    - restart the GNU Units systemd service timer
+  tags:
+    - print_action

@@ -1,0 +1,71 @@
+---
+- name: Install a VirtualbBox host kernel modules for Arch Kernel
+  pacaur:
+    name:
+      - virtualbox-host-modules-arch
+    state: present
+  become: yes
+  when: not LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Install a VirtualBox Host kernel modules sources
+  pacaur:
+    name:
+      - linux-lts-headers
+      - virtualbox-host-dkms
+    state: present
+  become: yes
+  when: LTS_KERNEL
+  tags:
+    - print_action
+
+- name: Install a powerful x86 virtualization for enterprise as well as home use
+  pacaur:
+    name:
+      - virtualbox
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map VirtualBox to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - VirtualBox
+    - virtualbox
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Add user to the vboxusers group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: vboxusers
+    append: yes
+  become: yes
+  tags:
+    - print_action
+    - user
+
+- name: Install the official VirtualBox Guest Additions ISO image
+  pacaur:
+    name:
+      - virtualbox-guest-iso
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the Oracle VM VirtualBox Extension Pack
+  pacaur:
+    name:
+      - virtualbox-ext-oracle
+    state: present
+  tags:
+    - print_action

@@ -1,0 +1,11 @@
+[Unit]
+Description=GNU Units currency update service timer
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec={{ UNITS_CURRENCY_UPDATE_INTERVAL | default('21600') }}
+FixedRandomDelay=true
+
+[Install]
+WantedBy=timers.target

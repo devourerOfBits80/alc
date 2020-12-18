@@ -63,6 +63,10 @@ INSTANT_MESSAGING_CLIENTS:
 # Office Tools
 UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
 
+# Education
+EDUCATION_TOOLS:
+    - anki
+
 # File Manager
 FILE_MANAGER: krusader
 
@@ -140,3 +144,21 @@ TORRENT_CLIENTS:
 
 # ACE Stream Engine
 ACESTREAM_ENABLED: True
+
+# System and Net Tools
+SYSTEM_TOOLS:
+    - rmlint
+    - screenfetch
+    - conky
+    - units
+NET_TOOLS:
+    - iptraf-ng
+    - netsniff-ng
+    - ngrep
+    - wireshark
+RMLINT_SHREDDER_ENABLED: False
+CONKY_MANAGER_ENABLED: False
+WIRESHARK_GUI_ENABLED: True
+
+# VirtualBox
+VIRTUALBOX_ENABLED: True

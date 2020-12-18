@@ -20,6 +20,8 @@
     - disk-image-tools
     - remote-desktop
     - acestream
+    - tools
+    - virtualbox
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -43,3 +45,5 @@
     - disk-image-tools
     - remote-desktop
     - acestream
+    - tools
+    - virtualbox
