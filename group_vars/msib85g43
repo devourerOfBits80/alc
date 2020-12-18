@@ -151,6 +151,7 @@ SYSTEM_TOOLS:
     - screenfetch
     - conky
     - units
+    - dosbox
 NET_TOOLS:
     - iptraf-ng
     - netsniff-ng

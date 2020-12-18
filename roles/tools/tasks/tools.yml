@@ -39,3 +39,6 @@
 
 - include: meld.yml
   when: '"meld" in SYSTEM_TOOLS'
+
+- include: dosbox.yml
+  when: '"dosbox" in SYSTEM_TOOLS'

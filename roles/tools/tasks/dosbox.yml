@@ -1,17 +1,17 @@
 ---
-- name: Install an application that helps you remember facts (like words/phrases in a foreign language) efficiently
+- name: Install an emulator with builtin DOS for running DOS Games
   pacaur:
     name:
-      - anki
+      - dosbox
     state: present
   become: yes
   tags:
     - print_action
 
-- name: Map Anki to Firejail
+- name: Map DOSBox to Firejail
   file:
     src: /usr/bin/firejail
-    path: /usr/local/bin/anki
+    path: /usr/local/bin/dosbox
     state: link
   become: yes
   when: FIREJAIL_ENABLED | default(True)

@@ -1,6 +1,13 @@
 ---
-- include: anki.yml
+- name: Install an application that helps you remember facts (like words/phrases in a foreign language) efficiently
+  pacaur:
+    name:
+      - anki
+    state: present
+  become: yes
   when: '"anki" in EDUCATION_TOOLS'
+  tags:
+    - print_action
 
 - name: Install a Vocabulary Trainer
   pacaur:

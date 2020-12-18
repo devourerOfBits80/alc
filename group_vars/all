@@ -309,7 +309,7 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 #ACESTREAM_GUI_ENABLED: True
 
 # System and Net Tools
-#SYSTEM_TOOLS:   # set of values: trash-cli, rmlint, screenfetch, conky, stacer, units or meld
+#SYSTEM_TOOLS:   # set of values: trash-cli, rmlint, screenfetch, conky, stacer, units, meld or dosbox
 #    - screenfetch
 #    - units
 #NET_TOOLS:  # set of values: iptraf-ng, netsniff-ng, ngrep, bettercap, ettercap, aircrack-ng, kismet, linssid or wireshark
