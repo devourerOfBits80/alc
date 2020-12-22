@@ -50,6 +50,13 @@
   tags:
     - print_action
 
+- name: Remove the boot image's signature table from the linux kernel
+  command: /usr/bin/sbattach --remove {{ VMLINUZ_FILE_PATH }}
+  become: no
+  changed_when: no
+  ignore_errors: yes
+  no_log: yes
+
 - name: Sign the linux kernel
   command: >
     /usr/bin/sbsign --key {{ REFIND_KEYS_DIR }}/refind_local.key --cert {{ REFIND_KEYS_DIR }}/refind_local.crt

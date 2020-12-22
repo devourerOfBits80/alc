@@ -4,7 +4,9 @@ Operation=Upgrade
 Operation=Remove
 Type=Package
 Target={{ DISCRETE_GPU_DRIVER_NAME }}
-Target={% if LTS_KERNEL %}linux-lts{% else %}linux{% endif %}
+Target={% if LTS_KERNEL %}linux-lts
+{% else %}linux
+{% endif %}
 
 [Action]
 Description=Update nvidia module in initcpio

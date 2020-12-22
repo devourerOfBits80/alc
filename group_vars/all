@@ -239,18 +239,15 @@ SYNCTHING_GTK_GUI_ENABLED: False
 # Image Viewers
 IMAGE_VIEWERS:  # set of values: gwenview, nomacs, qimgv, digikam
     - nomacs    # the first one will be the default system image viewer
-    - digikam
 
 # Audio Players
 AUDIO_PLAYERS:      # set of values: clementine, audacious, mpd (cantata) or cmus
     - clementine    # the first one will be the default system audio player (except for the C* MUsic Player)
-    - cmus
 #ID3TAG_EDITOR: picard   # set of values: kid3 or picard
 
 # Video Players
 VIDEO_PLAYERS:  # set of values: dragon, mpv, vlc or kodi
     - mpv       # the first one will be the default system video player (except for KODI)
-    - dragon
 YOUTUBE_DL_ENABLED: True
 QNAPI_SUBTITLES_DOWNLOADER_ENABLED: True
 #SUBTITLE_EDITOR: aegisub    # set of values: aegisub or gaupol

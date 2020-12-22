@@ -10,7 +10,7 @@ Target=linux-zen
 [Action]
 Description=Signing kernel with the Machine Owner Key for Secure Boot
 When=PostTransaction
-Exec=/usr/bin/find /boot/ -maxdepth 1 -name 'vmlinuz-*' -exec /usr/bin/sh -c 'if ! /usr/bin/sbverify --list {} 2> /dev/null | /usr/bin/grep -q "signature certificates"; then /usr/bin/sbsign --key {{ REFIND_KEYS_DIR }}/refind_local.key --cert {{ REFIND_KEYS_DIR }}/refind_local.crt --output {} {}; fi';
+Exec=/usr/bin/find /boot/ -maxdepth 1 -name 'vmlinuz-*' -exec /usr/bin/sh -c 'if ! /usr/bin/sbverify --list {} 2>/dev/null | /usr/bin/grep -q "signature certificates"; then /usr/bin/sbsign --key {{ REFIND_KEYS_DIR }}/refind_local.key --cert {{ REFIND_KEYS_DIR }}/refind_local.crt --output {} {}; fi' ;
 Depends=findutils
 Depends=grep
 Depends=sbsigntools

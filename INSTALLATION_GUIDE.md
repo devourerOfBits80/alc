@@ -329,9 +329,9 @@ Add the *rEFInd* configuration. For *LTS* kernel, replace the *initramfs-linux* 
 > \$ sed -i 's/^timeout .\*/timeout 2/' /boot/EFI/refind/refind.conf  
 > \$ ROOTPARTUUID=\$(blkid /dev/sda2 | awk '\{sub(/.\*PARTUUID=/,\_,\$0); print\}' | cut -d '"' -f2)  
 > \$ SWAPPARTUUID=\$(blkid /dev/sda3 | awk '\{sub(/.\*PARTUUID=/,\_,\$0); print\}' | cut -d '"' -f2) (only if hibernation is supported)  
-> \$ echo "\"Boot using default options\" \"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap quiet loglevel=3 resume=PARTUUID=\$SWAPPARTUUID initrd=initramfs-linux.img\"" > /boot/refind_linux.conf  
-> \$ echo "\"Boot using fallback initramfs\" \"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap initrd=initramfs-linux-fallback.img\"" >> /boot/refind_linux.conf  
-> \$ echo "\"Boot to terminal\" \"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap quiet loglevel=3 resume=PARTUUID=\$SWAPPARTUUID initrd=initramfs-linux.img systemd.unit=multi-user.target\"" >> /boot/refind_linux.conf
+> \$ echo "\\"Boot using default options\\" \\"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap quiet loglevel=3 resume=PARTUUID=\$SWAPPARTUUID initrd=initramfs-linux.img\\"" > /boot/refind_linux.conf  
+> \$ echo "\\"Boot using fallback initramfs\\" \\"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap initrd=initramfs-linux-fallback.img\\"" >> /boot/refind_linux.conf  
+> \$ echo "\\"Boot to terminal\\" \\"root=PARTUUID=\$ROOTPARTUUID rw add_efi_memmap quiet loglevel=3 resume=PARTUUID=\$SWAPPARTUUID initrd=initramfs-linux.img systemd.unit=multi-user.target\\"" >> /boot/refind_linux.conf
 
 ### Exit the chroot environment and reboot machine
 

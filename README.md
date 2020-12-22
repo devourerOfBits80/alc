@@ -30,6 +30,10 @@ Subsequently, when the *system.yml* playbook execution is finished, reboot your 
 > \$ cd alc  
 > \$ ansible-playbook -i hosts -l desktop --ask-become-pass plasma.yml (use *portable* instead of *desktop* for mobile devices)
 
+After all, you can run the additional playbooks like *applications.yml*, which should be launching in the same way as the *plasma.yml* playbook.
+
+> \$ ansible-playbook -i hosts -l desktop --ask-become-pass applications.yml
+
 ## Playbooks' execution settings
 
 *alc* has many playbooks' execution settings that can be pre-configured. They are mostly available in the *group_vars/all* file. Some of them (especially the most important) have been described below.
@@ -137,3 +141,32 @@ To quickly initialize a new password store for the *pass*, generate a [*GnuPG* k
 ### WEB Browsers
 
 The last step of executing the second phase playbook (desktop environment) is the WEB Browser installation. By using the *WEB_BROWSERS* list variable, there is a possibility to define one or more browsers that will have installed. In this area, there are available *Chromium*, *Google Chrome*, *Opera*, *Vivaldi*, *Brave*, and *Firefox*. The first list item will be the default system browser, and the last one, the temporary email client. If there is only one browser declared, it will set for both mentioned responsibilities.
+
+### Applications
+
+*alc* can install many different applications grouped by categories like Email Clients, Office Tools, Audio Players, Video Players, etc. Each of them has its configuration section in the *group_vars/all* file, where you can select what you want to install from the proposed list of the most popular applications. If there is not available an application that (in your opinion) is useful and worth attention, please install it on your own or just let me know, then I will try to extend the playbook. Below you can find tips for some application categories provided by the *applications.yml* playbook:
+
+- ***Email Clients***
+
+There are available two GUI applications, *KMail* and *Thunderbird*, and also one terminal-based email client *NeoMutt*, which needs some additional configuration. To use it with your email account, please edit the *neomuttrc* configuration file (*~/.config/neomutt/neomuttrc*) according to your requirements. If you want to encrypt the email account password (recommended), generate a [*GnuPG* key pair](#encrypted-communication-gnupg-and-ssh) (if you have not it yet), create a password file with the suitable contents, and encrypt it using the key as in the example below:
+
+> \$ nano ~/.my-pwds  
+> set my_pass = "*\{password\}*" (type, save and exit)  
+> \$ gpg --recipient \<*gpg-id* or *email*\> --encrypt ~/.my-pwds (the *.my-pwds.gpg* encrypted file will have been created)  
+> \$ rm -f ~/.my-pwds (delete the original unencrypted file)
+
+- ***File Synchronization and Cloud Synchronization Tools***
+
+*rsync*, *Rclone*, *FreeFileSync*, or *Syncthing* can be installed as file synchronization tools, and *Dropbox*, *MEGA Sync*, or *overGrive* as cloud synchronization tools. Because the *overGrive* is supported neither in the official *Arch Linux* repositories nor in the *AUR*, it is installed directly from the [project website](https://www.thefanclub.co.za/overgrive). To install the latest *overGrive* version, uncomment the *OVERGRIVE_PACKAGE_NAME* variable in the *group_vars/all* file and set the expected package name as its value.
+
+- ***Audio Players***
+
+In the matter of audio players, you can choose *Clementine*, *Audacious*, *Music Player Daemon* with the *Cantata* client, or terminal-based *C\* Music Player*. *Audacious* is installed together with the old, good, classic *Winamp* skin, however by default the *Qt* interface is applied. If you want to set the *Winamp* skin, go to the *Settings* (*Ctrl+P*), select the *Appearance* tab, and change the *Interface* option from *Qt* to classical *Winamp*. There is also a possibility to install an [*ID3 Tag*](https://en.wikipedia.org/wiki/ID3) editor like *Kid3* or *MusicBrainz Picard*.
+
+- ***Video Players***
+
+In the category of video players, *alc* offers the *Dragon Player*, *mpv*, *VLC media player*, and the ultimate entertainment center *KODI*. For the *mpv* and *VLC*, there is a possibility to set audio languages (*AUDIO_LANGUAGES* variable) and subtitle languages (*SUBTITLE_LANGUAGES* variable), which will be used by default in specified order during playing movies. The subtitle settings also have an impact on the *youtube-dl* downloader. In this place you can also install a subtitle editor like *Aegisub* or *gaupol*.
+
+- ***Remote Desktop***
+
+In case when you need to have remote control over your machine(s), you can install *KRDC* (which supports [*RDP*](https://en.wikipedia.org/wiki/Remote_Desktop_Protocol) and [*VNC*](https://en.wikipedia.org/wiki/Virtual_Network_Computing)) or *X2Go* as the clients, and *Krfb*, *X2Go*, or *Xrdp* as the remote desktop servers. Because the *X2Go* uses the *SSH* protocol, it requires to have enabled and configured the *SSH* daemon (by the server-side). To achieve the requirement, remember to set the *SSH_DAEMON_ENABLED* variable as *True*, before launching the *system.yml* playbook.

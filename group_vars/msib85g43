@@ -74,7 +74,6 @@ FILE_MANAGER: krusader
 FILE_SYNCHRONIZATION_TOOLS:
     - syncthing
     - dropbox
-    - overgrive
 SYNCTHING_WEB_GUI_EXTERNAL_ACCESS: False
 SYNCTHING_GTK_GUI_ENABLED: False
 DROPBOX_CLI_ENABLED: False
@@ -87,7 +86,6 @@ IMAGE_VIEWERS:
 # Audio Players
 AUDIO_PLAYERS:
     - audacious
-    - cmus
 ID3TAG_EDITOR: picard
 
 # Video Players
@@ -117,7 +115,7 @@ AUDIO_VIDEO_CONVERTERS:
     - ecasound
     - soundkonverter
     - handbrake
-HANDBRAKE_GUI_ENABLED: False
+HANDBRAKE_GUI_ENABLED: True
 
 # Disk Image Tools
 DISK_IMAGE_TOOLS:
