@@ -1,0 +1,13 @@
+[$Version]
+update_info=kwinrules.upd:replace-placement-string-to-enum
+
+[1]
+Description=conky
+below=true
+belowrule=2
+wmclass=conky
+wmclasscomplete=true
+wmclassmatch=1
+
+[General]
+count=1

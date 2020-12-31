@@ -17,7 +17,6 @@
     - reload systemd manager configuration (non-system mode)
   tags:
     - print_action
-    - firejail
 
 - name: Push the GNU Units systemd service timer
   template:
@@ -28,12 +27,12 @@
     - reload systemd manager configuration (non-system mode)
   tags:
     - print_action
-    - firejail
 
 - name: Enable the GNU Units systemd service timer
   service:
     name: units-currency.timer
     enabled: yes
+  become: yes
   notify:
     - restart the GNU Units systemd service timer
   tags:

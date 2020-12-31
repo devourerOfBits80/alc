@@ -1,0 +1,3 @@
+---
+- include: vcs.yml
+  when: (VCS_TOOLS | default([]) | length) > 0

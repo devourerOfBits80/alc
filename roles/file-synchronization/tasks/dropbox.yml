@@ -47,14 +47,3 @@
   tags:
     - print_action
     - ufw
-
-- name: Map Dropbox to Firejail
-  file:
-    src: /usr/bin/firejail
-    path: /usr/local/bin/dropbox
-    state: link
-  become: yes
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - print_action
-    - firejail

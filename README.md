@@ -30,7 +30,7 @@ Subsequently, when the *system.yml* playbook execution is finished, reboot your 
 > \$ cd alc  
 > \$ ansible-playbook -i hosts -l desktop --ask-become-pass plasma.yml (use *portable* instead of *desktop* for mobile devices)
 
-After all, you can run the additional playbooks like *applications.yml*, which should be launching in the same way as the *plasma.yml* playbook.
+After all, you can run the additional playbooks like *applications.yml* or *sdt.yml*, which should be launching in the same way as the *plasma.yml* playbook.
 
 > \$ ansible-playbook -i hosts -l desktop --ask-become-pass applications.yml
 
@@ -155,13 +155,15 @@ There are available two GUI applications, *KMail* and *Thunderbird*, and also on
 > \$ gpg --recipient \<*gpg-id* or *email*\> --encrypt ~/.my-pwds (the *.my-pwds.gpg* encrypted file will have been created)  
 > \$ rm -f ~/.my-pwds (delete the original unencrypted file)
 
+Keep in mind that *NeoMutt* is not able to handle a *[GMail](https://gmail.com)* account, when the two-factor authentication is enabled in the email account configuration.
+
 - ***File Synchronization and Cloud Synchronization Tools***
 
 *rsync*, *Rclone*, *FreeFileSync*, or *Syncthing* can be installed as file synchronization tools, and *Dropbox*, *MEGA Sync*, or *overGrive* as cloud synchronization tools. Because the *overGrive* is supported neither in the official *Arch Linux* repositories nor in the *AUR*, it is installed directly from the [project website](https://www.thefanclub.co.za/overgrive). To install the latest *overGrive* version, uncomment the *OVERGRIVE_PACKAGE_NAME* variable in the *group_vars/all* file and set the expected package name as its value.
 
 - ***Audio Players***
 
-In the matter of audio players, you can choose *Clementine*, *Audacious*, *Music Player Daemon* with the *Cantata* client, or terminal-based *C\* Music Player*. *Audacious* is installed together with the old, good, classic *Winamp* skin, however by default the *Qt* interface is applied. If you want to set the *Winamp* skin, go to the *Settings* (*Ctrl+P*), select the *Appearance* tab, and change the *Interface* option from *Qt* to classical *Winamp*. There is also a possibility to install an [*ID3 Tag*](https://en.wikipedia.org/wiki/ID3) editor like *Kid3* or *MusicBrainz Picard*.
+In the matter of audio players, you can choose *Clementine*, *Audacious*, *Music Player Daemon* with the *Cantata* client, or terminal-based *C\* Music Player*. *Audacious* is installed together with the old, good, classic *Winamp* skin, however by default the *Qt* interface is applied. If you want to set the *Winamp* skin, go to the *Settings* (*Ctrl+P*), select the *Appearance* tab, and change the *Interface* option from *Qt* to classical *Winamp*. There is also a possibility to install an *[ID3 Tag](https://en.wikipedia.org/wiki/ID3)* editor like *Kid3* or *MusicBrainz Picard*.
 
 - ***Video Players***
 
@@ -170,3 +172,11 @@ In the category of video players, *alc* offers the *Dragon Player*, *mpv*, *VLC 
 - ***Remote Desktop***
 
 In case when you need to have remote control over your machine(s), you can install *KRDC* (which supports [*RDP*](https://en.wikipedia.org/wiki/Remote_Desktop_Protocol) and [*VNC*](https://en.wikipedia.org/wiki/Virtual_Network_Computing)) or *X2Go* as the clients, and *Krfb*, *X2Go*, or *Xrdp* as the remote desktop servers. Because the *X2Go* uses the *SSH* protocol, it requires to have enabled and configured the *SSH* daemon (by the server-side). To achieve the requirement, remember to set the *SSH_DAEMON_ENABLED* variable as *True*, before launching the *system.yml* playbook.
+
+- ***System and Net Tools***
+
+*alc* offers an installation of many different system and net tools like *\[rm\]lint*, *screenFetch*, *conky*, *Stacer* or *bettercap*, *Ettercap*, *Kismet*, *Wireshark*. Most of them do not need any additional configurations, but *conky* does. If you want to display download and upload data speed values for the wired and wireless device in the *conky* widget, you have to set appropriate names of the network interfaces via the *WIRED_INTERFACE_NAME* and *WIRELESS_INTERFACE_NAME* variable. To list all available network interfaces on your machine, use the command:
+
+> \$ ip link
+
+*conky* comes with an author's theme inspired by the *[Arch Linux](https://www.archlinux.org)* OS.

@@ -16,6 +16,7 @@ USER:
     UID: 1000
     SHELL: /bin/zsh
     FULL_NAME: Tomasz Choroba
+    EMAIL: tomasz.choroba@yahoo.com
 
 # Repositories and common packages
 COMMON_PACKAGES:
@@ -258,7 +259,7 @@ SUBTITLE_LANGUAGES: pl,en
 #HIGH_QUALITY_VIDEO_RENDERING: True
 
 # Screen Capture
-SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot (do not work on VMs), simplescreenrecorder or vokoscreen
+SCREEN_CAPTURE_TOOLS:   # set of values: scrot, grim, flameshot, simplescreenrecorder or vokoscreen
     - scrot
     - vokoscreen
 
@@ -290,8 +291,8 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 #X2GO_DESKTOP_SHARING_ENABLED: True
 
 # Tor
-#TOR_ENABLED: True
-#TORBROWSER_LAUNCHER_ENABLED: False
+#TOR_SERVICE_ENABLED: True
+#TOR_BROWSER_LAUNCHER_ENABLED: True
 
 # BitTorrent Clients
 #TORRENT_CLIENTS:    # set of values: rtorrent, ktorrent, qbittorrent or transmission
@@ -306,9 +307,9 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 #ACESTREAM_GUI_ENABLED: True
 
 # System and Net Tools
-#SYSTEM_TOOLS:   # set of values: trash-cli, rmlint, screenfetch, conky, stacer, units, meld or dosbox
+#SYSTEM_TOOLS:   # set of values: trash-cli, rmlint, screenfetch, conky, stacer, units, kdiff3, meld or dosbox
 #    - screenfetch
-#    - units
+#    - conky
 #NET_TOOLS:  # set of values: iptraf-ng, netsniff-ng, ngrep, bettercap, ettercap, aircrack-ng, kismet, linssid or wireshark
 #    - ngrep
 #    - wireshark
@@ -316,6 +317,8 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 #RMLINT_SHREDDER_ENABLED: True   # GUI for rmlint
 # affects the Conky
 #CONKY_MANAGER_ENABLED: True
+#WIRED_INTERFACE_NAME: eth0
+#WIRELESS_INTERFACE_NAME: wlan0
 # affects the GNU Units
 #UNITS_CURRENCY_UPDATE_COMMAND: units_cur
 #UNITS_CURRENCY_UPDATE_INTERVAL: 21600   # 6 hours in seconds
@@ -324,3 +327,19 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 
 # VirtualBox
 #VIRTUALBOX_ENABLED: True
+
+
+### SOFTWARE DEVELOPMENT TOOLS PLAYBOOK SETTINGS ###
+
+# Version Control System
+VCS_TOOLS:  # set of values: git or mercurial
+    - git
+# affects the git
+GIT_EDITOR: nano    # set of values: nano or vim
+#GIT_DIFF_GUI_TOOL: kdiff3   # set of values: kdiff3, kompare, meld, tkdiff or vimdiff
+#GIT_MERGE_GUI_TOOL: kdiff3  # set of values: kdiff3, meld, tkdiff or vimdiff
+GIT_PULL_REBASE_ENABLED: False
+#GITAHEAD_ENABLED: True
+#GITHUB_DESKTOP_ENABLED: True
+# affects the Mercurial
+#EASY_MERCURIAL_ENABLED: True

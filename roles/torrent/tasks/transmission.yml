@@ -39,7 +39,8 @@
   file:
     path: ~/Downloads/Transmission
     state: directory
-  changed_when: no
+  tags:
+    - print_action
 
 - name: Push the Transmission configuration file
   template:
@@ -83,22 +84,6 @@
   when: >
     (FIREJAIL_ENABLED | default(True)) and
     not TRANSMISSION_GTK_VERSION
-  tags:
-    - print_action
-    - firejail
-
-- name: Allow Transmission access to the user's Downloads directory
-  lineinfile:
-    path: /etc/firejail/{{ item }}.local
-    regexp: '^#?\s*noblacklist\s+\$\{DOWNLOADS\}$'
-    line: 'noblacklist ${DOWNLOADS}'
-    state: present
-    create: yes
-  become: yes
-  with_items:
-    - transmission-gtk
-    - transmission-qt
-  when: FIREJAIL_ENABLED | default(True)
   tags:
     - print_action
     - firejail

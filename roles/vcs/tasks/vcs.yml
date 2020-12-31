@@ -1,0 +1,6 @@
+---
+- include: git.yml
+  when: '"git" in VCS_TOOLS'
+
+- include: mercurial.yml
+  when: '"mercurial" in VCS_TOOLS'

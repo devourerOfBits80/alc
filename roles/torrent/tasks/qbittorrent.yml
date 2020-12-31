@@ -18,7 +18,8 @@
   file:
     path: ~/Downloads/qBittorrent
     state: directory
-  changed_when: no
+  tags:
+    - print_action
 
 - name: Push the qBittorrent configuration file
   template:
@@ -32,19 +33,6 @@
     src: /usr/bin/firejail
     path: /usr/local/bin/qbittorrent
     state: link
-  become: yes
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - print_action
-    - firejail
-
-- name: Allow qBittorrent access to the user's Downloads directory
-  lineinfile:
-    path: /etc/firejail/qbittorrent.local
-    regexp: '^#?\s*noblacklist\s+\$\{DOWNLOADS\}$'
-    line: 'noblacklist ${DOWNLOADS}'
-    state: present
-    create: yes
   become: yes
   when: FIREJAIL_ENABLED | default(True)
   tags:

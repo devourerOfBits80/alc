@@ -37,6 +37,16 @@
 - include: units.yml
   when: '"units" in SYSTEM_TOOLS'
 
+- name: Install a file comparator/merge tool for KDE
+  pacaur:
+    name:
+      - kdiff3
+    state: present
+  become: yes
+  when: '"kdiff3" in SYSTEM_TOOLS'
+  tags:
+    - print_action
+
 - include: meld.yml
   when: '"meld" in SYSTEM_TOOLS'
 

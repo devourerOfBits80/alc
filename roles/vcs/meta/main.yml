@@ -2,4 +2,3 @@
 dependencies:
   - { role: init }
   - { role: plasma-detector }
-  - { role: systemd }

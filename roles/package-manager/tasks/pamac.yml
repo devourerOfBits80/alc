@@ -7,10 +7,10 @@
   tags:
     - print_action
 
-- name: Install Pamac tray icon using appindicator which feets better in KDE
+- name: Install Pamac tray icon for Plasma users
   pacaur:
     name:
-      - pamac-tray-appindicator
+      - pamac-tray-icon-plasma
     state: present
   when: PLASMA_DESKTOP_INSTALLED
   tags:

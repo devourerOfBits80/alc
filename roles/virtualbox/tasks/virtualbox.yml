@@ -1,5 +1,5 @@
 ---
-- name: Install a VirtualbBox host kernel modules for Arch Kernel
+- name: Install a VirtualBox host kernel modules for Arch Kernel
   pacaur:
     name:
       - virtualbox-host-modules-arch
@@ -28,20 +28,6 @@
   become: yes
   tags:
     - print_action
-
-- name: Map VirtualBox to Firejail
-  file:
-    src: /usr/bin/firejail
-    path: /usr/local/bin/{{ item }}
-    state: link
-  become: yes
-  with_items:
-    - VirtualBox
-    - virtualbox
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - print_action
-    - firejail
 
 - name: Add user to the vboxusers group
   user:

@@ -52,13 +52,10 @@ WEB_BROWSERS:
     - opera
     - chromium
 FORCE_GPU_ACCELERATION: True
+BROWSER_DARK_MODE_ENABLED: True
 
 
 ### APPLICATIONS PLAYBOOK SETTINGS ###
-
-# Email Clients
-EMAIL_CLIENTS:
-    - neomutt
 
 # IM Clients
 INSTANT_MESSAGING_CLIENTS:
@@ -132,8 +129,8 @@ REMOTE_DESKTOP_CLIENTS:
     - x2go
 
 # Tor
-TOR_ENABLED: True
-TORBROWSER_LAUNCHER_ENABLED: True
+TOR_SERVICE_ENABLED: False
+TOR_BROWSER_LAUNCHER_ENABLED: True
 
 # BitTorrent Clients
 TORRENT_CLIENTS:
@@ -148,6 +145,7 @@ SYSTEM_TOOLS:
     - screenfetch
     - conky
     - units
+    - kdiff3
 NET_TOOLS:
     - iptraf-ng
     - netsniff-ng
@@ -156,7 +154,17 @@ NET_TOOLS:
     - wireshark
 RMLINT_SHREDDER_ENABLED: False
 CONKY_MANAGER_ENABLED: False
+WIRED_INTERFACE_NAME: enp2s0
+WIRELESS_INTERFACE_NAME: wlo1
 WIRESHARK_GUI_ENABLED: True
 
 # VirtualBox
 VIRTUALBOX_ENABLED: True
+
+
+### SOFTWARE DEVELOPMENT TOOLS PLAYBOOK SETTINGS ###
+
+# Version Control System
+GIT_DIFF_GUI_TOOL: kdiff3
+GIT_MERGE_GUI_TOOL: kdiff3
+GIT_PULL_REBASE_ENABLED: False

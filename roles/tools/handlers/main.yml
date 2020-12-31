@@ -3,5 +3,6 @@
   service:
     name: units-currency.timer
     state: restarted
+  become: yes
   tags:
     - print_action

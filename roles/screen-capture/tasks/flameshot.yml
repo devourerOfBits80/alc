@@ -27,14 +27,3 @@
     dest: ~/.config/flameshot/flameshot.ini
   tags:
     - print_action
-
-- name: Map Flameshot to Firejail
-  file:
-    src: /usr/bin/firejail
-    path: /usr/local/bin/flameshot
-    state: link
-  become: yes
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - print_action
-    - firejail

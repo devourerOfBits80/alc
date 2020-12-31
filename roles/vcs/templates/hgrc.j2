@@ -1,0 +1,9 @@
+[extensions]
+hgk =
+progress =
+
+[ui]
+username = {{ USER.FULL_NAME | default('Mercurial User') }} <{{ USER.EMAIL | default('mercurial.user@user.mercurial') }}>
+
+[web]
+cacerts = /etc/ssl/certs/ca-certificates.crt

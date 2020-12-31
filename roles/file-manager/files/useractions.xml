@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE KrusaderUserActions>
+<KrusaderUserActions>
+ <deletedAction name="sample_amarok_enqueue"/>
+ <action name="sample_panesize">
+  <title>Równy rozmiar paneli</title>
+  <tooltip>Ustawia podział paneli na 50/50</tooltip>
+  <icon>view-split-left-right</icon>
+  <category>Przykłady</category>
+  <command>%aPanelSize("50")%</command>
+ </action>
+ <action name="sample_edit_as_root">
+  <title>Edytuj jako administrator</title>
+  <tooltip>Edytuj plik jako administrator</tooltip>
+  <icon>document-edit</icon>
+  <category>Przykłady</category>
+  <description>Edytuj plik z uprawnieniami administratora</description>
+  <command>EDITOR='kate -b' SUDO_ASKPASS=/usr/bin/ssh-askpass sudoedit -A %aCurrent%</command>
+  <defaultshortcut>Ctrl+E</defaultshortcut>
+ </action>
+ <action name="sample_newmount">
+  <title>Podepnij</title>
+  <tooltip>Podepnij nowy system plików</tooltip>
+  <icon>media-mount</icon>
+  <category>Przykłady</category>
+  <command executionmode="collect_output" run_as="root">mount -t %_Ask("Filesystem Type?")% %_Ask("Device ?")% %_Ask("Mount Point ?")%</command>
+  <defaultshortcut>Ctrl+Alt+M</defaultshortcut>
+ </action>
+ <action name="filename_to_clipboard">
+  <title>Kopiuj bieżący element do schowka</title>
+  <tooltip>Kopiuj bieżący element do schowka</tooltip>
+  <icon>edit-paste</icon>
+  <category>Przykłady</category>
+  <command>%_Clipboard("%aCurrent%")%</command>
+  <defaultshortcut>Ctrl+Alt+C</defaultshortcut>
+ </action>
+ <action name="sort_by_name">
+  <title>Uszereguj według nazwy</title>
+  <tooltip>Uszereguj według nazwy</tooltip>
+  <icon>sort-name</icon>
+  <category>Interfejs użytkownika</category>
+  <description>Uszereguj aktywny panel według nazwy</description>
+  <command>%aColSort("Name")%</command>
+  <defaultshortcut>Ctrl+1</defaultshortcut>
+ </action>
+ <action name="sort_by_extension">
+  <title>Uszereguj według rozszerzenia</title>
+  <tooltip>Uszereguj według rozszerzenia</tooltip>
+  <icon>sort-name</icon>
+  <category>Interfejs użytkownika</category>
+  <description>Uszereguj aktywny panel według rozszerzenia</description>
+  <command>%aColSort("Ext")%</command>
+  <defaultshortcut>Ctrl+2</defaultshortcut>
+ </action>
+ <action name="sort_by_size">
+  <title>Uszereguj według rozmiaru</title>
+  <tooltip>Uszereguj według rozmiaru</tooltip>
+  <icon>sort-name</icon>
+  <category>Interfejs użytkownika</category>
+  <description>Uszereguj aktywny panel według rozmiaru</description>
+  <command>%aColSort("Size")%</command>
+  <defaultshortcut>Ctrl+3</defaultshortcut>
+ </action>
+ <action name="sort_by_modified">
+  <title>Uszereguj według zmienionych</title>
+  <tooltip>Uszereguj według zmienionych</tooltip>
+  <icon>sort-name</icon>
+  <category>Interfejs użytkownika</category>
+  <description>Uszereguj aktywny panel według zmienionych</description>
+  <command>%aColSort("Modified")%</command>
+  <defaultshortcut>Ctrl+4</defaultshortcut>
+ </action>
+ <action name="backup_current">
+  <title>Utwórz kopię wyboru</title>
+  <tooltip>Utwórz kopię wybranego pliku w bieżącym katalogu</tooltip>
+  <icon>document-save-as</icon>
+  <category>System</category>
+  <description>Tworzy kopię wybranego pliku w bieżącym katalogu i pyta użytkownika o jego nową nazwę. Domyślnie dołączany jest przyrostek ".old" do nazwy pierwotnego pliku.</description>
+  <command>%_Copy("%aCurrent("", "No")%", "%_Ask("New filename", "%aCurrent%.old")%")%</command>
+  <defaultshortcut>Meta+F5</defaultshortcut>
+ </action>
+ <action name="touch_selected_files">
+  <title>Zmień &amp;datę plików</title>
+  <tooltip>Zmień datę i czas zaznaczonych plików</tooltip>
+  <icon>calendar</icon>
+  <category>System</category>
+  <description>Zmień datę i czas (dostępu oraz modyfikacji) zaznaczonych w aktywnym panelu plików, na wartości podane przez użytkownika.</description>
+  <command>touch -t %_Ask("Podaj datę w formacie [[CC]YY]MMDDhhmm[.ss]", "202101011200", "Data i czas")% %aList("Selected")%</command>
+  <defaultshortcut>Ctrl+Alt+D</defaultshortcut>
+ </action>
+</KrusaderUserActions>

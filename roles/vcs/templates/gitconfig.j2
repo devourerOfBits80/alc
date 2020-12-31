@@ -1,0 +1,13 @@
+[alias]
+    graph = log --graph --decorate
+[core]
+    editor = {{ GIT_EDITOR | default('nano') }}
+{% if GIT_DIFF_GUI_TOOL is defined %}[diff]
+    guitool = {{ GIT_DIFF_GUI_TOOL }}
+{% endif %}{% if GIT_MERGE_GUI_TOOL is defined %}[merge]
+    guitool = {{ GIT_MERGE_GUI_TOOL }}
+{% endif %}[pull]
+    rebase = {{ GIT_PULL_REBASE_ENABLED | default(false) | string | lower }}
+[user]
+    email = {{ USER.EMAIL | default('git.user@user.git') }}
+    name = {{ USER.FULL_NAME | default('Git User') }}

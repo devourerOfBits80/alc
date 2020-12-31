@@ -1,0 +1,26 @@
+---
+- name: Install a scalable distributed SCM tool
+  pacaur:
+    name:
+      - mercurial
+      - tk
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Push the Mercurial configuration file
+  template:
+    src: hgrc.j2
+    dest: ~/.hgrc
+  tags:
+    - print_action
+
+- name: Install a simple user interface for the Mercurial distributed version contol system
+  pacaur:
+    name:
+      - easyhg
+    state: present
+  when: EASY_MERCURIAL_ENABLED | default(False)
+  tags:
+    - print_action

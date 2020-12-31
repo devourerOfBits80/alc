@@ -22,6 +22,7 @@
     - acestream
     - tools
     - virtualbox
+    - vcs
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -47,3 +48,4 @@
     - acestream
     - tools
     - virtualbox
+    - vcs

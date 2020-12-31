@@ -19,6 +19,16 @@
   tags:
     - print_action
 
+- name: Copy the KDE Plasma Window rules for Conky
+  copy:
+    src: kwinrulesrc
+    dest: ~/.config/kwinrulesrc
+    force: yes
+    mode: 0600
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
 - name: Create the Conky configuration directory
   file:
     path: ~/.config/conky

@@ -1,0 +1,57 @@
+---
+- name: Install the fast distributed version control system
+  pacaur:
+    name:
+      - git
+      - tk
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Push the git configuration file
+  template:
+    src: gitconfig.j2
+    dest: ~/.gitconfig
+  tags:
+    - print_action
+
+- name: Install a graphical git client with a built-in merge tool
+  pacaur:
+    name:
+      - gitahead-bin
+    state: present
+  when: GITAHEAD_ENABLED | default(False)
+  tags:
+    - print_action
+
+- name: Install an electron-based graphical user interface built by the GitHub team
+  pacaur:
+    name:
+      - github-desktop-bin
+    state: present
+  when: GITHUB_DESKTOP_ENABLED
+  tags:
+    - print_action
+
+- name: Map GitHub Desktop to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/github-desktop
+    state: link
+  become: yes
+  when: (FIREJAIL_ENABLED | default(True)) and GITHUB_DESKTOP_ENABLED
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow the KDE Wallet to store Git credentials
+  lineinfile:
+    path: ~/.config/plasma-workspace/env/askpass.sh
+    regexp: "^#?\s*export\s+GIT_ASKPASS='/usr/bin/ksshaskpass'$"
+    line: "export GIT_ASKPASS='/usr/bin/ksshaskpass'"
+    state: present
+    mode: 0755
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action

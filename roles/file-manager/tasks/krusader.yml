@@ -24,3 +24,19 @@
     mode: 0600
   tags:
     - print_action
+
+- name: Create the Krusader local configuration directory
+  file:
+    path: ~/.local/share/krusader
+    state: directory
+  changed_when: no
+
+# the Polish language only
+- name: Copy the Krusader user actions file
+  copy:
+    src: useractions.xml
+    dest: ~/.local/share/krusader/useractions.xml
+    mode: 0644
+  when: X_KEYBOARD_MAP is defined and (X_KEYBOARD_MAP == 'pl')
+  tags:
+    - print_action

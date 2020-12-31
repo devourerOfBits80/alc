@@ -34,7 +34,7 @@
 - name: Push script to automate switching between audio and HDMI
   template:
     src: hdmi_sound_toggle.sh.j2
-    dest: /usr/local/bin/hdmi_sound_toggle.sh
+    dest: /usr/local/bin/hdmi_sound_toggle
     mode: 0755
   when: MACHINE_TYPE == 'portable'
   tags:
@@ -43,7 +43,7 @@
 - name: Create a udev rule file to manage the switching script
   lineinfile:
     path: /etc/udev/rules.d/99-hdmi_sound.rules
-    line: 'KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="change", RUN+="/usr/local/bin/hdmi_sound_toggle.sh"'
+    line: 'KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="change", RUN+="/usr/local/bin/hdmi_sound_toggle"'
     state: present
     create: yes
   notify:

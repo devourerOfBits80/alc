@@ -1,21 +1,25 @@
 conky.config = {
-    alignment = '{{ TASKBAR_ON_TOP | default(True) | ternary("bottom_right", "top_right") }}',
+    alignment = '{{ TASKBAR_ON_TOP | ternary("bottom_right", "top_right") }}',
     background = false,
     border_width = 1,
+    color0 = '1793D1',
+    color1 = '333333',
+    color2 = '999999',
     cpu_avg_samples = 2,
-    default_color = 'white',
-    default_outline_color = 'white',
-    default_shade_color = 'white',
+    default_color = 'FFFFFF',
+    default_outline_color = 'FFFFFF',
+    default_shade_color = 'FFFFFF',
     double_buffer = true,
     draw_borders = false,
     draw_graph_borders = true,
     draw_outline = false,
     draw_shades = false,
     extra_newline = false,
-    gap_x = 60,
-    gap_y = 60,
-    minimum_height = 5,
-    minimum_width = 5,
+    gap_x = 0,
+    gap_y = {{ TASKBAR_ON_TOP | ternary("-50", "0") }},
+    minimum_height = 1080,
+    minimum_width = 400,
+    maximum_width = 400,
     net_avg_samples = 2,
     no_buffers = true,
     out_to_console = false,
@@ -23,8 +27,12 @@ conky.config = {
     out_to_stderr = false,
     out_to_x = true,
     own_window = true,
+    own_window_argb_value = 160,
+    own_window_argb_visual = true,
     own_window_class = 'Conky',
-    own_window_type = 'desktop',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent = false,
+    own_window_type = 'dock',
     show_graph_range = false,
     show_graph_scale = false,
     stippled_borders = 0,
@@ -35,24 +43,66 @@ conky.config = {
 }
 
 conky.text = [[
-${color grey}Info:$color ${scroll 32 Conky $conky_version - $sysname $nodename $kernel $machine}
-$hr
-${color grey}Uptime:$color $uptime
-${color grey}Frequency (in MHz):$color $freq
-${color grey}Frequency (in GHz):$color $freq_g
-${color grey}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
-${color grey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
-${color grey}CPU Usage:$color $cpu% ${cpubar 4}
-${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
-$hr
-${color grey}File systems:
- / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
-${color grey}Networking:
-Up:$color ${upspeed} ${color grey} - Down:$color ${downspeed}
-$hr
-${color grey}Name              PID     CPU%   MEM%
-${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
-${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
-${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
-${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+${font Ubuntu:size=8}
+${font Ubuntu:size=22:style=Bold}${color}arch${color0}linux${font Ubuntu:size=6}${color1} TM
+${font Ubuntu:size=8}${hr 3}
+
+${font Ubuntu:size=12:style=Bold}${color0}${alignc}MACHINE
+${font Ubuntu:size=10:style=Bold}${color2}HOSTNAME:${font Ubuntu:size=10}${color}${goto 168}$nodename
+${font Ubuntu:size=10:style=Bold}${color2}KERNEL (architecture):${font Ubuntu:size=10}${color}${goto 168}$kernel  ($machine)
+${font Ubuntu:size=10:style=Bold}${color2}SYSTEM UPTIME:${font Ubuntu:size=10}${color}${goto 168}$uptime
+${font Ubuntu:size=8}${color1}${hr 3}
+
+${font Ubuntu:size=12:style=Bold}${color0}${alignc}CPU
+${font Ubuntu:size=10:style=Bold}${color2}MODEL NAME:${font Ubuntu:size=10}${color}${goto 128}${execi 86400 grep 'model name' /proc/cpuinfo | head -1 | cut -d ':' -f 2 | xargs}
+${font Ubuntu:size=10:style=Bold}${color2}FREQUENCY:${font Ubuntu:size=10}${color}${goto 128}${freq_g}GHz | ${freq}MHz
+${font Ubuntu:size=10:style=Bold}${color2}USAGE (pct.):${font Ubuntu:size=10}${color}${goto 129}${cpugraph cpu0 10,220 FFFFFF 1793D1 scale -l}  ${cpu cpu0}%
+${font Ubuntu:size=10:style=Bold}${color2}TEMPERATURE:${font Ubuntu:size=10}${color}${goto 128}${acpitemp}°C
+${font Ubuntu:size=10:style=Bold}${color2}LOAD AVERAGE:${font Ubuntu:size=10}${color}${goto 128}$loadavg
+${font Ubuntu:size=8}${color1}${hr 3}
+
+${font Ubuntu:size=12:style=Bold}${color0}${alignc}RAM & SWAP
+${font Ubuntu:size=10:style=Italic}${color2}${goto 102}RAM${goto 252}SWAP
+${font Ubuntu:size=10:style=Bold}${color2}IN USE (pct.):${font Ubuntu:size=10}${color}${goto 102}$mem  (${memperc}%)${goto 252}$swap  (${swapperc}%)
+${font Ubuntu:size=10:style=Bold}${color2}FREE SIZE:${font Ubuntu:size=10}${color}${goto 102}$memeasyfree${goto 252}$swapfree
+${font Ubuntu:size=10:style=Bold}${color2}TOTAL SIZE:${font Ubuntu:size=10}${color}${goto 102}$memmax${goto 252}$swapmax
+${font Ubuntu:size=8}${color1}${hr 3}
+
+${font Ubuntu:size=12:style=Bold}${color0}${alignc}FILE SYSTEMS
+${font Ubuntu:size=10:style=Italic}${color2}${goto 108}SIZE${goto 178}FREE ${goto 250}USED (pct.)
+${font Ubuntu:size=10:style=Bold}${color2}/ (${fs_type /}):${font Ubuntu:size=10}${color}${goto 108}${fs_size /}${goto 178}${fs_free /}${goto 251}${fs_bar 10,102 /}  ${fs_used_perc /}%
+${font Ubuntu:size=10:style=Bold}${color2}/home (${fs_type /home/{{ USER.NAME }}/}):${font Ubuntu:size=10}${color}${goto 108}${fs_size /home/{{ USER.NAME }}/}${goto 178}${fs_free /home/{{ USER.NAME }}/}${goto 251}${fs_bar 10,102 /home/{{ USER.NAME }}/}  ${fs_used_perc /home/{{ USER.NAME }}/}%
+{% if SECONDARY_DRIVE is defined and (SECONDARY_DRIVE != None) %}${font Ubuntu:size=10:style=Bold}${color2}/data (${fs_type /data/}):${font Ubuntu:size=10}${color}${goto 108}${fs_size /data/}${goto 178}${fs_free /data/}${goto 251}${fs_bar 10,102 /data/}  ${fs_used_perc /data/}%
+{% endif %}${font Ubuntu:size=8}${color1}${stippled_hr}
+${font Ubuntu:size=10:style=Bold}${color2}PRIMARY DRIVE READS:${font Ubuntu:size=10}${color}${goto 184}${diskiograph_read {{ PRIMARY_DRIVE }} 10,144 FFFFFF 1793D1 scale -l}  ${diskio_read {{ PRIMARY_DRIVE }}{% raw %}}/s
+{% endraw %}${font Ubuntu:size=10:style=Bold}${color2}PRIMARY DRIVE WRITES:${font Ubuntu:size=10}${color}${goto 184}${diskiograph_write {{ PRIMARY_DRIVE }} 10,144 FFFFFF 1793D1 scale -l}  ${diskio_write {{ PRIMARY_DRIVE }}{% raw %}}/s
+{% endraw %}${font Ubuntu:size=8}${color1}${hr 3}
+
+${font Ubuntu:size=12:style=Bold}${color0}${alignc}PROCESSES
+${font Ubuntu:size=10:style=Bold}${color2}TOTAL | RUNNING:${font Ubuntu:size=10}${color}${goto 140}${processes} | ${running_processes}
+${font Ubuntu:size=8}${color1}${stippled_hr}
+${color0}TOP 5 CPU USAGE${font Ubuntu:size=10:style=Italic}${color2}${goto 196}PID${goto 266}CPU [%]${goto 336}MEM [%]
+${font Ubuntu:size=10:style=Bold}${color2}1. ${top name 1}${font Ubuntu:size=10}${color}${goto 182}${top pid 1}${goto 261}${top cpu 1}${goto 331}${top mem 1}
+${font Ubuntu:size=10:style=Bold}${color2}2. ${top name 2}${font Ubuntu:size=10}${color}${goto 182}${top pid 2}${goto 261}${top cpu 2}${goto 331}${top mem 2}
+${font Ubuntu:size=10:style=Bold}${color2}3. ${top name 3}${font Ubuntu:size=10}${color}${goto 182}${top pid 3}${goto 261}${top cpu 3}${goto 331}${top mem 3}
+${font Ubuntu:size=10:style=Bold}${color2}4. ${top name 4}${font Ubuntu:size=10}${color}${goto 182}${top pid 4}${goto 261}${top cpu 4}${goto 331}${top mem 4}
+${font Ubuntu:size=10:style=Bold}${color2}5. ${top name 5}${font Ubuntu:size=10}${color}${goto 182}${top pid 5}${goto 261}${top cpu 5}${goto 331}${top mem 5}
+${font Ubuntu:size=8}${color1}${stippled_hr}
+${color0}TOP 5 MEMORY USAGE${font Ubuntu:size=10:style=Italic}${color2}${goto 196}PID${goto 266}CPU [%]${goto 336}MEM [%]
+${font Ubuntu:size=10:style=Bold}${color2}1. ${top_mem name 1}${font Ubuntu:size=10}${color}${goto 182}${top_mem pid 1}${goto 261}${top_mem cpu 1}${goto 331}${top_mem mem 1}
+${font Ubuntu:size=10:style=Bold}${color2}2. ${top_mem name 2}${font Ubuntu:size=10}${color}${goto 182}${top_mem pid 2}${goto 261}${top_mem cpu 2}${goto 331}${top_mem mem 2}
+${font Ubuntu:size=10:style=Bold}${color2}3. ${top_mem name 3}${font Ubuntu:size=10}${color}${goto 182}${top_mem pid 3}${goto 261}${top_mem cpu 3}${goto 331}${top_mem mem 3}
+${font Ubuntu:size=10:style=Bold}${color2}4. ${top_mem name 4}${font Ubuntu:size=10}${color}${goto 182}${top_mem pid 4}${goto 261}${top_mem cpu 4}${goto 331}${top_mem mem 4}
+${font Ubuntu:size=10:style=Bold}${color2}5. ${top_mem name 5}${font Ubuntu:size=10}${color}${goto 182}${top_mem pid 5}${goto 261}${top_mem cpu 5}${goto 331}${top_mem mem 5}
+${font Ubuntu:size=8}${color1}${hr 3}
+
+${font Ubuntu:size=12:style=Bold}${color0}${alignc}NETWORKING
+${font Ubuntu:size=10:style=Italic}${color2}${goto 116}WIRED${goto 259}WIRELESS
+${font Ubuntu:size=10:style=Bold}${color2}IP:${font Ubuntu:size=10}${color}${goto 116}${addr {{ WIRED_INTERFACE_NAME }}{% raw %}}{% endraw %}${goto 259}${addr {{ WIRELESS_INTERFACE_NAME }}{% raw %}}
+{% endraw %}${font Ubuntu:size=10:style=Bold}${color2}DOWNLOAD:${font Ubuntu:size=10}${color}${goto 117}${downspeedgraph {{ WIRED_INTERFACE_NAME }} 10,64 FFFFFF 1793D1 scale -l}  ${downspeed {{ WIRED_INTERFACE_NAME }}{% raw %}}/s{% endraw %}${goto 260}${downspeedgraph {{ WIRELESS_INTERFACE_NAME }} 10,64 FFFFFF 1793D1 scale -l}  ${downspeed {{ WIRELESS_INTERFACE_NAME }}{% raw %}}/s
+{% endraw %}${font Ubuntu:size=10:style=Bold}${color2}UPLOAD:${font Ubuntu:size=10}${color}${goto 117}${upspeedgraph {{ WIRED_INTERFACE_NAME }} 10,64 FFFFFF 1793D1 scale -l}  ${upspeed {{ WIRED_INTERFACE_NAME }}{% raw %}}/s{% endraw %}${goto 260}${upspeedgraph {{ WIRELESS_INTERFACE_NAME }} 10,64 FFFFFF 1793D1 scale -l}  ${upspeed {{ WIRELESS_INTERFACE_NAME }}{% raw %}}/s
+{% endraw %}${font Ubuntu:size=10:style=Bold}${color2}TOTAL DOWN:${font Ubuntu:size=10}${color}${goto 116}${totaldown {{ WIRED_INTERFACE_NAME }}{% raw %}}{% endraw %}${goto 259}${totaldown {{ WIRELESS_INTERFACE_NAME }}{% raw %}}
+{% endraw %}${font Ubuntu:size=10:style=Bold}${color2}TOTAL UP:${font Ubuntu:size=10}${color}${goto 116}${totalup {{ WIRED_INTERFACE_NAME }}{% raw %}}{% endraw %}${goto 259}${totalup {{ WIRELESS_INTERFACE_NAME }}{% raw %}}
+{% endraw %}${font Ubuntu:size=8}$color1}${hr 3}
+${font Ubuntu:size=6}${alignc}DESIGNED BY devourerOfBits80
 ]]

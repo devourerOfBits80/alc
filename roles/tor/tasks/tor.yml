@@ -9,27 +9,15 @@
   tags:
     - print_action
 
-- name: Create the Tor's systemd unit directory
-  file:
-    path: /etc/systemd/system/tor.service.d
-    state: directory
+- name: Install an application to securely and easily download, verify, install, and launch Tor Browser in Linux
+  pacaur:
+    name:
+      - torbrowser-launcher
+    state: present
   become: yes
-  changed_when: no
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - firejail
-
-- name: Copy the Tor service custom execution file
-  copy:
-    src: tor-service-customexec.conf
-    dest: /etc/systemd/system/tor.service.d/customexec.conf
-  become: yes
-  notify:
-    - reload systemd manager configuration (non-system mode)
-  when: FIREJAIL_ENABLED | default(True)
+  when: TOR_BROWSER_LAUNCHER_ENABLED
   tags:
     - print_action
-    - firejail
 
 - name: Update the Tor configuration file to run its by the tor user
   lineinfile:
@@ -38,10 +26,8 @@
     line: 'User tor'
     state: present
   become: yes
-  when: FIREJAIL_ENABLED | default(True)
   tags:
     - print_action
-    - firejail
 
 - name: Map Tor to Firejail
   file:
@@ -49,7 +35,7 @@
     path: /usr/local/bin/tor
     state: link
   become: yes
-  when: FIREJAIL_ENABLED | default(True)
+  when:  FIREJAIL_ENABLED | default(True)
   tags:
     - print_action
     - firejail
@@ -67,5 +53,12 @@
     - print_action
     - firejail
 
-- include: torbrowser-launcher.yml
-  when: TORBROWSER_LAUNCHER_ENABLED | default(True)
+- name: Start and enable Tor service
+  service:
+    name: tor.service
+    state: started
+    enabled: yes
+  become: yes
+  when: TOR_SERVICE_ENABLED
+  tags:
+    - print_action

@@ -1,0 +1,7 @@
+---
+- name: alc software development tools playbook
+  hosts: vm:desktop:portable:msigl63:msib85g43
+  become: no
+  roles:
+    - { role: vcs, tags: ['vcs'] }
+    - { role: finalize, tags: ['finalize'] }
