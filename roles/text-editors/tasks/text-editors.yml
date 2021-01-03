@@ -1,0 +1,15 @@
+---
+- include: atom.yml
+  when: '"atom" in TEXT_EDITORS'
+
+- include: bluefish.yml
+  when: '"bluefish" in TEXT_EDITORS'
+
+- include: brackets.yml
+  when: '"brackets" in TEXT_EDITORS'
+
+- include: notepadqq.yml
+  when: '"notepadqq" in TEXT_EDITORS'
+
+- include: vscode.yml
+  when: '"vscode" in TEXT_EDITORS'

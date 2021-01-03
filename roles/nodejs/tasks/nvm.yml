@@ -1,0 +1,37 @@
+---
+- name: Install a simple bash script to manage multiple active Node.js versions
+  pacaur:
+    name:
+      - nvm
+    state: present
+  tags:
+    - print_action
+
+- name: Set up Node Version Manager
+  command: '{{ NVM_INIT_COMMAND }}'
+  tags:
+    - print_action
+
+- name: Set up NVM automatically when the Bash shell starting
+  lineinfile:
+    path: ~/.bashrc
+    regexp: '^#?\s*source\s+/usr/share/nvm/(.*)$'
+    line: '{{ NVM_INIT_COMMAND }}'
+    state: present
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- name: Set up NVM automatically when the Zsh shell starting
+  lineinfile:
+    path: ~/.zshrc
+    regexp: '^#?\s*source\s+/usr/share/nvm/(.*)$'
+    line: '{{ NVM_INIT_COMMAND }}'
+    state: present
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action

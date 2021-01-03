@@ -4,4 +4,7 @@
   become: no
   roles:
     - { role: vcs, tags: ['vcs'] }
+    - { role: nodejs, tags: ['nodejs'] }
+    - { role: electron, tags: ['electron'] }
+    - { role: text-editors, tags: ['text-editors'] }
     - { role: finalize, tags: ['finalize'] }

@@ -1,0 +1,21 @@
+---
+- name: Install editor for building and debugging modern web and cloud applications (official binary version)
+  pacaur:
+    name:
+      - visual-studio-code-bin
+    state: present
+  tags:
+    - print_action
+
+- name: Create the Visual Studio Code configuration directory
+  file:
+    path: ~/.config/Code/User
+    state: directory
+  changed_when: no
+
+- name: Push the Visual Studio Code configuration file
+  template:
+    src: vscode.json.j2
+    dest: ~/.config/Code/User/settings.json
+  tags:
+    - print_action

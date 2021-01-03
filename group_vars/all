@@ -341,5 +341,18 @@ GIT_EDITOR: nano    # set of values: nano or vim
 GIT_PULL_REBASE_ENABLED: False
 #GITAHEAD_ENABLED: True
 #GITHUB_DESKTOP_ENABLED: True
-# affects the Mercurial
-#EASY_MERCURIAL_ENABLED: True
+
+# Node.js configuration
+NODEJS_VERSION: nodejs  # set of values: nodejs, nodejs-lts-dubnium (10.X), nodejs-lts-erbium (12.X) or nodejs-lts-fermium (14.X)
+#NVM_ENABLED: True   # Node Version Manager instead of Node.js standalone package
+
+# Electron software framework
+ELECTRON_ENABLED: True
+ELECTRON_VERSION: electron  # set of values: electron, electron6 (6.X), electron9 (9.X) or electron10 (10.X)
+
+# Text Editors
+TEXT_EDITORS:   # set of values: atom, bluefish, brackets, notepadqq or vscode
+    - atom
+    - vscode
+# affects the Visual Studio Code
+VSCODE_VERSION: vscodium    # set of values: code, ms-vscode, vscodium

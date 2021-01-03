@@ -23,6 +23,8 @@
     - tools
     - virtualbox
     - vcs
+    - nodejs
+    - text-editors
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -49,3 +51,5 @@
     - tools
     - virtualbox
     - vcs
+    - nodejs
+    - text-editors

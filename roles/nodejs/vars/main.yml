@@ -1,0 +1,2 @@
+---
+NVM_INIT_COMMAND: 'source /usr/share/nvm/init-nvm.sh'

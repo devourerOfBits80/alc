@@ -1,0 +1,6 @@
+---
+- include: electron.yml
+  when: ELECTRON_ENABLED | default(False)
+
+- include: plasma-trash.yml
+  when: PLASMA_DESKTOP_INSTALLED

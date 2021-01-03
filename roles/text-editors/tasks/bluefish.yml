@@ -1,0 +1,20 @@
+---
+- name: Install a powerful HTML editor for experienced web designers and programmers
+  pacaur:
+    name:
+      - bluefish
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map Bluefish to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/bluefish
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

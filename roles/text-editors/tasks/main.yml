@@ -1,0 +1,3 @@
+---
+- include: text-editors.yml
+  when: (TEXT_EDITORS | default([]) | length) > 0

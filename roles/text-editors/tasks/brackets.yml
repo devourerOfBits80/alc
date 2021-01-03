@@ -1,0 +1,32 @@
+---
+- name: Install a code editor for HTML, CSS and JavaScript
+  pacaur:
+    name:
+      - brackets-bin
+    state: present
+  tags:
+    - print_action
+
+- name: Create the Brackets configuration directory
+  file:
+    path: ~/.config/Brackets
+    state: directory
+  changed_when: no
+
+- name: Copy the Brackets configuration file
+  copy:
+    src: brackets.json
+    dest: ~/.config/Brackets/brackets.json
+  tags:
+    - print_action
+
+- name: Map Brackets to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/brackets
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

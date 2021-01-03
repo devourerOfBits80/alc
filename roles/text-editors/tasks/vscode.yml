@@ -1,0 +1,19 @@
+---
+- include: code.yml
+  when: VSCODE_VERSION == 'code'
+
+- include: ms-vscode.yml
+  when: VSCODE_VERSION == 'ms-vscode'
+
+- include: vscodium.yml
+  when: VSCODE_VERSION == 'vscodium'
+
+- name: Install a library for passing menus over DBus
+  pacaur:
+    name:
+      - libdbusmenu-glib
+    state: present
+  become: yes
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action

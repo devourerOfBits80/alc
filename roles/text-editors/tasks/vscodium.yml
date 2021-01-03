@@ -1,0 +1,22 @@
+---
+- name: Install a VS Code without MS branding/telemetry/licensing
+  pacaur:
+    name:
+      - vscodium-bin
+      - vscodium-bin-marketplace
+    state: present
+  tags:
+    - print_action
+
+- name: Create the VSCodium configuration directory
+  file:
+    path: ~/.config/VSCodium/User
+    state: directory
+  changed_when: no
+
+- name: Push the VSCodium configuration file
+  template:
+    src: vscode.json.j2
+    dest: ~/.config/VSCodium/User/settings.json
+  tags:
+    - print_action

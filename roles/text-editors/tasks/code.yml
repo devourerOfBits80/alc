@@ -1,0 +1,36 @@
+---
+- name: Install the Open Source build of Visual Studio Code (vscode) editor
+  pacaur:
+    name:
+      - code
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the code configuration directory
+  file:
+    path: '~/.config/Code - OSS/User'
+    state: directory
+  changed_when: no
+
+- name: Push the code configuration file
+  template:
+    src: vscode.json.j2
+    dest: '~/.config/Code - OSS/User/settings.json'
+  tags:
+    - print_action
+
+- name: Map code to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - code
+    - code-oss
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

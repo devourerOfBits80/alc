@@ -1,0 +1,22 @@
+---
+- name: Install a Notepad++-like text editor for Linux
+  pacaur:
+    name:
+      - notepadqq
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Notepadqq configuration directory
+  file:
+    path: ~/.config/Notepadqq
+    state: directory
+  changed_when: no
+
+- name: Copy the Notepadqq configuration file
+  copy:
+    src: Notepadqq.ini
+    dest: ~/.config/Notepadqq/Notepadqq.ini
+  tags:
+    - print_action

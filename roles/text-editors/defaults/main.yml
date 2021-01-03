@@ -1,0 +1,11 @@
+---
+ATOM_PACKAGES:
+  - build
+  - busy-signal
+  - git-plus
+  - linter
+  - linter-ui-default
+  - intentions
+  - markdown-writer
+  - script
+VSCODE_VERSION: code

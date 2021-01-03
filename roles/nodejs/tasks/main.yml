@@ -1,0 +1,72 @@
+---
+- name: Install an evented I/O for V8 JavaScript
+  pacaur:
+    name:
+      - '{{ NODEJS_VERSION }}'
+    state: present
+  become: yes
+  when: not NVM_ENABLED
+  tags:
+    - print_action
+
+- include: nvm.yml
+  when: NVM_ENABLED
+
+- name: Install a package manager for JavaScript
+  pacaur:
+    name:
+      - npm
+      - npm-check-updates
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a fast, reliable, and secure dependency management
+  pacaur:
+    name:
+      - yarn
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the Node.js module libraries directory
+  file:
+    path: ~/.node_modules/lib
+    state: directory
+  changed_when: no
+
+- name: Allow global Node.js package installations in the user account when the Bash shell is in use
+  blockinfile:
+    path: ~/.profile
+    block: |
+      PATH="$PATH:$HOME/.node_modules/bin"
+      export npm_config_prefix=~/.node_modules
+    marker_begin: '### Begin'
+    marker_end: '### End'
+    marker: '{mark} of the user-wide node modules configuration management block'
+    state: present
+    create: yes
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- name: Allow global Node.js package installations in the user account when the Zsh shell is in use
+  blockinfile:
+    path: ~/.zprofile
+    block: |
+      PATH="$PATH:$HOME/.node_modules/bin"
+      export npm_config_prefix=~/.node_modules
+    marker_begin: '### Begin'
+    marker_end: '### End'
+    marker: '{mark} of the user-wide node modules configuration management block'
+    state: present
+    create: yes
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action

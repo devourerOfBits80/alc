@@ -343,5 +343,5 @@ Add the *rEFInd* configuration. For *LTS* kernel, replace the *initramfs-linux* 
 
 If you need to configure the *Wi-Fi* connection, please login as a root and use the command.
 
-> \$ nmcli dev wifi connect \[SSID\] password \[password\]  
+> \$ HISTFILE= ; nmcli dev wifi connect \[SSID\] password \[password\]  
 > \$ history -c

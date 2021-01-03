@@ -1,0 +1,19 @@
+---
+- name: Install an electron-based graphical user interface built by the GitHub team
+  pacaur:
+    name:
+      - github-desktop-bin
+    state: present
+  tags:
+    - print_action
+
+- name: Map GitHub Desktop to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/github-desktop
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
