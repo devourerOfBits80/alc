@@ -17,3 +17,12 @@
   when: PLASMA_DESKTOP_INSTALLED
   tags:
     - print_action
+
+- name: Install a debugger for Python used with Visual Studio and Visual Studio Code
+  pacaur:
+    name:
+      - python-debugpy
+    state: present
+  when: PYTHON_DEBUGGER_ENABLED | default(True)
+  tags:
+    - print_action

@@ -356,3 +356,4 @@ TEXT_EDITORS:   # set of values: atom, bluefish, brackets, notepadqq or vscode
     - vscode
 # affects the Visual Studio Code
 VSCODE_VERSION: vscodium    # set of values: code, ms-vscode, vscodium
+PYTHON_DEBUGGER_ENABLED: True

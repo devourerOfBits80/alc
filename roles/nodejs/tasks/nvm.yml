@@ -8,7 +8,7 @@
     - print_action
 
 - name: Set up Node Version Manager
-  command: '{{ NVM_INIT_COMMAND }}'
+  shell: '{{ NVM_INIT_COMMAND }}'
   tags:
     - print_action
 
