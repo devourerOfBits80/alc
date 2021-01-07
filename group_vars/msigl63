@@ -164,7 +164,7 @@ VIRTUALBOX_ENABLED: True
 
 ### SOFTWARE DEVELOPMENT TOOLS PLAYBOOK SETTINGS ###
 
-# Version Control System
+# Version Control System and git-annex
 GIT_DIFF_GUI_TOOL: kdiff3
 GIT_MERGE_GUI_TOOL: kdiff3
 GIT_PULL_REBASE_ENABLED: False

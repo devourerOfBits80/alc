@@ -20,6 +20,7 @@
     - user
     - repositories
     - bootloader
+    - drives
     - hardware
     - vm
     - video

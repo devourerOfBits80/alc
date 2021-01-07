@@ -1,0 +1,15 @@
+---
+- name: restart the git-annex assistant systemd service
+  systemd:
+    name: git-annex-assistant.service
+    state: restarted
+    scope: user
+  when: git_annex_user_autostart_file.stat.exists
+  tags:
+    - print_action
+
+- name: reload settings from all the sysctl configuration files
+  command: sysctl --system
+  become: yes
+  tags:
+    - print_action

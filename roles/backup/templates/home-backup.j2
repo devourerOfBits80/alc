@@ -1,2 +1,3 @@
 #!/bin/bash
 /usr/bin/rdiff-backup /home {{ BACKUP_LOCATION }}
+/usr/bin/rdiff-backup --remove-older-than {{ BACKUPS_TO_PRESERVE }}B {{ BACKUP_LOCATION }}

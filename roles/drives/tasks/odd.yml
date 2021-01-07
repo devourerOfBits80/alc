@@ -5,7 +5,6 @@
     state: present
   tags:
     - print_action
-    - odd
 
 - name: Install video and DVD ripper and encoder
   pacaur:
@@ -14,7 +13,6 @@
     state: present
   tags:
     - print_action
-    - odd
 
 - name: Install DVD authoring tools
   pacaur:
@@ -23,4 +21,12 @@
     state: present
   tags:
     - print_action
-    - odd
+
+- name: Add user to the optical group
+  user:
+    name: '{{ USER.NAME }}'
+    groups: optical
+    append: yes
+  tags:
+    - print_action
+    - user

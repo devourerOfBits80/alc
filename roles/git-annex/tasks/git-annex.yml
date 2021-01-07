@@ -1,0 +1,47 @@
+---
+- name: Install a tool to manage files with git, without checking their contents into git
+  pacaur:
+    name:
+      - git-annex
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Copy the git-annex assistant systemd service
+  copy:
+    src: git-annex-assistant.service
+    dest: /etc/systemd/user/git-annex-assistant.service
+  become: yes
+  notify:
+    - reload systemd manager configuration (non-system mode)
+    - restart the git-annex assistant systemd service
+  tags:
+    - print_action
+
+- name: Check if the user's git-annex autostart file exists
+  stat:
+    path: ~/.config/git-annex/autostart
+  register: git_annex_user_autostart_file
+  changed_when: no
+
+- name: Enable the git-annex assistant service
+  systemd:
+    name: git-annex-assistant.service
+    enabled: yes
+    scope: user
+  when: git_annex_user_autostart_file.stat.exists
+  tags:
+    - print_action
+
+- name: Increase the amount of inotify watchers
+  lineinfile:
+    path: /etc/sysctl.d/999-max_user_watches.conf
+    line: 'fs.inotify.max_user_watches = 524288'
+    state: present
+    create: yes
+  become: yes
+  notify:
+    - reload settings from all the sysctl configuration files
+  tags:
+    - print_action

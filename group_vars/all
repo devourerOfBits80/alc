@@ -132,6 +132,7 @@ SSH_AGENT_ENABLED: True
 # Backup (rdiff-backup)
 USER_ACCOUNTS_BACKUP: False     # locally it only makes sense if you have installed a secondary drive
 BACKUP_LOCATION: /data/.backup/home     # it can be a remote SSH connection (eg. user@hostname.net::/remote-backup-dir)
+BACKUPS_TO_PRESERVE: 4
 DAILY_BACKUP: False    # if disabled, a backup is made weekly
 
 
@@ -331,7 +332,7 @@ DISK_IMAGE_TOOLS:   # set of values: etcher, woeusb, ventoy, acetoneiso or cdemu
 
 ### SOFTWARE DEVELOPMENT TOOLS PLAYBOOK SETTINGS ###
 
-# Version Control System
+# Version Control System and git-annex
 VCS_TOOLS:  # set of values: git or mercurial
     - git
 # affects the git
@@ -341,6 +342,7 @@ GIT_EDITOR: nano    # set of values: nano or vim
 GIT_PULL_REBASE_ENABLED: False
 #GITAHEAD_ENABLED: True
 #GITHUB_DESKTOP_ENABLED: True
+#GIT_ANNEX_ENABLED: True
 
 # Node.js configuration
 NODEJS_VERSION: nodejs  # set of values: nodejs, nodejs-lts-dubnium (10.X), nodejs-lts-erbium (12.X) or nodejs-lts-fermium (14.X)

@@ -89,17 +89,6 @@
     - print_action
     - firejail
 
-- name: Map K3b to Firejail
-  file:
-    src: /usr/bin/firejail
-    path: /usr/local/bin/k3b
-    state: link
-  become: yes
-  when: OPTICAL_DISC_DRIVE_SUPPORTED | default(False)
-  tags:
-    - print_action
-    - firejail
-
 - name: Map Skanlite to Firejail
   file:
     src: /usr/bin/firejail

@@ -1,7 +1,13 @@
 "*":
   core:
+    automaticallyUpdate: false
+    reopenProjectMenuCount: 10
     telemetryConsent: "no"
-{% if (MACHINE_TYPE == 'virtual') %}  editor:
-    useHardwareAcceleration: false
+  editor:
+    fontFamily: "Fira Code, Source Code Pro, Consolas, DejaVu Sans Mono, monospace"
+    fontSize: 14
+    preferredLineLength: 120
+    tabLength: 4
+{% if (MACHINE_TYPE == 'virtual') %}    useHardwareAcceleration: false
 {% endif %}  welcome:
     showOnStartup: false

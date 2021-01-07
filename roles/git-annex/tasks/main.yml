@@ -1,0 +1,5 @@
+---
+- include: git-annex.yml
+  when: >
+    (GIT_ANNEX_ENABLED | default(False)) and
+    VCS_TOOLS is defined and ("git" in VCS_TOOLS)
