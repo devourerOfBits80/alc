@@ -1,0 +1,15 @@
+[Desktop Entry]
+Categories=Network;InstantMessaging;
+Comment=Signal Private Messenger for Linux
+Exec=signal-desktop --start-in-tray
+Icon=signal-desktop
+Name=Signal
+NoDisplay=false
+Path[$e]=
+StartupNotify=true
+StartupWMClass=Signal
+Terminal=0
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

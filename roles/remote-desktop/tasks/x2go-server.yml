@@ -76,6 +76,16 @@
   tags:
     - print_action
 
+- name: Create a symlink to allow launching Plasma Desktop via the X2Go
+  file:
+    src: /usr/bin/startplasma-x11
+    path: /usr/bin/startkde
+    state: link
+  become: yes
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
 - name: Start and enable X2Go server service
   service:
     name: x2goserver.service

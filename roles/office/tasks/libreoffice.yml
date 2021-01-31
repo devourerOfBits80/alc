@@ -56,15 +56,3 @@
   tags:
     - print_action
     - firejail
-
-- name: Restrict LibreOffice access to /etc
-  lineinfile:
-    path: /etc/firejail/libreoffice.local
-    regexp: '^#?\s*private-etc(.*)$'
-    line: 'private-etc group,hostname,localtime,passwd,mime.types,firejail,fonts,libreoffice'
-    state: present
-  become: yes
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - print_action
-    - firejail

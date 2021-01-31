@@ -8,11 +8,50 @@
   tags:
     - print_action
 
+- name: Create the local share applications directory
+  file:
+    path: ~/.local/share/applications
+    state: directory
+  changed_when: no
+
+- name: Copy the Signal desktop entry
+  copy:
+    src: signal-desktop.desktop
+    dest: ~/.local/share/applications/signal-desktop.desktop
+    mode: 0600
+  tags:
+    - print_action
+
+- name: Create the Desktop Environment autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+  changed_when: no
+
+- name: Copy the Signal autostart entry file
+  copy:
+    src: signal-desktop.desktop
+    dest: ~/.config/autostart/signal-desktop.desktop
+  tags:
+    - print_action
+
 - name: Map Signal to Firejail
   file:
     src: /usr/bin/firejail
     path: /usr/local/bin/signal-desktop
     state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail
+
+- name: Allow Signal access to the tmp directory (displaying the tray icon)
+  lineinfile:
+    path: /etc/firejail/signal-desktop.local
+    line: 'ignore private-tmp'
+    state: present
+    create: yes
   become: yes
   when: FIREJAIL_ENABLED | default(True)
   tags:

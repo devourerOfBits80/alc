@@ -1,0 +1,15 @@
+---
+- name: Install a highly extensible IDE
+  pacaur:
+    name:
+      - '{{ ECLIPSE_VERSION }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install Eclipse IDE plugins
+  pacaur:
+    name: '{{ ECLIPSE_PLUGINS }}'
+    state: present
+  tags:
+    - print_action

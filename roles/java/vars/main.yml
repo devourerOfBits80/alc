@@ -1,0 +1,12 @@
+---
+LATEST_OPENJDK_PACKAGES:
+  - jre-openjdk-headless
+  - jre-openjdk
+  - jdk-openjdk
+  - openjdk-doc
+LATEST_OPENJFX_PACKAGES:
+  - java-openjfx
+  - java-openjfx-doc
+LATEST_ORACLE_JDK_PACKAGES:
+  - jre
+  - jdk

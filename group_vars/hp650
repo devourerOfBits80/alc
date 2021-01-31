@@ -9,6 +9,7 @@ COMMON_PACKAGES:
     - base-devel
     - pacman-contrib
     - pkgfile
+    - usbutils
     - dialog
     - wpa_supplicant
     - net-tools

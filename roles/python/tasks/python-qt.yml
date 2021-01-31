@@ -1,0 +1,17 @@
+---
+- name: Install the Python bindings for Qt
+  pacaur:
+    name: '{{ PYTHON_QT_BINDINGS_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install pytest support for PyQt and PySide applications
+  pacaur:
+    name:
+      - python-pytest-qt
+    state: present
+  become: yes
+  tags:
+    - print_action

@@ -1,0 +1,3 @@
+---
+- include: python.yml
+  when: PYTHON_SUPPORTED | default(True)

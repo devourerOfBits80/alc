@@ -1,0 +1,3 @@
+---
+- include: java.yml
+  when: JAVA_SUPPORTED | default(True)

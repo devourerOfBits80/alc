@@ -20,6 +20,12 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+whitelist ${HOME}/.kvirc4.rc
+mkdir ${HOME}/.config/KVIrc
+whitelist ${HOME}/.config/KVIrc
+whitelist ${HOME}/.config/kdeglobals
+whitelist ${DOWNLOADS}
+
 caps.drop all
 netfilter
 nodvd

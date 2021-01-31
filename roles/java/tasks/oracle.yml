@@ -1,0 +1,15 @@
+---
+- name: Install Oracle JDK packages
+  pacaur:
+    name: '{{ ORACLE_JDK_PACKAGES }}'
+    state: present
+  tags:
+    - print_action
+
+- name: Install the latest Oracle JDK version packages
+  pacaur:
+    name: '{{ LATEST_ORACLE_JDK_PACKAGES }}'
+    state: present
+  when: LATEST_ORACLE_JDK_INCLUDED | default(False)
+  tags:
+    - print_action

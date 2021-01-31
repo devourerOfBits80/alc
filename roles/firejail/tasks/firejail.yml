@@ -36,7 +36,7 @@
   tags:
     - print_action
 
-- name: Enable globally AppArmor support
+- name: Enable global AppArmor support
   lineinfile:
     path: /etc/firejail/globals.local
     line: apparmor
@@ -44,6 +44,17 @@
     create: yes
   become: yes
   when: APPARMOR_ENABLED | default(True)
+  tags:
+    - print_action
+
+- name: Enable global access to the secondary drive
+  lineinfile:
+    path: /etc/firejail/globals.local
+    line: 'noblacklist /data'
+    state: present
+    create: yes
+  become: yes
+  when: SECONDARY_DRIVE is defined and (SECONDARY_DRIVE != None)
   tags:
     - print_action
 

@@ -8,4 +8,7 @@
     - { role: nodejs, tags: ['nodejs'] }
     - { role: electron, tags: ['electron'] }
     - { role: text-editors, tags: ['text-editors'] }
+    - { role: python, tags: ['python'] }
+    - { role: java, tags: ['java'] }
+    - { role: android, tags: ['android'] }
     - { role: finalize, tags: ['finalize'] }

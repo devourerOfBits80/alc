@@ -1,0 +1,8 @@
+---
+PYTHON_QT_BINDINGS_PACKAGES:
+  - pyside2
+  - pyside2-tools
+  - python-pyqt5
+  - python-qtpy
+  - python-qt.py
+JUPYTERLAB_WORK_DIR: '$HOME/.local/share/jupyter/lab'

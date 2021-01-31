@@ -1,0 +1,26 @@
+---
+JAVA_IMPLEMENTATIONS:
+  - openjdk
+OPENJDK_PACKAGES:
+  - jre-openjdk-headless
+  - jre-openjdk
+  - jdk-openjdk
+  - openjdk-doc
+OPENJFX_PACKAGES:
+  - java-openjfx
+  - java-openjfx-doc
+LATEST_OPENJDK_INCLUDED: False
+ORACLE_JDK_PACKAGES:
+  - jre
+  - jdk
+ZULU_OPENJDK_PACKAGES:
+  - zulu-8-bin
+JAVA_IDES:
+  - eclipse
+ECLIPSE_VERSION: eclipse-java-bin
+ECLIPSE_PLUGINS:
+  - eclipse-markdown
+  - eclipse-pydev
+JAVA_BUILD_TOOLS:
+  - ant
+  - ant-doc

@@ -1,4 +1,24 @@
 ---
+- name: Enable a user D-Bus support (required by the KDE global menu applet)
+  lineinfile:
+    path: /etc/firejail/globals.local
+    line: ignore dbus-user none
+    state: present
+    create: yes
+  become: yes
+  tags:
+    - print_action
+
+- name: Enable a system D-Bus support (required by the KDE global menu applet)
+  lineinfile:
+    path: /etc/firejail/globals.local
+    line: ignore dbus-system none
+    state: present
+    create: yes
+  become: yes
+  tags:
+    - print_action
+
 - name: Map pavucontrol-qt to Firejail
   file:
     src: /usr/bin/firejail

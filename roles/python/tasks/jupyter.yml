@@ -1,0 +1,54 @@
+---
+- name: Install the JupyterLab computational environment
+  pacaur:
+    name:
+      - jupyterlab
+      - jupyterlab-widgets
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the language-agnostic HTML notebook application for Project Jupyter
+  pacaur:
+    name:
+      - jupyter-notebook
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the ipython kernel for Jupyter
+  pacaur:
+    name:
+      - python-ipykernel
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Create the JupyterLab working directory environment variable in the Bash shell profile file
+  lineinfile:
+    path: ~/.bash_profile
+    regexp: '^#?\s*export\s+JUPYTERLAB_DIR=(.*)$'
+    line: 'export JUPYTERLAB_DIR={{ JUPYTERLAB_WORK_DIR }}'
+    state: present
+    create: yes
+  when: >
+    USER.SHELL is defined and
+    USER.SHELL is search("/bin/bash")
+  tags:
+    - print_action
+
+- name: Create the JupyterLab working directory environment variable in the Zsh shell environment variables file
+  lineinfile:
+    path: ~/.zshenv
+    regexp: '^#?\s*export\s+JUPYTERLAB_DIR=(.*)$'
+    line: 'export JUPYTERLAB_DIR={{ JUPYTERLAB_WORK_DIR }}'
+    state: present
+    create: yes
+  when: >
+    USER.SHELL is not defined or
+    USER.SHELL is search("/bin/zsh")
+  tags:
+    - print_action

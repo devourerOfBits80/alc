@@ -1,0 +1,17 @@
+---
+- name: Install OpenJFX packages
+  pacaur:
+    name: '{{ OPENJFX_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install OpenJFX for the latest JDK version
+  pacaur:
+    name: '{{ LATEST_OPENJFX_PACKAGES }}'
+    state: present
+  become: yes
+  when: LATEST_OPENJDK_INCLUDED
+  tags:
+    - print_action

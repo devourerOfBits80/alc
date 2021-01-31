@@ -20,3 +20,14 @@
     dest: ~/.config/VSCodium/User/settings.json
   tags:
     - print_action
+
+- name: Map VSCodium to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/vscodium
+    state: link
+  become: yes
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

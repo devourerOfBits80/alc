@@ -28,17 +28,6 @@
   tags:
     - print_action
 
-- name: Map qBittorrent to Firejail
-  file:
-    src: /usr/bin/firejail
-    path: /usr/local/bin/qbittorrent
-    state: link
-  become: yes
-  when: FIREJAIL_ENABLED | default(True)
-  tags:
-    - print_action
-    - firejail
-
 - name: Allow connections to the qBittorrent ports
   community.general.ufw:
     name: qBittorrent

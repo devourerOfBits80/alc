@@ -25,6 +25,7 @@ COMMON_PACKAGES:
     - pkgfile
     - dmidecode
     - hwinfo
+    - usbutils
     - fwupd
     - dialog
     - wpa_supplicant
@@ -126,7 +127,7 @@ SANE_SUPPORTED: True
 
 # Encrypted communication (GnuPG and SSH)
 SSH_DAEMON_ENABLED: True
-FORCE_SSH_PUBLIC_KEY_AUTH: True     # disable (True) / enable (False) password authentication
+FORCE_SSH_PUBLIC_KEY_AUTH: True     # disable (True) or enable (False) password authentication
 SSH_AGENT_ENABLED: True
 
 # Backup (rdiff-backup)
@@ -337,8 +338,8 @@ VCS_TOOLS:  # set of values: git or mercurial
     - git
 # affects the git
 GIT_EDITOR: nano    # set of values: nano or vim
-#GIT_DIFF_GUI_TOOL: kdiff3   # set of values: kdiff3, kompare, meld, tkdiff or vimdiff
-#GIT_MERGE_GUI_TOOL: kdiff3  # set of values: kdiff3, meld, tkdiff or vimdiff
+GIT_DIFF_GUI_TOOL: tkdiff   # set of values: kdiff3, kompare, meld, tkdiff or vimdiff
+GIT_MERGE_GUI_TOOL: tkdiff  # set of values: kdiff3, meld, tkdiff or vimdiff
 GIT_PULL_REBASE_ENABLED: False
 #GITAHEAD_ENABLED: True
 #GITHUB_DESKTOP_ENABLED: True
@@ -359,3 +360,53 @@ TEXT_EDITORS:   # set of values: atom, bluefish, brackets, notepadqq or vscode
 # affects the Visual Studio Code
 VSCODE_VERSION: vscodium    # set of values: code, ms-vscode, vscodium
 PYTHON_DEBUGGER_ENABLED: True
+
+# Python configuration
+PYTHON_SUPPORTED: True
+#JUPYTER_SUPPORTED: True
+PYTHON_IDES:    # set of values: kdevelop or pycharm
+    - kdevelop
+
+# Java configuration
+JAVA_SUPPORTED: True
+JAVA_IMPLEMENTATIONS:   # set of values: openjdk, oracle or zulu
+    - openjdk
+#GROOVY_SUPPORTED: True
+#KOTLIN_SUPPORTED: True
+JAVA_IDES:  # set of values: eclipse, netbeans or idea
+    - netbeans
+JAVA_BUILD_TOOLS:   # set of values: ant (with ant-doc), maven or gradle
+    - ant
+    - ant-doc
+    - maven
+# affects the OpenJDK
+OPENJDK_PACKAGES:
+    - jre8-openjdk-headless
+    - jre8-openjdk
+    - jdk8-openjdk
+    - openjdk8-doc
+JAVAFX_SUPPORTED: True
+OPENJFX_PACKAGES:
+    - java8-openjfx
+    - java8-openjfx-doc
+LATEST_OPENJDK_INCLUDED: False
+# affects the Oracle JDK
+#ORACLE_JDK_PACKAGES:
+#    - jre8
+#    - jdk8
+#LATEST_ORACLE_JDK_INCLUDED: True
+# affects the Zulu
+#ZULU_OPENJDK_PACKAGES:
+#    - zulu-8-bin
+#    - zulu-11-bin
+# affects the Eclipse IDE
+#ECLIPSE_VERSION: eclipse-java-bin   # set of values: eclipse-java-bin, eclipse-java or eclipse-jee
+#ECLIPSE_PLUGINS:
+#    - eclipse-markdown
+#    - eclipse-pydev
+
+# Android
+ANDROID_SUPPORTED: True
+ANDROID_STUDIO_INCLUDED: False
+#ANDROID_SDK_INCLUDED: True
+#ANDROID_EMULATOR_INCLUDED: True

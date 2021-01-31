@@ -1,0 +1,20 @@
+---
+- name: Install OpenJDK packages
+  pacaur:
+    name: '{{ OPENJDK_PACKAGES }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the latest OpenJDK version packages
+  pacaur:
+    name: '{{ LATEST_OPENJDK_PACKAGES }}'
+    state: present
+  become: yes
+  when: LATEST_OPENJDK_INCLUDED
+  tags:
+    - print_action
+
+- include: openjfx.yml
+  when: JAVAFX_SUPPORTED | default(True)

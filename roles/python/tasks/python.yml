@@ -1,0 +1,85 @@
+---
+- name: Install the Python high-level scripting language packages
+  pacaur:
+    name:
+      - python
+      - python-setuptools
+      - mpdecimal
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a fancy ncurses interface to the Python interpreter
+  pacaur:
+    name:
+      - bpython
+      - python-jedi
+      - python-watchdog
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install an enhanced Interactive Python shell
+  pacaur:
+    name:
+      - ipython
+      - python-nose
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install the PyPA recommended tool for installing Python packages
+  pacaur:
+    name:
+      - python-pip
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a Sacred Marriage of Pipfile, Pip, & Virtualenv
+  pacaur:
+    name:
+      - python-pipenv
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Python development tools
+  pacaur:
+    name: '{{ PYTHON_DEVELOPMENT_TOOLS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install Python testing tools
+  pacaur:
+    name: '{{ PYTHON_TESTING_TOOLS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- include: python-qt.yml
+  when: PLASMA_DESKTOP_INSTALLED
+
+- include: jupyter.yml
+  when: JUPYTER_SUPPORTED | default(False)
+
+- include: kdevelop.yml
+  when: '"kdevelop" in PYTHON_IDES'
+
+- name: Install the Python IDE for Professional Developers
+  pacaur:
+    name:
+      - pycharm-community-edition
+    state: present
+  become: yes
+  when: '"pycharm" in PYTHON_IDES'
+  tags:
+    - print_action

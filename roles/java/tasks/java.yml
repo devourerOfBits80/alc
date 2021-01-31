@@ -1,0 +1,84 @@
+---
+- include: openjdk.yml
+  when: '"openjdk" in JAVA_IMPLEMENTATIONS'
+
+- include: oracle.yml
+  when: '"oracle" in JAVA_IMPLEMENTATIONS'
+
+- name: Install Zulu Community Builds of OpenJDK
+  pacaur:
+    name: '{{ ZULU_OPENJDK_PACKAGES }}'
+    state: present
+  when: '"zulu" in JAVA_IMPLEMENTATIONS'
+  tags:
+    - print_action
+
+- name: Install a programming language based on Java, inspired by Python, Ruby and Smalltalk
+  pacaur:
+    name:
+      - groovy
+    state: present
+  become: yes
+  when: GROOVY_SUPPORTED | default(False)
+  tags:
+    - print_action
+
+- name: Install a statically typed programming language that can interoperate with Java
+  pacaur:
+    name:
+      - kotlin
+    state: present
+  become: yes
+  when: KOTLIN_SUPPORTED | default(False)
+  tags:
+    - print_action
+
+- include: eclipse.yml
+  when: '"eclipse" in JAVA_IDES'
+
+- name: Install an IDE for Java, HTML5, PHP, Groovy, C and C++
+  pacaur:
+    name:
+      - netbeans
+    state: present
+  become: yes
+  when: '"netbeans" in JAVA_IDES'
+  tags:
+    - print_action
+
+- include: idea.yml
+  when: '"idea" in JAVA_IDES'
+
+- name: Install Java build tools and system packages
+  pacaur:
+    name: '{{ JAVA_BUILD_TOOLS }}'
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a simple JVM framework to write repeatable tests
+  pacaur:
+    name:
+      - junit
+      - junit-system-rules
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a free Java class file shrinker, optimizer, obfuscator, and preverifier
+  pacaur:
+    name:
+      - proguard
+    state: present
+  tags:
+    - print_action
+
+- name: Install a standalone graphical utility that displays Java source codes of .class files
+  pacaur:
+    name:
+      - jd-gui-bin
+    state: present
+  tags:
+    - print_action

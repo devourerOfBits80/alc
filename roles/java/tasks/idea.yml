@@ -1,0 +1,33 @@
+---
+- name: Install an IDE for Java, Groovy and other programming languages with advanced refactoring features
+  pacaur:
+    name:
+      - intellij-idea-community-edition
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a next generation, high-performance debugger
+  pacaur:
+    name:
+      - lldb
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Map IntelliJ IDEA to Firejail
+  file:
+    src: /usr/bin/firejail
+    path: /usr/local/bin/{{ item }}
+    state: link
+  become: yes
+  with_items:
+    - idea
+    - idea.sh
+    - ideaIC
+  when: FIREJAIL_ENABLED | default(True)
+  tags:
+    - print_action
+    - firejail

@@ -1,0 +1,30 @@
+---
+- name: Install a C++ IDE using KDE technologies
+  pacaur:
+    name:
+      - kdevelop
+      - kdevelop-pg-qt
+    state: present
+  become: yes
+  tags:
+    - print_action
+
+- name: Install a cross-platform application and UI framework (Documentation)
+  pacaur:
+    name:
+      - qt5-doc
+    state: present
+  become: yes
+  when: PLASMA_DESKTOP_INSTALLED
+  tags:
+    - print_action
+
+- name: Install the Python language and documentation plugin for KDevelop
+  pacaur:
+    name:
+      - kdevelop-python
+      - python-pycodestyle
+    state: present
+  become: yes
+  tags:
+    - print_action

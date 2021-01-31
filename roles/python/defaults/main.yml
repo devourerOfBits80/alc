@@ -1,0 +1,13 @@
+---
+PYTHON_DEVELOPMENT_TOOLS:
+  - python-numpy
+  - python-pandas
+  - python-pendulum
+  - python-pylint
+PYTHON_TESTING_TOOLS:
+  - python-pytest
+  - python-pytest-mock
+  - python-pytest-runner
+  - python-pyfakefs
+PYTHON_IDES:
+  - kdevelop

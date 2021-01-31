@@ -1,0 +1,3 @@
+---
+- include: android.yml
+  when: ANDROID_SUPPORTED | default(True)

@@ -25,6 +25,8 @@
     - vcs
     - nodejs
     - text-editors
+    - java
+    - android
 
 - name: Delete all cached packages from the cache folders
   command: '{{ INSTALLED_PACMAN_WRAPPER }} -Scc --noconfirm'
@@ -53,3 +55,5 @@
     - vcs
     - nodejs
     - text-editors
+    - java
+    - android

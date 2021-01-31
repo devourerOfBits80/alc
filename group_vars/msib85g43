@@ -4,6 +4,10 @@
 # Unique name to identify your machine on a network
 HOSTNAME: TOMAHAWK-MSIB85G43
 
+# Bootloader microcode update and Secure Boot
+REFIND_INSTALL_COMMAND: refind-install
+SECURE_BOOT_ENABLED: False
+
 # Drives, hardware and video drivers installation
 MACHINE_TYPE: desktop
 SECONDARY_DRIVE: /dev/sdb
@@ -55,6 +59,7 @@ INSTANT_MESSAGING_CLIENTS:
     - kvirc
     - skype
     - slack
+    - signal
 
 # Office Tools
 UNIVERSAL_DOCUMENT_CONVERTER_ENABLED: True
@@ -167,4 +172,22 @@ VIRTUALBOX_ENABLED: True
 # Version Control System and git-annex
 GIT_DIFF_GUI_TOOL: kdiff3
 GIT_MERGE_GUI_TOOL: kdiff3
-GIT_PULL_REBASE_ENABLED: False
+
+# Java configuration
+JAVA_IMPLEMENTATIONS:
+    - openjdk
+    - zulu
+GROOVY_SUPPORTED: True
+KOTLIN_SUPPORTED: True
+JAVA_BUILD_TOOLS:
+    - ant
+    - ant-doc
+    - maven
+    - gradle
+LATEST_OPENJDK_INCLUDED: True
+ZULU_OPENJDK_PACKAGES:
+    - zulu-11-bin
+
+# Android
+ANDROID_SDK_ROOT: $HOME/.android-ide/sdk
+ANDROID_STUDIO_INCLUDED: False
